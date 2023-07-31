@@ -4,6 +4,8 @@
 
     <!-- 인터넷 사용 허용하기 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 
     <application
@@ -36,6 +38,9 @@
             </intent-filter>
         </activity>
 
+        android:usesCleartextTraffic="true"
+        ...>
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="eeb69275338bd695f2f2fb303ece65b6" />
     </application>
 
 </manifest>
