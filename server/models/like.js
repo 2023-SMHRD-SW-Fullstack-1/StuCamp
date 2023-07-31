@@ -30,10 +30,8 @@ module.exports = class Like extends Sequelize.Model {
     );
   }
   static associate(db) {
-    // db.User.hasMany(db.Board, { foreignKey: "id", sourceKey: "id" }); // 1:N
-    // db.User.hasOne ... 1:1
-    // db.User.belongsToMany ... N : M
-    // foreignKey는 foreignKey지정만 하는거고
-    //데이터 가져올때는 sourceKey로 인해 가져온다.
-  }
+      db.Like.BelongsTo(db.User, { foreignKey: "user_id", sourceKey: "user_id" });
+      db.Like.BelongsTo(db.Feed, { foreignKey: "feed_id", sourceKey: "feed_id" });
+    } 
+  
 };
