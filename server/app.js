@@ -1,11 +1,12 @@
 const express = require("express");
 const { sequelize } = require("./models");
 const indexRouter = require("./routes/index");
-const userRouter = require("./routes/user");
+const userRouter = require("./routes/user")
 const recordRouter = require("./routes/record");
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json);
 
 // sequelize 설정
 sequelize
@@ -14,7 +15,7 @@ sequelize
   .catch((err) => {
     console.log(err);
   });
-
+console.log("abc")
 //routes 연결
 app.use("/", indexRouter);
 app.use("/user", userRouter);
