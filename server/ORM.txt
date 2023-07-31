@@ -1,0 +1,24 @@
+ORM (Object Relational Mapping) : 객체-관계 매핑
+ -> 객체와 관계형 데이터베이스(DB-oracle, mysql...)의 데이터를 자동으로 매핑 해주는 것
+
+ex- String - JPA, node - Sequelize
+
+1. sequelize 설치
+2. sequelize-cli 설치 (폴더 구조를 만드는 명령문 사용하기 위해 설치!)
+3. mysql2 설치
+4. npx sequelize init (sequelize-cli 설치필요 : 폴더 구조 만들어줌)
+  4-1) config : DB연결에 필요한 정보(dev(개발용도) / test(테스트용도) / production(배포용도))
+  4-2) migrations : DB 변경 기록 다음 파일 보관 (이전 설정으로 되돌림)
+  4-3) models : 테이블에 대한 객체 정의
+  4-4) seeders : 테이블에 자동으로 기본 데이터 넣고 싶을 때
+5. config.js 수정 -> 실제 사용할 DB 정보로 변경!
+6. 'User' 객체 정의 -> models폴더
+7. index -> 객체 사용 정의 / -> models 폴더
+8. app.js -> sequelize 설정
+
+* seed 사용
+1. seed 생성
+-   npx sequelize seed:generate --name 테이블이름
+2. seed 실행
+-   npx sequelize db:seed --seed 파일명 (파일1개)
+-   npx sequelize-cli db:seed:all (전체 실행)
