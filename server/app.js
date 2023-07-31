@@ -1,7 +1,13 @@
 const express = require('express')
+const {sequelize} = require('./models')
 const app = express()
 
 app.use(express.urlencoded({extended:true}))
+
+// sequelize 설정
+sequelize.sync({force : false})
+.then(()=>console.log('DB연결성공!'))
+.catch((err)=>{console.log(err);});
 
 app.set('port', process.env.PORT||8888)
 app.listen(app.get('port'), ()=>{
