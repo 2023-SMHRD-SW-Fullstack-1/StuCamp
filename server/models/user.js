@@ -7,12 +7,12 @@ module.exports = class User extends Sequelize.Model {
     return super.init(
       {
         // 컬럼 정보(id, pw, age)
-       user_id: {
+        user_id: {
           type: Sequelize.BIGINT, // 자료형, 크기
           allowNull: false, // NULL 값 허용 여부
           primaryKey: true, // 기본키 지정
           unique: true, // UNIQUE 설정
-          autoIncrement: true
+          autoIncrement: true,
         },
         user_email: {
           type: Sequelize.STRING(50), // 자료형, 크기
@@ -23,7 +23,6 @@ module.exports = class User extends Sequelize.Model {
         user_nickname: {
           type: Sequelize.STRING(50),
         },
-        
       },
       {
         // 테이블에 대한 설정
