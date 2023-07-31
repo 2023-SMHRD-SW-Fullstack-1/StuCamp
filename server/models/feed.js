@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-const User = require('./user');
 
 module.exports = class Feed extends Sequelize.Model {
 
@@ -37,10 +36,8 @@ module.exports = class Feed extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.Feed.hasMany(db.User, { foreignKey: "user_id", sourceKey: "user_id" }); // 1:N
-    // db.User.hasOne ... 1:1
-    // db.User.belongsToMany ... N : M
-    // foreignKey는 foreignKey지정만 하는거고
-    //데이터 가져올때는 sourceKey로 인해 가져온다.
+    db.Feed.BelongsTo(db.User, { foreignKey: "user_id", sourceKey: "user_id" });
+    db.Feed.hasMany(db.Like, {foreignKey: "feed_id", sourceKey: "feed_id"});
+    db.Feed.hasMany(db.Comment, {foreignKey: "comment_id", sourceKey: "comment_id"});
   }
 };
