@@ -30,6 +30,14 @@ module.exports = class Wish extends Sequelize.Model {
     );
   }
   static associate(db) {
+    db.Wish.belongsTo(db.User, {
+      foreignKey: "user_id",
+      targetKey: "user_id",
+    });
+    db.Wish.belongsTo(db.Feed, {
+      foreignKey: "feed_id",
+      targetKey: "feed_id",
+    });
     // db.User.hasMany(db.Board, { foreignKey: "id", sourceKey: "id" }); // 1:N
     // db.User.hasOne ... 1:1
     // db.User.belongsToMany ... N : M

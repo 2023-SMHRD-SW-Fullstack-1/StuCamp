@@ -36,6 +36,14 @@ module.exports = class RecordDetail extends Sequelize.Model {
     );
   }
   static associate(db) {
+    db.RecordDetail.belongsTo(db.User, {
+      foreignKey: "user_id",
+      targetKey: "user_id",
+    });
+    db.RecordDetail.hasMany(db.User, {
+      foreignKey: "record_detail_id",
+      targetKey: "record_detail_id",
+    });
     // db.User.hasMany(db.Board, { foreignKey: "id", sourceKey: "id" }); // 1:N
     // db.User.hasOne ... 1:1
     // db.User.belongsToMany ... N : M

@@ -36,6 +36,36 @@ module.exports = class User extends Sequelize.Model {
     );
   }
   static associate(db) {
+    db.User.hasMany(db.Record, {
+      foreignKey: "user_id", // Record 모델에서 사용할 외래키 컬럼
+      sourceKey: "user_id", // User 모델에서 참조하는 기본키 컬럼
+      onDelete: "CASCADE", // User 데이터가 삭제될 경우 관련된 Record 데이터도 함께 삭제
+      onUpdate: "CASCADE", // User 데이터의 기본키가 업데이트될 경우 관련된 Record 데이터도 함께 업데이트
+    });
+    db.User.hasMany(db.Feed, {
+      foreignKey: "user_id", // Record 모델에서 사용할 외래키 컬럼
+      sourceKey: "user_id", // User 모델에서 참조하는 기본키 컬럼
+      onDelete: "CASCADE", // User 데이터가 삭제될 경우 관련된 Record 데이터도 함께 삭제
+      onUpdate: "CASCADE", // User 데이터의 기본키가 업데이트될 경우 관련된 Record 데이터도 함께 업데이트
+    });
+    db.User.hasMany(db.Like, {
+      foreignKey: "user_id", // Record 모델에서 사용할 외래키 컬럼
+      sourceKey: "user_id", // User 모델에서 참조하는 기본키 컬럼
+      onDelete: "CASCADE", // User 데이터가 삭제될 경우 관련된 Record 데이터도 함께 삭제
+      onUpdate: "CASCADE", // User 데이터의 기본키가 업데이트될 경우 관련된 Record 데이터도 함께 업데이트
+    });
+    db.User.hasMany(db.Comment, {
+      foreignKey: "user_id", // Record 모델에서 사용할 외래키 컬럼
+      sourceKey: "user_id", // User 모델에서 참조하는 기본키 컬럼
+      onDelete: "CASCADE", // User 데이터가 삭제될 경우 관련된 Record 데이터도 함께 삭제
+      onUpdate: "CASCADE", // User 데이터의 기본키가 업데이트될 경우 관련된 Record 데이터도 함께 업데이트
+    });
+    db.User.hasMany(db.Wish, {
+      foreignKey: "user_id", // Record 모델에서 사용할 외래키 컬럼
+      sourceKey: "user_id", // User 모델에서 참조하는 기본키 컬럼
+      onDelete: "CASCADE", // User 데이터가 삭제될 경우 관련된 Record 데이터도 함께 삭제
+      onUpdate: "CASCADE", // User 데이터의 기본키가 업데이트될 경우 관련된 Record 데이터도 함께 업데이트
+    });
     // db.User.hasMany(db.Board, { foreignKey: "id", sourceKey: "id" }); // 1:N
     // db.User.hasOne ... 1:1
     // db.User.belongsToMany ... N : M

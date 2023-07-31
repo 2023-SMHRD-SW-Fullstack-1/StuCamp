@@ -32,9 +32,18 @@ module.exports = class Record extends Sequelize.Model {
     );
   }
   static associate(db) {
+    db.Record.belongsTo(db.User, {
+      foreignKey: "user_id",
+      targetKey: "user_id",
+    });
+    db.Record.hasMany(db.RecordDetail, {
+      foreignKey: "record_detail_id",
+      targetKey: "record_detail_id",
+    });
     // db.User.hasMany(db.Board, { foreignKey: "id", sourceKey: "id" }); // 1:N
     // db.User.hasOne ... 1:1
     // db.User.belongsToMany ... N : M
+    // belongsTo : N:1
     // foreignKey는 foreignKey지정만 하는거고
     //데이터 가져올때는 sourceKey로 인해 가져온다.
   }
