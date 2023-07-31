@@ -18,6 +18,12 @@ const db = {};
 
 db.sequelize = sequelize;
 db.User = User;
+db.Comment = Comment;
+db.Feed = Feed;
+db.Like = Like;
+db.RecordDetail = RecordDetail;
+db.Record = Record;
+db.Wish = Wish;
 
 User.init(sequelize);
 User.associate(db); //관계설정했을시
