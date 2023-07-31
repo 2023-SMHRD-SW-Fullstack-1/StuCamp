@@ -6,6 +6,7 @@ const recordRouter = require("./routes/record");
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // sequelize 설정
 sequelize
