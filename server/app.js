@@ -15,7 +15,7 @@ sequelize
   .catch((err) => {
     console.log(err);
   });
-
+console.log("abc");
 //routes 연결
 app.use("/", indexRouter);
 app.use("/user", userRouter);
