@@ -9,7 +9,8 @@ const JoinDTO = require("../dto/userDTO/JoinDTO");
 
 // 로그인
 router.post("/login", async (req, res, next) => {
-  const loginReqDTO = new LoginReqDTO(req.body.loginUser);
+  const loginReqDTO = new LoginReqDTO(JSON.parse(req.body.loginUser));
+  console.log(req.body)
   try {
     const userEntity = await User.findOne({
       where: {
@@ -20,10 +21,10 @@ router.post("/login", async (req, res, next) => {
 
     if (userEntity) {
       console.log(userEntity);
-      res.send("Success");
+      res.json(userEntity);
     } else {
       console.log("user login ... 사용자가 존재하지 않습니다.");
-      res.send("Fail");
+      res.json(-1);
     }
   } catch (error) {
     console.error(error);
@@ -44,6 +45,7 @@ router.get("/find/:user_email", async (req, res, next) => {
 
     if (userEntity) {
       console.log(userEntity);
+      res.json(userEntity);
     } else {
       console.log("user find ... 사용자가 존재하지 않습니다.");
     }
@@ -72,7 +74,7 @@ router.put("/update", async (req, res, next) => {
 
     if (userEntity[0]) {
       console.log(userEntity[0]);
-      res.status(200).send("Success");
+      res.status(200).json(userEntity[0]);
     } else {
       console.log("user update ... 사용자가 존재하지 않습니다.");
     }
@@ -85,7 +87,7 @@ router.put("/update", async (req, res, next) => {
 //회원가입
 router.post("/join", async (req, res, next) => {
   let result = req.body.joinUser;
-
+  console.log(result);
   const joinDto = new JoinDTO(result);
   // console.log(joinDto.user_email);
   // console.log(joinDto.user_nickname);
@@ -100,7 +102,7 @@ router.post("/join", async (req, res, next) => {
 
   if (userEntity) {
     console.log("이미 존재하는 사용자");
-    res.send("existed email");
+    res.json("existed email");
   } else {
     userEntity = await User.build({
       user_email: joinDto.user_email,
@@ -112,11 +114,11 @@ router.post("/join", async (req, res, next) => {
       .save()
       .then((user) => {
         console.log("User saved:", user.toJSON);
-        res.send("join success");
+        res.json("join success");
       })
       .catch((error) => {
         console.log("Error saving user:", error);
-        res.send("join fail");
+        res.json("join fail");
       });
   }
 });

@@ -1,5 +1,8 @@
 package com.smhrd.stucamp.VO
-data class FeedVO (var feedId : String,  var feedLikeCnt : Int, var feedContent : String)
+
+import android.graphics.Bitmap
+
+data class FeedVO (var user_nickname : String,  var feed_like_cnt : Int, var feed_content : String, var feed_imgpath : String)
 
 
 //var feedImgPath : String,

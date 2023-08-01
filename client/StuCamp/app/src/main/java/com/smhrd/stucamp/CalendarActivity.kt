@@ -37,6 +37,8 @@ class CalendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
 
+
+
         // UI값 생성
         calendarView=findViewById(R.id.calendarView)
         diaryTextView=findViewById(R.id.diaryTextView)
@@ -49,7 +51,16 @@ class CalendarActivity : AppCompatActivity() {
         back = findViewById(R.id.back)
 
 
+
+
         title.text = "캘린더"
+
+        val totalTime = intent.getStringExtra("totalTime")
+        totalTime?.let {
+            val diaryContentTextView: TextView = findViewById(R.id.diaryContent)
+            diaryContentTextView.text = "오늘 공부 시간 : $it"
+        }
+
 
         back.setOnClickListener{
             var it_back: Intent = Intent(this, MainActivity::class.java)
@@ -79,7 +90,9 @@ class CalendarActivity : AppCompatActivity() {
             diaryContent.text = str
             diaryContent.visibility = View.VISIBLE
         }
+
     }
+
 
     // 달력 내용 조회, 수정
     fun checkDay(cYear: Int, cMonth: Int, cDay: Int, userID: String) {

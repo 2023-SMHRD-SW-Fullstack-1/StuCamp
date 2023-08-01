@@ -14,7 +14,9 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
 import org.json.JSONArray
+import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -49,14 +51,14 @@ class LoginActivity : AppCompatActivity() {
 
             val url = URL("http://172.30.1.25:8888/user/login")
 
-            val connection = url.openConnection() as HttpURLConnection
-            connection.run {
-                requestMethod = "POST"
-                setRequestProperty("Content-Type", "application/json; charset=utf-8")
-            }
+//            val connection = url.openConnection() as HttpURLConnection
+//            connection.run {
+//                requestMethod = "POST"
+//                setRequestProperty("Content-Type", "application/json; charset=utf-8")
+//            }
 
 // 결과 얻기
-            val status = connection.responseCode // HTTP 상태 코드 가져오기
+//            val status = connection.responseCode // HTTP 상태 코드 가져오기
 
 
             Log.d("inputEmail" , inputEmail)
@@ -69,15 +71,17 @@ class LoginActivity : AppCompatActivity() {
                 {
                         response ->
                     Log.d("response", response)
+//                    Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show()
 
-                    if(response=="Fail") {
-                        Toast.makeText(this, "이메일 또는 비밀번호를 다시 입력해주세요.", Toast.LENGTH_LONG).show()
-                    }
-                    else if(response=="Success") {
-                        val result = JSONArray(response)
-                        Log.d("result", result.toString())
-                        val user  = result.getJSONObject(0)
-                        Log.d("user", user.toString())
+
+                    if(response.equals("-1")) {
+                        Log.d("response", response)
+                        Toast.makeText(this, "아이디나 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
+                    }else{
+                        val user = JSONObject(response)
+//                        Log.d("result", result.toString())
+//                        val user  = result.getJSONObject(0)
+//                        Log.d("user", user.toString())
                         // Editor 생성
                         val editor = spf.edit()
                         // editor를 통해 로그인한 회원의 정보 저장
@@ -87,9 +91,6 @@ class LoginActivity : AppCompatActivity() {
                         // MainActivity로 전환 (Intent)joinUser
                         val it = Intent(this, MainActivity::class.java)
                         startActivity(it)
-                    } else{
-                        Log.d("response 오류", response)
-                        Toast.makeText(this, "로그인 실패!", Toast.LENGTH_LONG).show()
                     }
 
                 },
@@ -102,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
                 override fun getParams(): MutableMap<String, String>? {
                     val params : MutableMap<String, String> = HashMap()
                     val user : UserVO = UserVO(inputEmail, inputPassword, null)
-                    params.put("user", Gson().toJson(user))
+                    params.put("loginUser", Gson().toJson(user))
                     Log.d("params", user.toString())
 
                     return params
