@@ -14,8 +14,6 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import org.json.JSONArray
-import java.net.HttpURLConnection
-import java.net.URL
 
 class MemDeleteActivity : AppCompatActivity() {
 

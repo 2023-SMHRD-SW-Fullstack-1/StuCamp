@@ -53,7 +53,7 @@
         <activity android:name=".MemDeleteActivity" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_login2" />
         <activity
             android:name=".MemInfoActivity"
