@@ -1,6 +1,9 @@
 package com.smhrd.stucamp
 
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
@@ -29,6 +32,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
         var tvId : TextView = holder.tvId
         //var ivFeed : ImageView = holder.ivFeed
         var ibHeart : ImageButton = holder.ibHeart
+        var ivFeed : ImageView = holder.ivFeed
         var tvLikeCnt : TextView = holder.tvLikeCnt
         var tvContent : TextView = holder.tvContent
         //var edtComment : EditText = holder.edtComment
@@ -54,6 +58,16 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
 
         tvLikeCnt.text = feed.feedLikeCnt.toString()
         tvContent.text = feed.feedContent
+        Log.d("1111sfeed", feed.toString())
+
+        tvId.text = feed.user_nickname.toString()
+        //이미지 변환
+//        val imageBytes = Base64.decode(feed.feed_imgpath.toString(), 0)
+//        val feed_img = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+
+//        ivFeed.setImageBitmap(feed_img)
+        tvLikeCnt.text = feed.feed_like_cnt.toString()
+        tvContent.text = feed.feed_content
         //edtComment.text = feed.edtComment
 
 
