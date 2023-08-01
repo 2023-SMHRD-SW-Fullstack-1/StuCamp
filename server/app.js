@@ -5,6 +5,7 @@ const userRouter = require("./routes/user");
 const recordRouter = require("./routes/record");
 const feedRouter = require("./routes/feed")
 const likeRouter = require('./routes/like')
+const commentRouter = require('./routes/comment')
 const bodyParser = require('body-parser')
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/user", userRouter);
 app.use("/record", recordRouter);
 app.use("/feed", feedRouter);
 app.use("/like", likeRouter)
+app.use("/comment", commentRouter)
 
 app.set("port", process.env.PORT || 8888);
 app.listen(app.get("port"), () => {
