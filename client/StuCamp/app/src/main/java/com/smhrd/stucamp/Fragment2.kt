@@ -32,7 +32,9 @@ import java.util.Locale class Fragment2 : Fragment() {
 
         val calendarbtn: Button = view.findViewById(R.id.calendarbtn)
         calendarbtn.setOnClickListener {
-            var next: Intent = Intent(requireActivity(), CalendarActivity::class.java)
+            var next: Intent = Intent(requireActivity(), CalendarActivity::class.java).apply {
+                putExtra("totalTime", formatElapsedTime(totalTime))
+            }
             startActivity(next)
         }
 
