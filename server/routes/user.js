@@ -20,8 +20,10 @@ router.post("/login", async (req, res, next) => {
 
     if (userEntity) {
       console.log(userEntity);
+      res.send("Success");
     } else {
       console.log("user login ... 사용자가 존재하지 않습니다.");
+      res.send("Fail");
     }
   } catch (error) {
     console.error(error);
@@ -70,13 +72,13 @@ router.put("/update", async (req, res, next) => {
 
     if (userEntity[0]) {
       console.log(userEntity[0]);
-      // res.status(200).json()
+      res.status(200).send("Success");
     } else {
       console.log("user update ... 사용자가 존재하지 않습니다.");
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send("user update ... 내부 서버 오류");
+    res.status(500).send("Fail");
   }
 });
 

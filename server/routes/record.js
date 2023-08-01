@@ -63,6 +63,7 @@ router.get("/:user_email", async (req, res, next) => {
       }
     } else {
       console.log("user find ... 사용자가 존재하지 않습니다.");
+      res.send("userNotExisted");
     }
   } catch (error) {
     console.error(error);
