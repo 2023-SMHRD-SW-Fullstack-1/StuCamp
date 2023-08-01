@@ -19,6 +19,8 @@ const sequelize = new Sequelize(
   config
 );
 
+sequelize.options.timezone = "+09:00"; // 한국 시간 (+09:00)
+
 // sequelize, model
 const db = {};
 

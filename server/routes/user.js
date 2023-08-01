@@ -9,7 +9,7 @@ const JoinDTO = require("../dto/userDTO/JoinDTO");
 
 // 로그인
 router.post("/login", async (req, res, next) => {
-  const loginReqDTO = new LoginReqDTO(req.body.user);
+  const loginReqDTO = new LoginReqDTO(req.body.loginUser);
   try {
     const userEntity = await User.findOne({
       where: {
@@ -52,7 +52,7 @@ router.get("/find/:user_email", async (req, res, next) => {
 
 // 회원 수정
 router.put("/update", async (req, res, next) => {
-  const updateReqDTO = new UpdateReqDTO(req.body.user);
+  const updateReqDTO = new UpdateReqDTO(req.body.updateUser);
   try {
     const userEntity = await User.update(
       {
@@ -63,6 +63,7 @@ router.put("/update", async (req, res, next) => {
         where: {
           user_email: updateReqDTO.user_email,
         },
+        individualHooks: true, // updatedAt 칼럼을 자동으로 업데이트하도록 설정
       }
     );
 
