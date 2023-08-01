@@ -1,5 +1,6 @@
 package com.smhrd.stucamp
 // 이지희
+// **url 수정 필요!
 
 import android.content.Context
 import android.content.Intent
@@ -42,8 +43,8 @@ class LoginActivity : AppCompatActivity() {
 
         // SharedPreference 생성
         val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
-        val test = spf.getString("user", " ")
-        Log.d("userState", test.toString())
+        val user = spf.getString("user", " ")
+        Log.d("userState", user.toString())
 
         btnLogin.setOnClickListener{
             val inputEmail = etLoginEmail.text.toString()
@@ -64,15 +65,10 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("response", response)
 //                    Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show()
 
-
                     if(response.equals("-1")) {
-                        Log.d("response", response)
                         Toast.makeText(this, "아이디나 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
                     }else{
                         val user = JSONObject(response)
-//                        Log.d("result", result.toString())
-//                        val user  = result.getJSONObject(0)
-//                        Log.d("user", user.toString())
                         // Editor 생성
                         val editor = spf.edit()
                         // editor를 통해 로그인한 회원의 정보 저장
@@ -86,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
 
                 },
                 {
-                        error ->
+                    error ->
                     Log.d("error", error.toString())
                     Toast.makeText(this, "에러발생!", Toast.LENGTH_LONG).show()
                 }
@@ -95,7 +91,6 @@ class LoginActivity : AppCompatActivity() {
                     val params : MutableMap<String, String> = HashMap()
                     val user : UserVO = UserVO(inputEmail, inputPassword, null)
                     params.put("loginUser", Gson().toJson(user))
-                    Log.d("params", user.toString())
 
                     return params
                 }
