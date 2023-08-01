@@ -1,16 +1,24 @@
 package com.smhrd.stucamp
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var bnv : BottomNavigationView
     lateinit var fl : FrameLayout
+
+    lateinit var tvId : TextView
+    lateinit var btnLogout : Button
+    lateinit var btnWrite : Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,11 +26,17 @@ class MainActivity : AppCompatActivity() {
         bnv = findViewById(R.id.bnv)
         fl = findViewById(R.id.fl)
 
+        //tvId = findViewById(R.id.tvId)
+        btnLogout = findViewById(R.id.btnLogout)
+        btnWrite = findViewById(R.id.btnWrite)
+
 
         supportFragmentManager.beginTransaction().replace(
             R.id.fl,
             Fragment1()
         ).commit()
+
+
         //bottomNavigationView 이동
         bnv.setOnItemSelectedListener {
             Log.d("id", it.itemId.toString())
@@ -58,8 +72,25 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            //boolean - true(이벤트 인식이 더 좋음!) / false(이벤트 인식이 떨어짐)
             true
         }
+
+        // 글쓰기 버튼 클릭
+        btnWrite.setOnClickListener(){
+            var intent = Intent(this, FeedWriteActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        // 로그아웃 버튼 클릭
+//        btnLogout.setOnClickListener(){
+//
+//            editor.remove("member")
+//            editor.commit()
+//
+//            var intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+//        }
+
     }
 }

@@ -6,6 +6,15 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!-- Storage 쓰기/읽기 권한 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- 카메라 API 사용-->
+    <uses-feature
+        android:name="android.hardware.Camera"
+        android:required="true"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,7 +25,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StuCamp"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
         <activity
             android:name=".TimerActivity"
             android:exported="true" />
@@ -28,7 +40,7 @@
             android:exported="true" />
         <activity
             android:name=".FeedWriteActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".IntroActivity"
             android:exported="true">
@@ -55,7 +67,7 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="eeb69275338bd695f2f2fb303ece65b6" />
+            android:value="7480995f399f515c42165e970519c34d" />
     </application>
 
 </manifest>

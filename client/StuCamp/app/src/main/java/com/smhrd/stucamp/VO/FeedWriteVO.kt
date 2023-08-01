@@ -1,4 +1,3 @@
 package com.smhrd.stucamp.VO
 
-class FeedWriteVO {
-}
+data class FeedWriteVO(var img : String, var writer : String, var content : String)

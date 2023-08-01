@@ -9,7 +9,7 @@ const JoinDTO = require("../dto/userDTO/JoinDTO");
 
 // 로그인
 router.post("/login", async (req, res, next) => {
-  const loginReqDTO = new LoginReqDTO(req.body.user);
+  const loginReqDTO = new LoginReqDTO(req.body.loginUser);
   try {
     const userEntity = await User.findOne({
       where: {
@@ -20,8 +20,10 @@ router.post("/login", async (req, res, next) => {
 
     if (userEntity) {
       console.log(userEntity);
+      res.json(userEntity);
     } else {
       console.log("user login ... 사용자가 존재하지 않습니다.");
+      res.json(-1);
     }
   } catch (error) {
     console.error(error);
@@ -32,6 +34,7 @@ router.post("/login", async (req, res, next) => {
 // 단일 회원 정보 확인
 router.get("/find/:user_email", async (req, res, next) => {
   const findReqDTO = new FindReqDTO(req.params.user_email);
+  console.log(findReqDTO.user_email);
   try {
     const userEntity = await User.findOne({
       where: {
@@ -41,6 +44,7 @@ router.get("/find/:user_email", async (req, res, next) => {
 
     if (userEntity) {
       console.log(userEntity);
+      res.json(userEntity);
     } else {
       console.log("user find ... 사용자가 존재하지 않습니다.");
     }
@@ -52,7 +56,7 @@ router.get("/find/:user_email", async (req, res, next) => {
 
 // 회원 수정
 router.put("/update", async (req, res, next) => {
-  const updateReqDTO = new UpdateReqDTO(req.body.user);
+  const updateReqDTO = new UpdateReqDTO(req.body.updateUser);
   try {
     const userEntity = await User.update(
       {
@@ -63,25 +67,26 @@ router.put("/update", async (req, res, next) => {
         where: {
           user_email: updateReqDTO.user_email,
         },
+        individualHooks: true, // updatedAt 칼럼을 자동으로 업데이트하도록 설정
       }
     );
 
     if (userEntity[0]) {
       console.log(userEntity[0]);
-      // res.status(200).json()
+      res.status(200).json(userEntity[0]);
     } else {
       console.log("user update ... 사용자가 존재하지 않습니다.");
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send("user update ... 내부 서버 오류");
+    res.status(500).send("Fail");
   }
 });
 
 //회원가입
 router.post("/join", async (req, res, next) => {
-  let result = req.body.joinUser;
-
+  let result = JSON.parse(req.body.joinUser);
+  console.log(result);
   const joinDto = new JoinDTO(result);
   // console.log(joinDto.user_email);
   // console.log(joinDto.user_nickname);
@@ -96,7 +101,7 @@ router.post("/join", async (req, res, next) => {
 
   if (userEntity) {
     console.log("이미 존재하는 사용자");
-    res.send("join fail : existed email");
+    res.json("existed email");
   } else {
     userEntity = await User.build({
       user_email: joinDto.user_email,
@@ -108,32 +113,43 @@ router.post("/join", async (req, res, next) => {
       .save()
       .then((user) => {
         console.log("User saved:", user.toJSON);
-        res.send("join success");
+        res.json("join success");
       })
       .catch((error) => {
         console.log("Error saving user:", error);
-        res.send("join fail");
+        res.json("join fail");
       });
   }
 });
 
 //회원탈퇴
-// router.delete('/delete', async(req, res)=>{
-//   const userDeleteDTO = new UserDeleteDTO(req.body.deleteUser);
-//   try {
-//    //계정 삭제
-//    const userEntity = await User.destroy({
-//       where: {
-//         user_email: userDeleteDTO.user_email,
-//         user_password: userDeleteDTO.user_password,
-//       }
-//     })
-//     res.send("success delete")
-//     }
-//   catch (error) {
-//     console.error(error);
-//     res.status(500).send("내부 서버 오류");
-//   }
-//   })
+router.delete("/delete", async (req, res, next) => {
+  const userDeleteDTO = new UserDeleteDTO(req.body.deleteUser);
+  try {
+    //해당 아이디 패스워드 확인
+    let userEntity = await User.findOne({
+      where: {
+        user_email: userDeleteDTO.user_email,
+        user_password: userDeleteDTO.user_password,
+      },
+    });
+
+    //계정 삭제
+    if (userEntity) {
+      userEntity = await User.destroy({
+        where: {
+          user_email: userDeleteDTO.user_email,
+          user_password: userDeleteDTO.user_password,
+        },
+      });
+      res.send("success delete");
+    } else {
+      res.send("패스워드가 일치하지 않습니다.");
+    }
+  } catch (error) {
+    console.error("에러발생 : ", error);
+    next(error);
+  }
+});
 
 module.exports = router;

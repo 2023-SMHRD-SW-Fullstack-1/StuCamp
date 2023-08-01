@@ -22,7 +22,7 @@ module.exports = class Like extends Sequelize.Model {
         sequelize,
         timestamps: true,
         modelName: "Like",
-        tableName: "like",
+        tableName: "likes",
         charset: "utf8",
         collate: "utf8_general_ci",
       }
