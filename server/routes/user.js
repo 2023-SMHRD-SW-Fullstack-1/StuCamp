@@ -85,8 +85,8 @@ router.put("/update", async (req, res, next) => {
 
 //회원가입
 router.post("/join", async (req, res, next) => {
-  let result = req.body.joinUser;
-
+  let result = JSON.parse(req.body.joinUser);
+  console.log(result);
   const joinDto = new JoinDTO(result);
   // console.log(joinDto.user_email);
   // console.log(joinDto.user_nickname);
@@ -101,7 +101,7 @@ router.post("/join", async (req, res, next) => {
 
   if (userEntity) {
     console.log("이미 존재하는 사용자");
-    res.send("existed email");
+    res.json("existed email");
   } else {
     userEntity = await User.build({
       user_email: joinDto.user_email,
@@ -113,11 +113,11 @@ router.post("/join", async (req, res, next) => {
       .save()
       .then((user) => {
         console.log("User saved:", user.toJSON);
-        res.send("join success");
+        res.json("join success");
       })
       .catch((error) => {
         console.log("Error saving user:", error);
-        res.send("join fail");
+        res.json("join fail");
       });
   }
 });

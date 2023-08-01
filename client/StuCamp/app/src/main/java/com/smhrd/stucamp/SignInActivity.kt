@@ -60,26 +60,31 @@ class SignInActivity : AppCompatActivity() {
                     {
                         response ->
                         Log.d("response", response)
+//                        Toast.makeText(this, "성공", Toast.LENGTH_LONG).show()
 
-                        if(response == "join fail : existed email") {
+                        if(response == "existed email") {
                             Toast.makeText(this, "이미 존재하는 이메일입니다", Toast.LENGTH_LONG).show()
                         } else if(response == "join fail") {
                             Toast.makeText(this, "가입실패! 다시 시도해주세요.", Toast.LENGTH_LONG).show()
                         }
 
                         else {
-                            val result = JSONArray(response)
-                            Log.d("result", result.toString())
-                            val joinUser  = result.getJSONObject(0)
-                            Log.d("joinUser", joinUser.toString())
+                            Log.d("response", response)
+//                            Toast.makeText(this, "성공", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show()
+
+                            val result = response
+//                            Log.d("result", result.toString())
+//                            val joinUser  = result.getJSONObject(0)
+//                            Log.d("joinUser", joinUser.toString())
                             // Editor 생성
                             val editor = spf.edit()
                             // editor를 통해 로그인한 회원의 정보 저장
-                            editor.putString("joinUser", joinUser.toString())
+                            editor.putString("joinUser", response)
                             editor.commit()
 
                             // MainActivity로 전환 (Intent)joinUser
-                            val it = Intent(this, LoginActivity::class.java)
+                            val it = Intent(this, MainActivity::class.java)
                             startActivity(it)
                         }
 
