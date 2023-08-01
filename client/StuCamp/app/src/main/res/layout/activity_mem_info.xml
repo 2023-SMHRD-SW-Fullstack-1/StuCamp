@@ -11,8 +11,73 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MemberInfo Page"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etInfoEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="이메일"
+        app:layout_constraintTop_toBottomOf="@+id/tvMemInfo"
+        tools:layout_editor_absoluteX="90dp" />
+
+    <EditText
+        android:id="@+id/etInfoPw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="비밀번호"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@+id/etInfoEmail"
+        tools:layout_editor_absoluteX="89dp" />
+
+    <EditText
+        android:id="@+id/etInfoNick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="닉네임"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@+id/etInfoPwCheck"
+        tools:layout_editor_absoluteX="89dp" />
+
+    <EditText
+        android:id="@+id/etInfoPwCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="비밀번호 확인"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@+id/etInfoPw"
+        tools:layout_editor_absoluteX="90dp" />
+
+    <Button
+        android:id="@+id/btnInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원정보수정"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        app:layout_constraintStart_toStartOf="@+id/guideline9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

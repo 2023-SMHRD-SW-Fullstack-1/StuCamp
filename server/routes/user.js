@@ -25,7 +25,7 @@ router.post("/login", async (req, res, next) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send("user login ... 내부 서버 오류");
+      res.status(500).send("user login ... 내부 서버 오류");
   }
 });
 
@@ -81,7 +81,7 @@ router.put("/update", async (req, res, next) => {
 
 //회원가입
 router.post("/join", async (req, res, next) => {
-  let result = req.body.joinUser;
+  let result = JSON.parse(req.body.joinUser);
 
   const joinDto = new JoinDTO(result);
   // console.log(joinDto.user_email);
