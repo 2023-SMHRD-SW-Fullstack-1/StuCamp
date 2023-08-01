@@ -3,9 +3,13 @@ const { sequelize } = require("./models");
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
 const recordRouter = require("./routes/record");
+const feedRouter = require("./routes/feed")
+const likeRouter = require('./routes/like')
+const bodyParser = require('body-parser')
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json()) //json형식의 body 파싱
 app.use(express.json());
 
 // sequelize 설정
@@ -20,6 +24,8 @@ console.log("abc");
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/record", recordRouter);
+app.use("/feed", feedRouter);
+app.use("/like", likeRouter)
 
 app.set("port", process.env.PORT || 8888);
 app.listen(app.get("port"), () => {

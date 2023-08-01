@@ -84,6 +84,7 @@ router.put("/update", async (req, res, next) => {
 
 //회원가입
 router.post("/join", async (req, res, next) => {
+  console.log(req.body);
   let result = req.body.joinUser;
 
   const joinDto = new JoinDTO(result);
@@ -100,7 +101,7 @@ router.post("/join", async (req, res, next) => {
 
   if (userEntity) {
     console.log("이미 존재하는 사용자");
-    res.send("join fail : existed email");
+    res.send("existed email");
   } else {
     userEntity = await User.build({
       user_email: joinDto.user_email,
