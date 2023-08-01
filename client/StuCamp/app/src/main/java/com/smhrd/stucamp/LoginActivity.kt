@@ -74,14 +74,14 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "이메일 또는 비밀번호를 다시 입력해주세요.", Toast.LENGTH_LONG).show()
                     }
                     else if(response=="Success") {
-                        val result = JSONArray(response)
-                        Log.d("result", result.toString())
-                        val user  = result.getJSONObject(0)
-                        Log.d("user", user.toString())
+//                        val result = JSONArray(response)
+//                        Log.d("result", result.toString())
+//                        val user  = result.getJSONObject(0)
+//                        Log.d("user", user.toString())
                         // Editor 생성
                         val editor = spf.edit()
                         // editor를 통해 로그인한 회원의 정보 저장
-                        editor.putString("user", user.toString())
+                        editor.putString("user", inputEmail)
                         editor.commit()
 
                         // MainActivity로 전환 (Intent)joinUser
@@ -101,9 +101,9 @@ class LoginActivity : AppCompatActivity() {
             ){
                 override fun getParams(): MutableMap<String, String>? {
                     val params : MutableMap<String, String> = HashMap()
-                    val user : UserVO = UserVO(inputEmail, inputPassword, null)
-                    params.put("user", Gson().toJson(user))
-                    Log.d("params", user.toString())
+//                    val user : UserVO = UserVO(inputEmail, inputPassword, null)
+//                    params.put("user", Gson().toJson(user))
+//                    Log.d("params", user.toString())
 
                     return params
                 }
