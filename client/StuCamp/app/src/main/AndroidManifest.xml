@@ -21,23 +21,33 @@
             android:name=".FeedWriteActivity"
             android:exported="false" />
         <activity
-            android:name=".MemInfoActivity"
-            android:exported="false" />
+            android:name=".IntroActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".MemDeleteActivity"
+             />
+        <activity
+            android:name="LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login2" />
+        <activity
+            android:name=".MemInfoActivity"
             android:exported="false" />
         <activity
             android:name=".SignInActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bnv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />A
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
