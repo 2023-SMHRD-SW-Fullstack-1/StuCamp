@@ -23,6 +23,6 @@ class IntroActivity : AppCompatActivity() {
             // Intro 화면이 보이고 3초 뒤에 MainActivity 전환 -> Intent
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-        } , 3000)
+        } , 500) //3000에서 잠시 수정
     }
 }

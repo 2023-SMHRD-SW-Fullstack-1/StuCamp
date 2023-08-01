@@ -43,4 +43,37 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
 
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#7A7A7A"
+        android:paddingLeft="10dp"
+        android:paddingTop="3dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="3dp"
+        android:text="로그아웃"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/fl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52" />
+
+    <Button
+        android:id="@+id/btnWrite"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#7A7A7A"
+        android:paddingLeft="10dp"
+        android:paddingTop="3dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="3dp"
+        android:text="글작성"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/btnLogout"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

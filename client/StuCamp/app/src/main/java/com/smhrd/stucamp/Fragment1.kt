@@ -15,20 +15,14 @@ import com.smhrd.stucamp.VO.FeedVO
 class Fragment1 : Fragment() {
 
     lateinit var rc : RecyclerView
-    lateinit var btnWriteAct : Button
- override fun onCreateView(
+
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         var view = inflater.inflate(R.layout.fragment_1, container, false)
 
         rc = view.findViewById(R.id.rcFeed)
-        btnWriteAct = view.findViewById(R.id.btnWriteAct)
-
-//        btnWriteAct.setOnClickListener(){
-//         val intent = Intent(requireActivity(), FeedWriteActivity::class.java)
-//         startActivity(intent)
-//        }
 
         val feedList = ArrayList<FeedVO>()
 
