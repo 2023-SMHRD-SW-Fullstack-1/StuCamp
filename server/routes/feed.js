@@ -5,7 +5,8 @@ const FeedAddReqDto = require("../dto/feedDTO/feedAddReqDTO");
 const FeedUpdateReqDto = require("../dto/feedDTO/FeedUpdateReqDTO")
 const Feed = require("../models/feed");
 const FeedDeleteReqDto = require("../dto/feedDTO/FeedDeleteDTO");
-const FeedResDTO = require('../dto/feedDTO/FeedResDTO')
+const FeedResDTO = require('../dto/feedDTO/FeedResDTO');
+const { Comment } = require("../models");
 const router = express.Router();
 
 //피드 등록 
@@ -136,7 +137,16 @@ router.get("/find/:id", async (req, res, next)=>{
             }
         })
 
-        const feedResDTO = new FeedResDTO(feedEntity)
+        //해당 게시글에 대한 댓글 조회
+        const commentEntity = await Comment.findAll({
+            where : {
+                feed_id : findReqFeedId
+            }
+        })
+        
+        console.log(commentEntity);
+
+        const feedResDTO = new FeedResDTO(feedEntity, commentEntity)
         const imgPath = feedResDTO.feed_imgpath;
         console.log(imgPath);
         console.log('public/img/feed/' + imgPath + '.jpg')
