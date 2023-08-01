@@ -1,9 +1,7 @@
 package com.smhrd.stucamp
 
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -18,7 +16,7 @@ class FeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
     //lateinit var edtComment : EditText
 
     init {
-        tvId = itemView.findViewById(R.id.tvId)
+        tvId = itemView.findViewById(R.id.tvId2)
         //ivFeed = itemView.findViewById(R.id.ivFeed)
         ibHeart = itemView.findViewById(R.id.ibHeart)
         ivFeed = itemView.findViewById(R.id.ivFeed)

@@ -13,7 +13,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="7dp"
         android:backgroundTint="#FFFFFF"
-        android:src="@drawable/heart_off"
+        android:src="@drawable/heart_on"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
@@ -21,7 +21,7 @@
         android:id="@+id/tvId2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="ID"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
@@ -33,13 +33,14 @@
 
     <ImageView
         android:id="@+id/ivFeed2"
-        android:layout_width="413dp"
-        android:layout_height="413dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline6"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -47,14 +48,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08" />
+        app:layout_constraintGuide_percent="0.11" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_begin="466dp" />
 
     <TextView
         android:id="@+id/tvContent2"
@@ -91,10 +92,9 @@
 
     <EditText
         android:id="@+id/edtComment2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="323dp"
+        android:layout_height="48dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
         android:ems="10"
         android:hint="댓글"
@@ -104,5 +104,32 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvContent2" />
+
+    <Button
+        android:id="@+id/btnOk2"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="5dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:text="OK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edtComment2"
+        app:layout_constraintTop_toBottomOf="@+id/tvContent2" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:text="삭제"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintStart_toEndOf="@+id/tvId2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.842" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
