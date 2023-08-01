@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var tvId : TextView
     lateinit var btnLogout : Button
     lateinit var btnWrite : Button
+    lateinit var btnMyHome : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         //tvId = findViewById(R.id.tvId)
         btnLogout = findViewById(R.id.btnLogout)
         btnWrite = findViewById(R.id.btnWrite)
+        btnMyHome = findViewById(R.id.btnMyHome)
 
 
         supportFragmentManager.beginTransaction().replace(
@@ -75,11 +77,19 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        // 마이홈
+        btnMyHome.setOnClickListener(){
+            var intent = Intent(this, MyFeedActivity::class.java)
+            startActivity(intent)
+        }
+
         // 글쓰기 버튼 클릭
         btnWrite.setOnClickListener(){
             var intent = Intent(this, FeedWriteActivity::class.java)
             startActivity(intent)
         }
+
+
 
 
         // 로그아웃 버튼 클릭

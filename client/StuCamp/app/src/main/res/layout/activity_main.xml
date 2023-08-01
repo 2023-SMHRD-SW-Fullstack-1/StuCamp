@@ -64,7 +64,7 @@
         android:id="@+id/btnWrite"
         android:layout_width="80dp"
         android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="5dp"
         android:backgroundTint="#7A7A7A"
         android:paddingLeft="10dp"
         android:paddingTop="3dp"
@@ -74,6 +74,22 @@
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/btnLogout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnMyHome"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="#7A7A7A"
+        android:paddingLeft="10dp"
+        android:paddingTop="3dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="3dp"
+        android:text="마이홈"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/btnWrite"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
