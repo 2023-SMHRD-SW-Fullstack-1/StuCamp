@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import org.json.JSONArray
+import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -47,16 +48,7 @@ class LoginActivity : AppCompatActivity() {
             val inputEmail = etLoginEmail.text.toString()
             val inputPassword = etLoginPw.text.toString()
 
-            val url = URL("http://172.30.1.25:8888/user/login")
-
-            val connection = url.openConnection() as HttpURLConnection
-            connection.run {
-                requestMethod = "POST"
-                setRequestProperty("Content-Type", "application/json; charset=utf-8")
-            }
-
-// 결과 얻기
-            val status = connection.responseCode // HTTP 상태 코드 가져오기
+            val url = URL("http://172.30.1.50:8888/user/login")
 
 
             Log.d("inputEmail" , inputEmail)
@@ -65,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
             val request = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.25:8888/user/login",
+                "http://172.30.1.50:8888/user/login",
                 {
                         response ->
                     Log.d("response", response)
@@ -74,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "이메일 또는 비밀번호를 다시 입력해주세요.", Toast.LENGTH_LONG).show()
                     }
                     else if(response=="Success") {
-//                        val result = JSONArray(response)
+                        val result = JSONObject(response)
 //                        Log.d("result", result.toString())
 //                        val user  = result.getJSONObject(0)
 //                        Log.d("user", user.toString())
