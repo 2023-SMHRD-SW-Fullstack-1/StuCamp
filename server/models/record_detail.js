@@ -18,10 +18,13 @@ module.exports = class RecordDetail extends Sequelize.Model {
           type: Sequelize.DataTypes.DATE,
         },
         record_elapsed_time: {
-          type: Sequelize.DataTypes.DATE,
+          type: Sequelize.BIGINT,
         },
         record_subject: {
           type: Sequelize.STRING,
+        },
+        record_id: {
+          type: Sequelize.BIGINT,
         },
       },
       {

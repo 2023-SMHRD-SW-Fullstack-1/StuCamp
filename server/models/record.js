@@ -11,14 +11,11 @@ module.exports = class Record extends Sequelize.Model {
           unique: true,
           autoIncrement: true,
         },
-        record_detail_id: {
-          type: Sequelize.BIGINT,
-        },
         user_id: {
           type: Sequelize.BIGINT,
         },
         record_date: {
-          type: Sequelize.DataTypes.DATE,
+          type: Sequelize.STRING,
         },
       },
       {
