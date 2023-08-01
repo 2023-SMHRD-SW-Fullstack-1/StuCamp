@@ -118,22 +118,35 @@ router.post("/join", async (req, res, next) => {
 });
 
 //회원탈퇴
-// router.delete('/delete', async(req, res)=>{
-//   const userDeleteDTO = new UserDeleteDTO(req.body.deleteUser);
-//   try {
-//    //계정 삭제
-//    const userEntity = await User.destroy({
-//       where: {
-//         user_email: userDeleteDTO.user_email,
-//         user_password: userDeleteDTO.user_password,
-//       }
-//     })
-//     res.send("success delete")
-//     }
-//   catch (error) {
-//     console.error(error);
-//     res.status(500).send("내부 서버 오류");
-//   }
-//   })
+router.delete('/delete', async(req, res, next)=>{
+  const userDeleteDTO = new UserDeleteDTO(req.body.deleteUser);
+  try {
+
+    //해당 아이디 패스워드 확인
+    let userEntity = await User.findOne({
+      where: {
+        user_email: userDeleteDTO.user_email,
+        user_password: userDeleteDTO.user_password,
+      },
+    });
+
+    //계정 삭제
+    if(userEntity){
+      userEntity = await User.destroy({
+      where: {
+        user_email: userDeleteDTO.user_email,
+        user_password: userDeleteDTO.user_password,
+      }
+    })
+      res.send("success delete")
+    }else{
+      res.send("패스워드가 일치하지 않습니다.")
+    }
+  }
+  catch (error) {
+    console.error('에러발생 : ', error);
+    next(error)
+    }
+  })
 
 module.exports = router;
