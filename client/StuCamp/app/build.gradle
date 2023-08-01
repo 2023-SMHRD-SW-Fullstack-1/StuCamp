@@ -1,11 +1,17 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+
+
 }
 
 android {
     namespace 'com.smhrd.stucamp'
     compileSdk 33
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
 
     defaultConfig {
         applicationId "com.smhrd.stucamp"
