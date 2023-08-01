@@ -32,6 +32,7 @@ router.post("/login", async (req, res, next) => {
 // 단일 회원 정보 확인
 router.get("/find/:user_email", async (req, res, next) => {
   const findReqDTO = new FindReqDTO(req.params.user_email);
+  console.log(findReqDTO.user_email);
   try {
     const userEntity = await User.findOne({
       where: {
@@ -119,10 +120,9 @@ router.post("/join", async (req, res, next) => {
 });
 
 //회원탈퇴
-router.delete('/delete', async(req, res, next)=>{
+router.delete("/delete", async (req, res, next) => {
   const userDeleteDTO = new UserDeleteDTO(req.body.deleteUser);
   try {
-
     //해당 아이디 패스워드 확인
     let userEntity = await User.findOne({
       where: {
@@ -132,22 +132,21 @@ router.delete('/delete', async(req, res, next)=>{
     });
 
     //계정 삭제
-    if(userEntity){
+    if (userEntity) {
       userEntity = await User.destroy({
-      where: {
-        user_email: userDeleteDTO.user_email,
-        user_password: userDeleteDTO.user_password,
-      }
-    })
-      res.send("success delete")
-    }else{
-      res.send("패스워드가 일치하지 않습니다.")
+        where: {
+          user_email: userDeleteDTO.user_email,
+          user_password: userDeleteDTO.user_password,
+        },
+      });
+      res.send("success delete");
+    } else {
+      res.send("패스워드가 일치하지 않습니다.");
     }
+  } catch (error) {
+    console.error("에러발생 : ", error);
+    next(error);
   }
-  catch (error) {
-    console.error('에러발생 : ', error);
-    next(error)
-    }
-  })
+});
 
 module.exports = router;

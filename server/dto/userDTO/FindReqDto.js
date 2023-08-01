@@ -1,6 +1,6 @@
 class FindReqDto {
-  constructor(data) {
-    this.user_email = data.user_email;
+  constructor(user_email) {
+    this.user_email = user_email;
   }
 }
 

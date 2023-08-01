@@ -37,8 +37,8 @@ module.exports = class Record extends Sequelize.Model {
       targetKey: "user_id",
     });
     db.Record.hasMany(db.RecordDetail, {
-      foreignKey: "record_detail_id",
-      targetKey: "record_detail_id",
+      foreignKey: "record_id",
+      targetKey: "record_id",
     });
     // db.User.hasMany(db.Board, { foreignKey: "id", sourceKey: "id" }); // 1:N
     // db.User.hasOne ... 1:1
