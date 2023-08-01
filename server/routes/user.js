@@ -20,10 +20,10 @@ router.post("/login", async (req, res, next) => {
 
     if (userEntity) {
       console.log(userEntity);
-      res.send("Success");
+      res.json(userEntity);
     } else {
       console.log("user login ... 사용자가 존재하지 않습니다.");
-      res.send("Fail");
+      res.json(-1);
     }
   } catch (error) {
     console.error(error);
@@ -44,6 +44,7 @@ router.get("/find/:user_email", async (req, res, next) => {
 
     if (userEntity) {
       console.log(userEntity);
+      res.json(userEntity);
     } else {
       console.log("user find ... 사용자가 존재하지 않습니다.");
     }
@@ -72,7 +73,7 @@ router.put("/update", async (req, res, next) => {
 
     if (userEntity[0]) {
       console.log(userEntity[0]);
-      res.status(200).send("Success");
+      res.status(200).json(userEntity[0]);
     } else {
       console.log("user update ... 사용자가 존재하지 않습니다.");
     }
