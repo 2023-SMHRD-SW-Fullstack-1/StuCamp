@@ -71,9 +71,10 @@ class FeedWriteActivity : AppCompatActivity() {
             takePicture()
         }
 
-        // SharedPreference 생성
-//        val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
-//        val user = Gson().fromJson(spf.getString("user", ""), UserVO::class.java)
+        //SharedPreference 생성
+        val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
+        val user = Gson().fromJson(spf.getString("user", ""), UserVO::class.java)
+        val user_email = user.user_email
 
         btnWrite.setOnClickListener(){
             val feed_content = etContent.text.toString()
@@ -86,12 +87,12 @@ class FeedWriteActivity : AppCompatActivity() {
             val request = object : StringRequest(
                 //일반적으로 크기가 큰 경우엔 POST 방식 사용
                 Request.Method.POST,
-                "http://172.30.1.52:8888/feed/add",
+                "http://172.30.1.42:8888/feed/add",
                 {
                         response ->
                     Log.d("response", response.toString())
 
-                    if(response == "Success"){
+                    if(response == "1"){
                         var intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }
@@ -104,7 +105,7 @@ class FeedWriteActivity : AppCompatActivity() {
             ){
                 override fun getParams() : MutableMap<String, String>?{
                     val params : MutableMap<String, String> = HashMap<String, String>()
-                    val feed = FeedWriteVO(feed_content, encodeImgString, "test") //encodeImgString
+                    val feed = FeedWriteVO(feed_content, encodeImgString, user_email) //encodeImgString
                     params.put("feed", Gson().toJson(feed))
                     return params
                 }
@@ -136,10 +137,10 @@ class FeedWriteActivity : AppCompatActivity() {
                     ivUpload.setImageBitmap(bitmap)
 
                     val options = BitmapFactory.Options()
-                    options.inSampleSize = 4 // 4개의 픽셀 -> 1개의 픽셀 => 1/4 크기로 변환
+                    options.inSampleSize = 2 // 4개의 픽셀 -> 1개의 픽셀 => 1/4 크기로 변환
 
                     // filter => true(선명하게) / false(흐릿하게)
-                    val resized = Bitmap.createScaledBitmap(bitmap, 100, 100, true)
+                    val resized = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
 
                     encodeBitmapImg(resized)
                 }

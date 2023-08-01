@@ -36,15 +36,6 @@ class Fragment1 : Fragment() {
         rc = view.findViewById(R.id.rcFeed)
         reqQueue = Volley.newRequestQueue(requireActivity())
         feedList = ArrayList<FeedVO>()
-//        feedList.add(FeedVO("hihi", 3, "하이하이", "1"))
-//        feedList.add(FeedVO("ID1", 2, "하이하이1", "2"))
-//        feedList.add(FeedVO("ID2", 5, "하이하이2", "3"))
-//        feedList.add(FeedVO("ID3", 3, "하이하이3", "4"))
-//        Log.d("feedList", feedList.toString())
-//        Toast.makeText(requireContext(), feedList.toString(), Toast.LENGTH_SHORT).show()
-
-
-        var requestSize: Int = 1
 
         val request = object : StringRequest(
             Request.Method.GET,
@@ -56,12 +47,12 @@ class Fragment1 : Fragment() {
                 for (i in 0 until result.length()) {
                     val feed = result.getJSONObject(i)
                     val feed_content = feed.getString("feed_content").toString()
-                    val feed_imgpath = feed.getString("feed_imgpath").toString()
+                    val feed_img = feed.getString("feed_imgpath").toString()
                     val user_nickname = feed.getJSONObject("user").getString("user_nickname")
-                    val feed_like_cnt = feed.getInt("feed_like_cnt").toInt()
+                    val feed_like_cnt = feed.getInt("feed_like_cnt")
                     val comment = feed.getJSONArray("comment")
 
-                    feedList.add(FeedVO(user_nickname, feed_like_cnt, feed_content, feed_imgpath))
+                    feedList.add(FeedVO(user_nickname, feed_like_cnt, feed_content, feed_img))
                     Log.d("feed", feed.toString())
 
                 }
@@ -75,14 +66,7 @@ class Fragment1 : Fragment() {
             }
         ) {}
 
-
-
         reqQueue.add(request)
-
-//        val adapter = FeedAdapter(feedList, requireActivity())
-//        rc.layoutManager = LinearLayoutManager(requireActivity())
-//        rc.adapter = adapter
-
 
         return view
     }

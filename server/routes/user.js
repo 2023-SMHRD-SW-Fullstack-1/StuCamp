@@ -86,7 +86,7 @@ router.put("/update", async (req, res, next) => {
 
 //회원가입
 router.post("/join", async (req, res, next) => {
-  let result = req.body.joinUser;
+  let result = JSON.parse(req.body.joinUser);
   console.log(result);
   const joinDto = new JoinDTO(result);
   // console.log(joinDto.user_email);

@@ -13,10 +13,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.RequestQueue
 import com.smhrd.stucamp.VO.FeedVO
 
 class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
     : RecyclerView.Adapter<FeedViewHolder>(){
+
+    lateinit var reqQueue : RequestQueue
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         return FeedViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.feed_item, parent, false)
@@ -39,8 +43,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
 
         var feed : FeedVO = datas.get(position)
 
-        tvId.text = feed.feedId
-        //ivFeed = feed.feedImgPath
+        tvId.text = feed.user_nickname
         val heartOn = ContextCompat.getDrawable(context, R.drawable.heart_on)
         val heartOff = ContextCompat.getDrawable(context, R.drawable.heart_off)
         var isLiked : Boolean = false
@@ -48,6 +51,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
         ibHeart.setOnClickListener(){
             if(!isLiked){
                 ibHeart.setImageDrawable(heartOn)
+
                 isLiked = true
             }else {
                 ibHeart.setImageDrawable(heartOff)
@@ -56,14 +60,15 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
 
         }
 
-        tvLikeCnt.text = feed.feedLikeCnt.toString()
-        tvContent.text = feed.feedContent
+        tvLikeCnt.text = feed.feed_like_cnt.toString()
+        tvContent.text = feed.feed_content
         Log.d("1111sfeed", feed.toString())
 
         tvId.text = feed.user_nickname.toString()
         //이미지 변환
-//        val imageBytes = Base64.decode(feed.feed_imgpath.toString(), 0)
-//        val feed_img = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        val imageBytes = Base64.decode(feed.feed_img.toString(), 0)
+        val feed_img = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        ivFeed.setImageBitmap(feed_img)
 
 //        ivFeed.setImageBitmap(feed_img)
         tvLikeCnt.text = feed.feed_like_cnt.toString()

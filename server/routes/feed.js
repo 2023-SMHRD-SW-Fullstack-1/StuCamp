@@ -66,18 +66,18 @@ router.post("/add", async (req, res) => {
         .save()
         .then((feed) => {
           console.log("feed saved:", feed.toString);
-          res.send("feed add success");
+          res.json(1);
         })
         .catch((error) => {
           console.log("error saving feed:", error);
-          res.send("feed add fail");
+          res.json("feed add fail");
         });
     } else {
       console.log("존재하지 않는 이메일");
     }
   } catch (error) {
     console.log(error);
-    res.send("server error");
+    res.json("server error");
   }
 });
 
@@ -288,6 +288,7 @@ router.get("/findall", async (req, res, next) => {
         feedResDTO.feed_imgpath = encode;
 
         feedList.push(feedResDTO);
+        console.log(feedResDTO);
       } catch (error) {
         console.log("error", error);
       }
