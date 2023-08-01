@@ -2,7 +2,6 @@ package com.smhrd.stucamp
 // 이지희
 
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log

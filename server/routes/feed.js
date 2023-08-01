@@ -12,6 +12,7 @@ const router = express.Router();
 //피드 등록 
 router.post("/add", async(req, res)=>{
 
+console.log("add 통신 확인");
 // //사진 변환 테스트
 // // 강아지 사진 파일 경로
 // const filePath = 'public/img/test/img2.jpg';
@@ -32,7 +33,8 @@ router.post("/add", async(req, res)=>{
 //     console.log("4444")
 // });
 
-    const feedAddReqDTO = new FeedAddReqDto(req.body.feed);
+    const feedAddReqDTO = new FeedAddReqDto(JSON.parse(req.body.feed));
+    console.log(feedAddReqDTO);
     try{
 
         //이미지 처리 
@@ -46,7 +48,7 @@ router.post("/add", async(req, res)=>{
         const feedEntity = await Feed.build({
             feed_content : feedAddReqDTO.feed_content,
             feed_imgpath : feed_imgpath,
-            user_id : feedAddReqDTO.user_id,
+            user_email : feedAddReqDTO.user_email,
             feed_like_cnt : 0 //게시물 등록시 좋아요 0개
         })
 
