@@ -21,7 +21,7 @@ class IntroActivity : AppCompatActivity() {
         val handler = Handler()
         handler.postDelayed({ //말 그대로 지연시키기({딜레이 후 뭘 할건지}, 몇 초동안 딜레이 시킬건지
             // Intro 화면이 보이고 3초 뒤에 MainActivity 전환 -> Intent
-            var intent = Intent(this, MainActivity::class.java)
+            var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         } , 3000)
     }
