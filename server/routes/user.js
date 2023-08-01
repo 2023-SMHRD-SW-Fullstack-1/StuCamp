@@ -9,7 +9,8 @@ const JoinDTO = require("../dto/userDTO/JoinDTO");
 
 // 로그인
 router.post("/login", async (req, res, next) => {
-  const loginReqDTO = new LoginReqDTO(req.body.loginUser);
+  const loginReqDTO = new LoginReqDTO(JSON.parse(req.body.loginUser));
+  console.log(req.body)
   try {
     const userEntity = await User.findOne({
       where: {
