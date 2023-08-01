@@ -49,16 +49,7 @@ class LoginActivity : AppCompatActivity() {
             val inputEmail = etLoginEmail.text.toString()
             val inputPassword = etLoginPw.text.toString()
 
-            val url = URL("http://172.30.1.25:8888/user/login")
-
-//            val connection = url.openConnection() as HttpURLConnection
-//            connection.run {
-//                requestMethod = "POST"
-//                setRequestProperty("Content-Type", "application/json; charset=utf-8")
-//            }
-
-// 결과 얻기
-//            val status = connection.responseCode // HTTP 상태 코드 가져오기
+            val url = URL("http://172.30.1.50:8888/user/login")
 
 
             Log.d("inputEmail" , inputEmail)
@@ -67,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
 
             val request = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.25:8888/user/login",
+                "http://172.30.1.50:8888/user/login",
                 {
                         response ->
                     Log.d("response", response)
