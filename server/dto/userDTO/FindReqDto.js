@@ -4,4 +4,4 @@ class FindReqDto {
   }
 }
 
-module.exports = UserLoginDTO;
+module.exports = FindReqDto;

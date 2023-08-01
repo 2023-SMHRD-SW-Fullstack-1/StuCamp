@@ -1,4 +1,4 @@
-class UserLoginDTO {
+class UpdateReqDTO {
   constructor(data) {
     this.user_email = data.user_email;
     this.user_password = data.user_password;
@@ -6,4 +6,4 @@ class UserLoginDTO {
   }
 }
 
-module.exports = UserLoginDTO;
+module.exports = UpdateReqDTO;
