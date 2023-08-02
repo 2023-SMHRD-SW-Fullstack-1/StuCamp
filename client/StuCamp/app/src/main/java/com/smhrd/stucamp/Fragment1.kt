@@ -50,11 +50,9 @@ class Fragment1 : Fragment() {
                     val feed_img = feed.getString("feed_imgpath").toString()
                     val user_nickname = feed.getJSONObject("user").getString("user_nickname")
                     val feed_like_cnt = feed.getInt("feed_like_cnt")
+                    val feed_id = feed.getInt("feed_id")
                     val comment = feed.getJSONArray("comment")
-
-                    feedList.add(FeedVO(user_nickname, feed_like_cnt, feed_content, feed_img))
-                    Log.d("feed", feed.toString())
-
+                    feedList.add(FeedVO(user_nickname, feed_like_cnt, feed_content, feed_img, feed_id))
                 }
                 Log.d("feedList", feedList.toString())
                 val adapter = FeedAdapter(feedList, requireActivity())
