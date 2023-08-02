@@ -93,7 +93,7 @@ router.post("/add", async (req, res, next) => {
   // 실제
   const requestData = req.body;
 
-  const recordSaveReqDTO = new RecordSaveReqDTO(requestData.record);
+  const recordSaveReqDTO = new RecordSaveReqDTO(requestData.record)
   try {
     // 이메일을 기준으로 사용자 데이터 조회
     const userEntity = await User.findOne({
