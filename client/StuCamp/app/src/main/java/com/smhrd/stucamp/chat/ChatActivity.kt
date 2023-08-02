@@ -10,8 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import com.smhrd.stucamp.R
 import com.smhrd.stucamp.VO.KakaoVO
+import com.smhrd.stucamp.VO.UserVO
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class ChatActivity : AppCompatActivity() {
 
@@ -28,8 +34,9 @@ class ChatActivity : AppCompatActivity() {
         edt_msg = findViewById(R.id.edt_msg)
 
         val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
-        val user = spf.getString("user", " ")
-        Log.d("userState", user.toString())
+        val user = Gson().fromJson(spf.getString("user", " "), UserVO::class.java)
+
+
 
         val it = getIntent()
         Log.d("intentTest", it.getIntExtra("room_id", 0).toString())
@@ -38,23 +45,22 @@ class ChatActivity : AppCompatActivity() {
         val myRef = database.getReference("message")
 
         val roomRef = database.getReference("roomList")
-
+        val idRef = roomRef.child(it.getIntExtra("room_id", 0).toString())
+        val chatsRef = idRef.child("chat")
+//        chatsRef.push().setValue(KakaoVO(R.drawable.img1, "김혁3", "안녕하세요^^", "오후 4:17"))
 
 
         var data = ArrayList<KakaoVO>()
 
-        // add 함수 사용하여 메시지 5개 저장~
-        myRef.push().setValue(KakaoVO(R.drawable.img1, "김혁", "안녕하세요^^", "오후 4:17"))
+        fun getCurrentTimeInHHMMFormat(): String {
+            val currentTime = System.currentTimeMillis()
+            val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val timeZone = TimeZone.getTimeZone("GMT+9")
+            dateFormat.timeZone = timeZone
 
+            return dateFormat.format(Date(currentTime))
+        }
 
-
-        // 내가 보낸 채팅 오른쪽에 띄우는법 !
-        // 1. template.xml 파일에 오른쪽 톡 추가! (중요! 같은 파일에 추가 할 것!)
-        // 2. 현재 로그인한 ID를 adapter 생성자로 전송 => 메시지 주인
-        // 3. adapter 클래스의 onBindView메소드에서 data.get(position).name(메시지주인)과 생성자로
-        // 전달된 id를 비교
-        // 4. 일치한다면 왼쪽 뷰들은 전부 gone, 오른쪽 뷰들은 visible
-        //   template에 뷰가 추가됐으니 ViewHolder도 수정 필요!!!
         var adapter: KakaoAdapter = KakaoAdapter(applicationContext, R.layout.template, data)
 
         // layoutManager 세팅
@@ -62,17 +68,19 @@ class ChatActivity : AppCompatActivity() {
         rv.adapter = adapter
 
         btn_send.setOnClickListener {
-            myRef.push().setValue(KakaoVO(R.drawable.img1, "펑이", edt_msg.text.toString(), "오후 16:38"))
+            chatsRef.push().setValue(KakaoVO(R.drawable.img1, user.user_nickname, edt_msg.text.toString(), getCurrentTimeInHHMMFormat()))
             // adapter 새로고침
             adapter.notifyDataSetChanged()
             // 스크롤 옮기기
-            rv.smoothScrollToPosition(data.size - 1)
+            if(data.size >= 1){
+                rv.smoothScrollToPosition(data.size - 1)
+            }
             // EditText 비우기
             edt_msg.text.clear()
 
         }
 
-        myRef.addChildEventListener(ChildEvent(data, adapter))
+        idRef.child("chat").addChildEventListener(ChildEvent(data, adapter))
 
     }
 }
