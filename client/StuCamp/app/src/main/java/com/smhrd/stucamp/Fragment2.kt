@@ -200,6 +200,7 @@ class Fragment2 : Fragment() {
 // ------------------------------------------
 
 class CustomAdapter(context: Context) : ArrayAdapter<Pair<String, String>>(context, R.layout.list_item) {
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var listItem = convertView
         if (listItem == null)
