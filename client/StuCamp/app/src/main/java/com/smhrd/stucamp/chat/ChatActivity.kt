@@ -80,7 +80,7 @@ class ChatActivity : AppCompatActivity() {
 
         }
 
-        idRef.child("chat").addChildEventListener(ChildEvent(data, adapter))
+        idRef.child("chat").addChildEventListener(ChildEvent(data, adapter, rv, data.size))
 
     }
 }
