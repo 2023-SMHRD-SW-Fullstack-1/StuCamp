@@ -18,15 +18,14 @@ router.post("/add", async (req, res) => {
     console.log("add 통신 확인");
 
     const feedAddReqDTO = new FeedAddReqDto(JSON.parse(req.body.feed));
-    console.log("+++++++++++++++++++++++++++++++++++++++");
-    console.log(feedAddReqDTO);
+    // console.log(feedAddReqDTO);
     try {
         //이미지 처리
         let decode = await Buffer.from(feedAddReqDTO.feed_img, "base64");
         // let decode = await Buffer.from(base64String, 'base64')
         // console.log("34343")
         // console.log(decode)
-        console.log(feedAddReqDTO.feed_img);
+        // console.log(feedAddReqDTO.feed_img);
         const feed_imgpath = uuidv4();
         await fs.writeFileSync("public/img/feed/" + feed_imgpath + ".jpg", decode);
 
@@ -64,39 +63,49 @@ router.post("/add", async (req, res) => {
 });
 
 //피드 수정
-router.patch("/update", async (req, res) => {
-    const feedUpdateReqDTO = new FeedUpdateReqDto(JSON.parse(req.body.feed));
-    //이메일 조회
+router.post("/update", async (req, res) => {
+    console.log("feed update 통신 확인");
+    const feedUpdateReqDTO = new FeedUpdateReqDto(JSON.parse(req.body.updateFeed));
+    // console.log("feed update DTO : ", feedUpdateReqDTO);
+
+    //이미지 처리
+    let decode = await Buffer.from(feedUpdateReqDTO.feed_img, "base64");
+    const feed_imgpath = uuidv4();
+    await fs.writeFileSync("public/img/feed/" + feed_imgpath + ".jpg", decode);
+
     const userEntity = await User.findOne({
         where: {
-            user_email: likeAddDTO.user_email,
+            user_email: feedUpdateReqDTO.user_email,
         },
     });
-    try {
-        const feedEntity = await Feed.update(
-            {
-                feed_content: feedUpdateReqDTO.feed_content,
-                feed_imgpath: feedUpdateReqDTO.feed_imgpath,
-            },
-            {
-                where: {
-                    user_id: feedUpdateReqDTO.user_id,
-                    feed_id: feedUpdateReqDTO.feed_id,
-                },
-                individualHooks: true,
-            }
-        );
 
-        if (feedEntity[0]) {
-            console.log(feedEntity[0]);
-            res.json(1);
-        } else {
-            console.log("feed_id 혹은 user_id 불일치");
-            res.json(0);
+    if (userEntity) {
+        try {
+            const feedEntity = await Feed.update(
+                {
+                    feed_content: feedUpdateReqDTO.feed_content,
+                    feed_imgpath: feed_imgpath,
+                },
+                {
+                    where: {
+                        user_id: userEntity.user_id,
+                        feed_id: feedUpdateReqDTO.feed_id,
+                    },
+                    individualHooks: true,
+                }
+            );
+
+            if (feedEntity[0]) {
+                console.log(feedEntity[0]);
+                res.json(1);
+            } else {
+                console.log("feed_id 혹은 user_id 불일치");
+                res.json(0);
+            }
+        } catch (error) {
+            console.log("error updating feed:", error);
+            res.json(-1);
         }
-    } catch (error) {
-        console.log("error updating feed:", error);
-        res.json(-1);
     }
 });
 
@@ -148,7 +157,7 @@ router.get("/findall", async (req, res, next) => {
                         feed_id: item.feed_id,
                     },
                 });
-                console.log("--------------------", feedOneEntity);
+                // console.log("--------------------", feedOneEntity);
                 const commentEntity = await Comment.findAll({
                     where: {
                         feed_id: item.feed_id,
@@ -170,7 +179,7 @@ router.get("/findall", async (req, res, next) => {
                 feedResDTO.feed_imgpath = encode;
 
                 feedList.push(feedResDTO);
-                console.log(feedResDTO);
+                // console.log(feedResDTO);
             } catch (error) {
                 console.log("피드 조회 error", error);
             }
