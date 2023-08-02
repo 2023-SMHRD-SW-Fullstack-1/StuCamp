@@ -26,6 +26,7 @@ import com.google.gson.Gson
 import com.smhrd.stucamp.VO.FeedVO
 import com.smhrd.stucamp.VO.LikeVO
 import com.smhrd.stucamp.VO.UserVO
+import com.smhrd.stucamp.VO.WishVO
 import org.w3c.dom.Comment
 
 class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var activity: Fragment1)
@@ -52,6 +53,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
         var tvContent : TextView = holder.tvContent
         //var edtComment : EditText = holder.edtComment
         var btnCom : Button = holder.btnCom
+        var btnAddWish : Button = holder.btnAddWish
 
         reqQueue = Volley.newRequestQueue(context)
         var feed : FeedVO = datas.get(position)
@@ -93,6 +95,37 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
         tvLikeCnt.text = feed.feed_like_cnt.toString()
         tvContent.text = feed.feed_content
         //edtComment.text = feed.edtComment
+
+        //찜하기 버튼 클릭 => 찜목록에 추가
+        btnAddWish.setOnClickListener {
+
+            //서버와 통신
+            val request = object : StringRequest(
+                Request.Method.POST,
+                "http://172.30.1.42:8888/wish/add",
+                {
+                        response ->
+//                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
+                    if(response == "1"){
+                        //좋아요 클릭 여부 spf 생성
+                        Log.d("response", response)
+                        btnAddWish.text = "찜완료"
+                    }
+                },{
+                        error ->
+                    Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
+                }
+            ) {
+                override fun getParams(): MutableMap<String, String>? {
+                    val params: MutableMap<String, String> = HashMap()
+                    val wish: WishVO = WishVO(user_email, feedId)
+                    params.put("wish", Gson().toJson(wish))
+                    Log.d("params", wish.toString())
+                    return params
+                }
+            }
+            reqQueue.add(request)
+        }
 
         //댓글 버튼 클릭
         btnCom.setOnClickListener(){
