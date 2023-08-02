@@ -13,8 +13,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import com.smhrd.stucamp.VO.FeedVO
+import com.smhrd.stucamp.VO.LikeVO
 
 class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
     : RecyclerView.Adapter<FeedViewHolder>(){
@@ -34,13 +39,12 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
 
         var tvId : TextView = holder.tvId
-        //var ivFeed : ImageView = holder.ivFeed
         var ibHeart : ImageButton = holder.ibHeart
         var ivFeed : ImageView = holder.ivFeed
         var tvLikeCnt : TextView = holder.tvLikeCnt
         var tvContent : TextView = holder.tvContent
         //var edtComment : EditText = holder.edtComment
-
+        reqQueue = Volley.newRequestQueue(context)
         var feed : FeedVO = datas.get(position)
 
         tvId.text = feed.user_nickname
@@ -48,14 +52,68 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
         val heartOff = ContextCompat.getDrawable(context, R.drawable.heart_off)
         var isLiked : Boolean = false
 
-        ibHeart.setOnClickListener(){
-            if(!isLiked){
-                ibHeart.setImageDrawable(heartOn)
+        //feed id 가져오기
+        val feedId = feed.feed_id
 
+        //SharedPreference 생성
+        val spf = context.getSharedPreferences("mySPF", Context.MODE_PRIVATE)
+        val user = Gson().fromJson(spf.getString("user", ""), UserVO::class.java)
+        val user_email = user.user_email
+
+        ibHeart.setOnClickListener(){
+            if(!isLiked){ //좋아요 클릭했을 때
+                ibHeart.setImageDrawable(heartOn)
                 isLiked = true
-            }else {
+
+                //서버와 통신
+                val request = object : StringRequest(
+                    Request.Method.POST,
+                    "http://172.30.1.42:8888/like/add",
+                    {
+                        response ->
+//                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
+                    },{
+                        error ->
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                ){
+                    override fun getParams(): MutableMap<String, String>? {
+                        val params : MutableMap<String, String> = HashMap()
+                        val addLike : LikeVO = LikeVO(user_email, feedId)
+                        params.put("addLike", Gson().toJson(addLike))
+                        Log.d("params", addLike.toString())
+                        return params
+                    }
+                }
+                reqQueue.add(request)
+
+            }else { //좋아요 취소했을 때
                 ibHeart.setImageDrawable(heartOff)
                 isLiked = false
+
+                //서버와 통신
+                val request = object : StringRequest(
+                    Request.Method.POST,
+                    "http://172.30.1.42:8888/like/cancel",
+                    {
+                            response ->
+                        Log.d("response" , response.toString())
+                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
+                    },{
+                            error ->
+                        Log.d("error", error.toString())
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                ){
+                    override fun getParams(): MutableMap<String, String>? {
+                        val params : MutableMap<String, String> = HashMap()
+                        val addLike : LikeVO = LikeVO(user_email, feedId)
+                        params.put("addLike", Gson().toJson(addLike))
+                        Log.d("params", addLike.toString())
+                        return params
+                    }
+                }
+                reqQueue.add(request)
             }
 
         }
@@ -74,6 +132,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
         tvLikeCnt.text = feed.feed_like_cnt.toString()
         tvContent.text = feed.feed_content
         //edtComment.text = feed.edtComment
+
 
 
     }
