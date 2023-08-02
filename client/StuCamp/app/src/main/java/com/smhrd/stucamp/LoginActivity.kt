@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
             val inputEmail = etLoginEmail.text.toString()
             val inputPassword = etLoginPw.text.toString()
 
-            val url = URL("http://172.30.1.22:8888/user/login")
+            val url = URL("http://172.30.1.50:8888/user/login")
 
 
             Log.d("inputEmail" , inputEmail)

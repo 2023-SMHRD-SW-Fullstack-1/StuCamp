@@ -32,6 +32,14 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var startStopButton: Button
     private lateinit var resetButton: Button
     private lateinit var textView: TextView
+    private lateinit var userEmail: String
+    private lateinit var subName: String
+
+    private var startTime: Long = 0
+    private var stopTime: Long = 0
+    private var differenceTime: Long = 0
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +62,6 @@ class TimerActivity : AppCompatActivity() {
         val subName = sub.toString()
 
 
-
-
         position = intent.getIntExtra("position", 0)
         elapsedTime = intent.getLongExtra("elapsedTime", 0)
 
@@ -63,6 +69,8 @@ class TimerActivity : AppCompatActivity() {
             elapsedTime = it.getLong("elapsedTime")
             position = it.getInt("position")
         }
+
+
 
         // 오늘 날짜
         fun getCurrentDate(): String {
@@ -74,19 +82,25 @@ class TimerActivity : AppCompatActivity() {
 
         startStopButton.setOnClickListener {
             if (timerRunning) {
+                stopTime = System.currentTimeMillis()
+                differenceTime = stopTime - startTime +1000
+//                elapsedTime += differenceTime
+
                 handler.removeCallbacks(runnable)
-                Log.d("MainActivity", "경과 시간: ${elapsedTime} ms")
+                Log.d("MainActivity", "경과 시간: ${differenceTime} ms")
+
 
                 // save time to server
                 val reqQueue = Volley.newRequestQueue(applicationContext)
-                val url = "http://172.30.1.42:8888/record/add"
 
                 val subject_name = subName // 또는 사용자가 선택한 과목 이름 가져오기
+
+//                val ssibal = elapsedTime - ?????
 
                 val recordDetailJson = JSONObject()
                 recordDetailJson.put("record_start_date", getCurrentDate())
                 recordDetailJson.put("record_end_date", getCurrentDate())
-                recordDetailJson.put("record_elapsed_time", elapsedTime)
+                recordDetailJson.put("record_elapsed_time", differenceTime)
                 recordDetailJson.put("record_subject", subject_name)
 
                 val recordJson = JSONObject()
@@ -101,23 +115,28 @@ class TimerActivity : AppCompatActivity() {
 
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.42:8888/record/add",
+                    "http://172.30.1.50:8888/record/add",
                     {
                             response ->
                         Log.d("Response", response)
-                        if(response == "RecordSaveSuccess"){
-                            Toast.makeText(applicationContext, "타이머 저장 성공!", Toast.LENGTH_SHORT).show()
-                        } else if(response == "RecordSaveFail") {
-                            Toast.makeText(applicationContext, "타이머 저장 실패!", Toast.LENGTH_SHORT).show()
+                        if (response == "RecordSaveSuccess") {
+                            Toast.makeText(applicationContext, "타이머 저장 성공!", Toast.LENGTH_SHORT)
+                                .show()
+                        } else if (response == "RecordSaveFail") {
+                            Toast.makeText(applicationContext, "타이머 저장 실패!", Toast.LENGTH_SHORT)
+                                .show()
                         } else {
                             Toast.makeText(applicationContext, "에러발생", Toast.LENGTH_SHORT).show()
                         }
-                        
+
                     },
-                    {
-                            error ->
+                    { error ->
                         Log.e("Error", "Error while saving time: ${error.localizedMessage}")
-                        Toast.makeText(applicationContext, "Error occurred while saving time", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            applicationContext,
+                            "Error occurred while saving time",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 ) {
                     override fun getBody(): ByteArray {
@@ -134,11 +153,15 @@ class TimerActivity : AppCompatActivity() {
                 timerRunning = false
                 startStopButton.text = "시작"
             } else {
+                startTime = System.currentTimeMillis()
+
                 runnable = createRunnable()
                 handler.post(runnable)
                 timerRunning = true
                 startStopButton.text = "일시 정지"
             }
+
+
         } // startStopButton 클릭리스너 끝
 
         resetButton.setOnClickListener {
@@ -147,22 +170,59 @@ class TimerActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            handler.removeCallbacks(runnable)
-            val intent = Intent().apply {
-                putExtra("elapsedTime", elapsedTime)
-                putExtra("position", position)
-            }
-            Log.d("MainActivity", "Elapsed time value: $elapsedTime, Position: $position")
-            setResult(RESULT_OK, intent)
-            finish()
+//            handler.removeCallbacks(runnable)
+//            val intent = Intent().apply {
+//                putExtra("elapsedTime", elapsedTime)
+//                putExtra("position", position)
+//            }
+//            Log.d("MainActivity", "Elapsed time value: $elapsedTime, Position: $position")
+//            setResult(RESULT_OK, intent)
+//            finish()
 
             // subSpf 데이터 없애기
             subEditor.clear()
             subEditor.commit()
+
+            val it = Intent(this, MainActivity::class.java)
+            startActivity(it)
+
         }
         updateTimeUI()
     }
 
+
+    // 처음 시간 데려오는 부분
+    private fun updateTimeFromDatabase() {
+        val requestQueue = Volley.newRequestQueue(applicationContext)
+
+        val request = object : StringRequest(
+            Request.Method.POST,
+            "http://http://172.30.1.50:8888/record/${userEmail}",
+            { response ->
+                // 응답(Parsing the response)을 처리하고 업데이트된 시간을 표시하세요
+                val jsonObject = JSONObject(response)
+                elapsedTime = jsonObject.getLong("elapsed_time")
+                updateTimeUI()
+            },
+            { error ->
+                Log.e("Error", "Error while getting saved time: ${error.localizedMessage}")
+                Toast.makeText(
+                    applicationContext,
+                    "Error occurred while getting saved time",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                // 사용자 이메일과 과목 이름을 매개변수로 전달
+                params["user_email"] = userEmail
+                params["subject_name"] = subName
+                return params
+            }
+        }
+        requestQueue.add(request)
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putLong("elapsedTime", elapsedTime)
