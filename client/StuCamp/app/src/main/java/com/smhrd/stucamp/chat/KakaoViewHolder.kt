@@ -1,10 +1,11 @@
-package com.smhrd.stucamp
+package com.smhrd.stucamp.chat
 
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.smhrd.stucamp.R
 
 class KakaoViewHolder(var itemView : View) : ViewHolder(itemView){
     // 위에 괄호 -> 생성자

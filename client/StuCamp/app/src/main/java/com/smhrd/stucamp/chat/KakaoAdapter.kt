@@ -1,4 +1,4 @@
-package com.smhrd.stucamp
+package com.smhrd.stucamp.chat
 
 
 import android.content.Context

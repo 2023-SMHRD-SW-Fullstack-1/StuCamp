@@ -1,9 +1,8 @@
-package com.orthh.ex20230720
+package com.smhrd.stucamp.chat
 
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.smhrd.stucamp.KakaoAdapter
 import com.smhrd.stucamp.VO.KakaoVO
 
 class ChildEvent(var data: ArrayList<KakaoVO>, var adapter: KakaoAdapter) : ChildEventListener {

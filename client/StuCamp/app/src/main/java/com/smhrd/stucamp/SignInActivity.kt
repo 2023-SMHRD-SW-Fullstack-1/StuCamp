@@ -14,6 +14,8 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import org.json.JSONArray
 
@@ -83,6 +85,11 @@ class SignInActivity : AppCompatActivity() {
                             // editor를 통해 로그인한 회원의 정보 저장
                             editor.putString("joinUser", response)
                             editor.commit()
+
+                            // firebase 에 user 저장
+                            val database = Firebase.database
+                            val userRef = database.getReference("User")
+                            userRef.push().setValue(UserVO(inputEmail, inputPassword, InputNickname))
 
                             // MainActivity로 전환 (Intent)joinUser
                             val it = Intent(this, MainActivity::class.java)
