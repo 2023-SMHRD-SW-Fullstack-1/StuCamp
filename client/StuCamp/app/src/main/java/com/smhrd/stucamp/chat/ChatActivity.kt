@@ -1,7 +1,9 @@
 package com.smhrd.stucamp.chat
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,8 +27,19 @@ class ChatActivity : AppCompatActivity() {
         btn_send = findViewById(R.id.btn_send)
         edt_msg = findViewById(R.id.edt_msg)
 
+        val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
+        val user = spf.getString("user", " ")
+        Log.d("userState", user.toString())
+
+        val it = getIntent()
+        Log.d("intentTest", it.getIntExtra("room_id", 0).toString())
+
         val database = Firebase.database
         val myRef = database.getReference("message")
+
+        val roomRef = database.getReference("roomList")
+
+
 
         var data = ArrayList<KakaoVO>()
 
