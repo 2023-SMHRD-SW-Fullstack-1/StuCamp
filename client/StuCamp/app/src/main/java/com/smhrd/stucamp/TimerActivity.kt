@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -40,6 +41,20 @@ class TimerActivity : AppCompatActivity() {
         resetButton = findViewById(R.id.reset_button)
         textView = findViewById(R.id.ResultTime)
 
+        // 유저 spf처리
+        val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
+        val user = spf.getString("user", " ")
+        val userVO = Gson().fromJson(user, UserVO::class.java)
+        val userEmail = userVO.user_email
+
+        val subSpf = getSharedPreferences("SubjectSpf", Context.MODE_PRIVATE)
+        val subEditor = subSpf.edit()
+        val sub = subSpf.getString("SubjectSpf", " ")
+        val subName = sub.toString()
+
+
+
+
         position = intent.getIntExtra("position", 0)
         elapsedTime = intent.getLongExtra("elapsedTime", 0)
 
@@ -48,6 +63,7 @@ class TimerActivity : AppCompatActivity() {
             position = it.getInt("position")
         }
 
+        // 오늘 날짜
         fun getCurrentDate(): String {
             val calendar = Calendar.getInstance()
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -62,30 +78,39 @@ class TimerActivity : AppCompatActivity() {
 
                 // save time to server
                 val reqQueue = Volley.newRequestQueue(applicationContext)
-                val url = "http://172.30.1.50:8888/record/add"
 
-                val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
-                val user_email = spf.getString("user", "a") // user_email
+                val subject_name = subName // 또는 사용자가 선택한 과목 이름 가져오기
+
+                val recordDetailJson = JSONObject()
+                recordDetailJson.put("record_start_date", getCurrentDate())
+                recordDetailJson.put("record_end_date", getCurrentDate())
+                recordDetailJson.put("record_elapsed_time", elapsedTime)
+                recordDetailJson.put("record_subject", subject_name)
+
+                val recordJson = JSONObject()
+                recordJson.put("record_date", getCurrentDate())
+                recordJson.put("user_email", userEmail)
+                recordJson.put("record_detail", recordDetailJson)
 
                 val jsonBody = JSONObject()
-                jsonBody.put("record_date", getCurrentDate()) // 현재 날짜를 yyyy-MM-dd 형식으로 지정해야 합니다.
-                jsonBody.put("user_email", user_email)
-                val recordDetailJson = JSONObject()
-                recordDetailJson.put("record_start_date", getCurrentDate()) // yyyy-MM-dd'T'HH:mm:ss 형식으로 지정해야 합니다.
-                recordDetailJson.put("record_end_date", getCurrentDate()) // yyyy-MM-dd'T'HH:mm:ss 형식으로 지정해야 합니다.
-                recordDetailJson.put("record_elapsed_time", elapsedTime)
-//                recordDetailJson.put("record_subject", "your_subject_name")
-                jsonBody.put("record_detail", recordDetailJson)
+                jsonBody.put("record", recordJson)
 
                 val requestBody = jsonBody.toString()
 
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    url,
+                    "http://172.30.1.50:8888/record/add",
                     {
                             response ->
-                        Log.d("Response", "Response from server: $response")
-                        Toast.makeText(applicationContext, "Time saved successfully", Toast.LENGTH_SHORT).show()
+                        Log.d("Response", response)
+                        if(response == "RecordSaveSuccess"){
+                            Toast.makeText(applicationContext, "타이머 저장 성공!", Toast.LENGTH_SHORT).show()
+                        } else if(response == "RecordSaveFail") {
+                            Toast.makeText(applicationContext, "타이머 저장 실패!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(applicationContext, "에러발생", Toast.LENGTH_SHORT).show()
+                        }
+                        
                     },
                     {
                             error ->
@@ -112,7 +137,7 @@ class TimerActivity : AppCompatActivity() {
                 timerRunning = true
                 startStopButton.text = "일시 정지"
             }
-        }
+        } // startStopButton 클릭리스너 끝
 
         resetButton.setOnClickListener {
             elapsedTime = 0L
@@ -128,6 +153,10 @@ class TimerActivity : AppCompatActivity() {
             Log.d("MainActivity", "Elapsed time value: $elapsedTime, Position: $position")
             setResult(RESULT_OK, intent)
             finish()
+
+            // subSpf 데이터 없애기
+            subEditor.clear()
+            subEditor.commit()
         }
         updateTimeUI()
     }
