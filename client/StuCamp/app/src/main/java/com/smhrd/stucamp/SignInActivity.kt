@@ -54,8 +54,9 @@ class SignInActivity : AppCompatActivity() {
             if(inputPassword==inputPwCheck){
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.25:8888/user/join",
-                    { response ->
+                    "http://172.30.1.50:8888/user/join",
+                    {
+                        response ->
                         Log.d("response", response)
 
                         if(response == "existed email") {
