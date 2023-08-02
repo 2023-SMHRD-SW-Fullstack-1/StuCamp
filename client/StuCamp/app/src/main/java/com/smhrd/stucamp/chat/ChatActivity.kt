@@ -61,7 +61,7 @@ class ChatActivity : AppCompatActivity() {
             return dateFormat.format(Date(currentTime))
         }
 
-        var adapter: KakaoAdapter = KakaoAdapter(applicationContext, R.layout.template, data)
+        var adapter: KakaoAdapter = KakaoAdapter(applicationContext, R.layout.template, data, user.user_nickname)
 
         // layoutManager 세팅
         rv.layoutManager = LinearLayoutManager(applicationContext)

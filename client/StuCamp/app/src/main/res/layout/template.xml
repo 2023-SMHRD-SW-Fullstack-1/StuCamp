@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
 
-        android:id="@+id/cardView"
+        android:id="@+id/cv_pic"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -46,8 +46,8 @@
         android:layout_marginStart="8dp"
         android:text="보낸사람"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toTopOf="@+id/cardView" />
+        app:layout_constraintStart_toEndOf="@+id/cv_pic"
+        app:layout_constraintTop_toTopOf="@+id/cv_pic" />
 
     <TextView
         android:id="@+id/tv_msg"
@@ -57,7 +57,7 @@
         android:background="@drawable/mal_9"
         android:text="메세지"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toEndOf="@+id/cv_pic"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
     <TextView
@@ -70,4 +70,31 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_msg"
         app:layout_constraintStart_toEndOf="@+id/tv_msg" />
+
+    <TextView
+        android:id="@+id/tv_myMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/my_mal"
+        android:text="보낸메세지"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_myTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="나의시간"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_myMsg"
+        app:layout_constraintTop_toTopOf="@+id/tv_myMsg"
+        app:layout_constraintVertical_bias="0.768" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
