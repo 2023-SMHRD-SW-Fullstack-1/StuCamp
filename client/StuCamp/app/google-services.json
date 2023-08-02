@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "77909987131",
+    "project_id": "stucamp-61b1b",
+    "storage_bucket": "stucamp-61b1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77909987131:android:ff2b859fe010bb58cc711e",
+        "android_client_info": {
+          "package_name": "com.smhrd.stucamp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77909987131-f475m60pehts4lfmbglu5006a6asahpu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3eYziwE-szTkARM-f60kGpC2q52rCKbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77909987131-f475m60pehts4lfmbglu5006a6asahpu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
