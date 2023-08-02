@@ -52,8 +52,8 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
         val user = Gson().fromJson(spf.getString("user", ""), UserVO::class.java)
         val user_email = user.user_email
 
-        tvLikeCnt2.text = myFeed.feedLikeCnt.toString()
-        tvContent2.text = myFeed.feedContent
+//        tvLikeCnt2.text = myFeed.feedLikeCnt.toString()
+//        tvContent2.text = myFeed.feedContent
 
 
 
