@@ -9,7 +9,8 @@ const JoinDTO = require("../dto/userDTO/JoinDTO");
 
 // 로그인
 router.post("/login", async (req, res, next) => {
-  const loginReqDTO = new LoginReqDTO(req.body.loginUser);
+  const loginReqDTO = new LoginReqDTO(JSON.parse(req.body.loginUser));
+  console.log(req.body);
   try {
     const userEntity = await User.findOne({
       where: {
@@ -56,7 +57,7 @@ router.get("/find/:user_email", async (req, res, next) => {
 
 // 회원 수정
 router.put("/update", async (req, res, next) => {
-  const updateReqDTO = new UpdateReqDTO(req.body.updateUser);
+  const updateReqDTO = new UpdateReqDTO(JSON.parse(req.body.updateUser));
   try {
     const userEntity = await User.update(
       {
@@ -123,8 +124,8 @@ router.post("/join", async (req, res, next) => {
 });
 
 //회원탈퇴
-router.delete("/delete", async (req, res, next) => {
-  const userDeleteDTO = new UserDeleteDTO(req.body.deleteUser);
+router.post("/delete", async (req, res, next) => {
+  const userDeleteDTO = new UserDeleteDTO(JSON.parse(req.body.deleteUser));
   try {
     //해당 아이디 패스워드 확인
     let userEntity = await User.findOne({

@@ -4,16 +4,12 @@
     <!-- 인터넷 사용 허용하기 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- Storage 쓰기/읽기 권한 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-    <!-- 카메라 API 사용-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Storage 쓰기/읽기 권한 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 카메라 API 사용 -->
     <uses-feature
         android:name="android.hardware.Camera"
-        android:required="true"/>
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -25,7 +21,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StuCamp"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".MyFeedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyHome"
+            android:exported="false" />
         <activity
             android:name=".MapActivity"
             android:exported="false" />
@@ -43,13 +48,17 @@
             android:exported="true" />
         <activity
             android:name=".IntroActivity"
-            android:exported="true"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MemDeleteActivity" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_login2" />
         <activity
             android:name=".MemInfoActivity"
@@ -60,11 +69,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
 
         <meta-data

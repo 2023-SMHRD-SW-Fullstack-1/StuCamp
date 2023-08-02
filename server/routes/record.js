@@ -76,6 +76,7 @@ router.get("/:user_email?date={date}");
 
 // 기록 저장
 router.post("/add", async (req, res, next) => {
+  console.log(req.body)
   // 사용자로부터 받은 데이터(더미)
   // const requestData = {
   //   record: {

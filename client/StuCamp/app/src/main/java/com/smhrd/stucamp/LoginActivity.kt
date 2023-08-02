@@ -1,5 +1,6 @@
 package com.smhrd.stucamp
 // 이지희
+// **url 수정 필요!
 
 import android.content.Context
 import android.content.Intent
@@ -14,7 +15,9 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
 import org.json.JSONArray
+import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -40,23 +43,14 @@ class LoginActivity : AppCompatActivity() {
 
         // SharedPreference 생성
         val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
-        val test = spf.getString("user", " ")
-        Log.d("userState", test.toString())
+        val user = spf.getString("user", " ")
+        Log.d("userState", user.toString())
 
         btnLogin.setOnClickListener{
             val inputEmail = etLoginEmail.text.toString()
             val inputPassword = etLoginPw.text.toString()
 
-            val url = URL("http://172.30.1.25:8888/user/login")
-
-            val connection = url.openConnection() as HttpURLConnection
-            connection.run {
-                requestMethod = "POST"
-                setRequestProperty("Content-Type", "application/json; charset=utf-8")
-            }
-
-// 결과 얻기
-            val status = connection.responseCode // HTTP 상태 코드 가져오기
+            val url = URL("http://172.30.1.42:8888/user/login")
 
 
             Log.d("inputEmail" , inputEmail)
@@ -65,45 +59,38 @@ class LoginActivity : AppCompatActivity() {
 
             val request = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.25:8888/user/login",
+                "http://172.30.1.42:8888/user/login",
                 {
                         response ->
                     Log.d("response", response)
+//                    Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show()
 
-                    if(response=="Fail") {
-                        Toast.makeText(this, "이메일 또는 비밀번호를 다시 입력해주세요.", Toast.LENGTH_LONG).show()
-                    }
-                    else if(response=="Success") {
-//                        val result = JSONArray(response)
-//                        Log.d("result", result.toString())
-//                        val user  = result.getJSONObject(0)
-//                        Log.d("user", user.toString())
+                    if(response.equals("-1")) {
+                        Toast.makeText(this, "아이디나 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
+                    }else{
+                        val user = JSONObject(response)
                         // Editor 생성
                         val editor = spf.edit()
                         // editor를 통해 로그인한 회원의 정보 저장
-                        editor.putString("user", inputEmail)
+                        editor.putString("user", user.toString())
                         editor.commit()
 
                         // MainActivity로 전환 (Intent)joinUser
                         val it = Intent(this, MainActivity::class.java)
                         startActivity(it)
-                    } else{
-                        Log.d("response 오류", response)
-                        Toast.makeText(this, "로그인 실패!", Toast.LENGTH_LONG).show()
                     }
 
                 },
                 {
-                        error ->
+                    error ->
                     Log.d("error", error.toString())
                     Toast.makeText(this, "에러발생!", Toast.LENGTH_LONG).show()
                 }
             ){
                 override fun getParams(): MutableMap<String, String>? {
                     val params : MutableMap<String, String> = HashMap()
-//                    val user : UserVO = UserVO(inputEmail, inputPassword, null)
-//                    params.put("user", Gson().toJson(user))
-//                    Log.d("params", user.toString())
+                    val user : UserVO = UserVO(inputEmail, inputPassword, null)
+                    params.put("loginUser", Gson().toJson(user))
 
                     return params
                 }

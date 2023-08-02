@@ -1,3 +1,5 @@
 package com.smhrd.stucamp.VO
 
-data class FeedWriteVO(var img : String, var writer : String, var content : String)
+import java.math.BigInteger
+
+data class FeedWriteVO(var feed_content : String, var feed_img : String, var user_email:String?)

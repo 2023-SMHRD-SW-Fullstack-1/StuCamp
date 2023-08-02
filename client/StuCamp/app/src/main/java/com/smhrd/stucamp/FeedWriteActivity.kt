@@ -1,5 +1,6 @@
 package com.smhrd.stucamp
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -7,7 +8,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -21,6 +21,7 @@ import com.google.gson.Gson
 import com.smhrd.stucamp.VO.FeedWriteVO
 import java.io.ByteArrayOutputStream
 
+class FeedWriteActivity : AppCompatActivity() {
 
     lateinit var btnBack : ImageButton
     lateinit var ibGallery : ImageButton
@@ -38,7 +39,6 @@ import java.io.ByteArrayOutputStream
     //카메라 촬영
     val REQUEST_IMAGE_CODE = 101
 
-class FeedWriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed_write)
@@ -71,23 +71,31 @@ class FeedWriteActivity : AppCompatActivity() {
             takePicture()
         }
 
+        //SharedPreference 생성
+        val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
+        val user = Gson().fromJson(spf.getString("user", ""), UserVO::class.java)
+        val user_email = user.user_email
+
         btnWrite.setOnClickListener(){
-            val inputContent = etContent.text.toString()
-            val writer =  " testId " //member.id
+            val feed_content = etContent.text.toString()
+            val feed_like_cnt = 5
+            val user_nickname = "test"
+
+            //(var feed_id : BigInteger, var feed_content : String, var feed_imgpath : String,
+            //var user_id : BigInteger, var feed_like_cnt : Int)
 
             val request = object : StringRequest(
                 //일반적으로 크기가 큰 경우엔 POST 방식 사용
                 Request.Method.POST,
-                "http://172.30.1.52:8888/board/write",
+                "http://172.30.1.42:8888/feed/add",
                 {
                         response ->
                     Log.d("response", response.toString())
 
-                    if(response == "Success"){
+                    if(response == "1"){
                         var intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }
-
                 },
                 {
                         error ->
@@ -97,8 +105,7 @@ class FeedWriteActivity : AppCompatActivity() {
             ){
                 override fun getParams() : MutableMap<String, String>?{
                     val params : MutableMap<String, String> = HashMap<String, String>()
-
-                    val feed = FeedWriteVO(encodeImgString, writer, inputContent)
+                    val feed = FeedWriteVO(feed_content, encodeImgString, user_email) //encodeImgString
                     params.put("feed", Gson().toJson(feed))
                     return params
                 }
@@ -130,10 +137,10 @@ class FeedWriteActivity : AppCompatActivity() {
                     ivUpload.setImageBitmap(bitmap)
 
                     val options = BitmapFactory.Options()
-                    options.inSampleSize = 4 // 4개의 픽셀 -> 1개의 픽셀 => 1/4 크기로 변환
+                    options.inSampleSize = 2 // 4개의 픽셀 -> 1개의 픽셀 => 1/4 크기로 변환
 
                     // filter => true(선명하게) / false(흐릿하게)
-                    val resized = Bitmap.createScaledBitmap(bitmap, 100, 100, true)
+                    val resized = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
 
                     encodeBitmapImg(resized)
                 }
