@@ -44,7 +44,7 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <Button
-        android:id="@+id/btnLogout"
+        android:id="@+id/btnMyPage"
         android:layout_width="80dp"
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
@@ -73,7 +73,7 @@
         android:text="글작성"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toStartOf="@+id/btnLogout"
+        app:layout_constraintEnd_toStartOf="@+id/btnMyPage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button

@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var fl : FrameLayout
 
     lateinit var tvId : TextView
-    lateinit var btnLogout : Button
+    lateinit var btnMyPage : Button
     lateinit var btnWrite : Button
     lateinit var btnMyHome : Button
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         fl = findViewById(R.id.fl)
 
         //tvId = findViewById(R.id.tvId)
-        btnLogout = findViewById(R.id.btnLogout)
+        btnMyPage = findViewById(R.id.btnMyPage)
         btnWrite = findViewById(R.id.btnWrite)
         btnMyHome = findViewById(R.id.btnMyHome)
 
@@ -92,14 +92,11 @@ class MainActivity : AppCompatActivity() {
 
 
         // 로그아웃 버튼 클릭
-//        btnLogout.setOnClickListener(){
-//
-//            editor.remove("member")
-//            editor.commit()
-//
-//            var intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//        }
+        btnMyPage.setOnClickListener(){
+
+            var intent = Intent(this, MemInfoActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }
