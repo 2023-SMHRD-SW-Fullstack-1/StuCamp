@@ -24,7 +24,7 @@
         tools:targetApi="31">
         <activity
             android:name=".CommentActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".MyFeedActivity"
             android:exported="false" />
@@ -65,7 +65,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
