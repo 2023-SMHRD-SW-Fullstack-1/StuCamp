@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.smhrd.stucamp.VO.FeedWriteVO
+import com.smhrd.stucamp.VO.UserVO
 import java.io.ByteArrayOutputStream
 
 class FeedWriteActivity : AppCompatActivity() {

@@ -1,72 +1,114 @@
-const express = require('express')
-const LikeAddReqDTO = require('../dto/likeDTO/LikeAddReqDTO')
-const { Like, Feed } = require('../models')
-const router = express.Router()
+const express = require("express");
+const LikeAddReqDTO = require("../dto/likeDTO/LikeAddReqDTO");
+const { Like, Feed, User } = require("../models");
+const router = express.Router();
 
 //좋아요 클릭했을 때
-router.post("/add", async(req,res) => {
-    // console.log("like add 통신 확인")
-    const likeAddDTO = new LikeAddReqDTO(req.body.addLike)
-    const likeEntity = await Like.build({
-        user_id : likeAddDTO.user_id,
-        feed_id : likeAddDTO.feed_id
-    })
+router.post("/add", async (req, res) => {
+    // console.log("like add 통신 확인");
+    const likeAddDTO = new LikeAddReqDTO(JSON.parse(req.body.addLike));
 
-    //좋아요 등록
-    await likeEntity
-    .save()
-    .then(async (like)=>{
+    //이메일 조회
+    const userEntity = await User.findOne({
+        where: {
+            user_email: likeAddDTO.user_email,
+        },
+    });
 
-        //좋아요 개수 추가 (feedEntity)
-        //해당 게시글에 대한 전체 좋아요 조회
-        const allLike = await Like.findAll({
-            where : {
-                feed_id : likeAddDTO.feed_id
-            }
-        })
+    if (userEntity) {
+        const likeEntity = await Like.build({
+            user_id: userEntity.user_id,
+            feed_id: likeAddDTO.feed_id,
+        });
 
-        console.log("like list :" , allLike.length);
+        //좋아요 등록
+        await likeEntity
+            .save()
+            .then(async (like) => {
+                //좋아요 개수 추가 (feedEntity)
+                //해당 게시글에 대한 전체 좋아요 조회
+                const allLike = await Like.findAll({
+                    where: {
+                        feed_id: likeAddDTO.feed_id,
+                    },
+                });
 
-        //Feed 엔터티 좋아요 개수 update
-        Feed.update({
-            feed_like_cnt: allLike.length
-        },{
-            where : {
-                feed_id : likeAddDTO.feed_id
-            }
-        })
+                console.log("like list :", allLike.length);
 
-        console.log("like saved: ", like.toJSON);
-        res.send("like add success")
-    })
-    .catch((error)=>{
-        console.log("Error saving like : ", error);
-        res.send("like add fail")
-    })
-})
+                //Feed 엔터티 좋아요 개수 update
+                await Feed.update(
+                    {
+                        feed_like_cnt: allLike.length,
+                    },
+                    {
+                        where: {
+                            feed_id: likeAddDTO.feed_id,
+                        },
+                    }
+                );
+
+                console.log("like saved: ", like.toJSON);
+
+                res.json(1);
+            })
+            .catch((error) => {
+                console.log("Error saving like : ", error);
+                res.json(0);
+            });
+    } else {
+        console.log("존재하지 않는 이메일");
+    }
+});
 
 //좋아요 취소
-router.delete('/cancel', async(req, res, next)=>{
-    const likeCancelDTO = new LikeAddReqDTO(req.body.cancelLike)
+router.post("/cancel", async (req, res, next) => {
+    const likeCancelDTO = new LikeAddReqDTO(JSON.parse(req.body.cancelLike));
     // console.log(likeCancelDTO);
+    // 이메일 조회
+    const userEntity = await User.findOne({
+        where: {
+            user_email: likeCancelDTO.user_email,
+        },
+    });
 
-    try{
-        const likeEntity = await Like.destroy({
-            where: {
-                feed_id : likeCancelDTO.feed_id,
-                user_id : likeCancelDTO.user_id 
+    if (userEntity) {
+        try {
+            const likeEntity = await Like.destroy({
+                where: {
+                    feed_id: likeCancelDTO.feed_id,
+                    user_id: userEntity.user_id,
+                },
+            });
+
+            const allLike = await Like.findAll({
+                where: {
+                    feed_id: likeCancelDTO.feed_id,
+                },
+            });
+
+            await Feed.update(
+                {
+                    feed_like_cnt: allLike.length,
+                },
+                {
+                    where: {
+                        feed_id: likeCancelDTO.feed_id,
+                    },
+                }
+            );
+
+            if (likeEntity) {
+                res.json(1);
+            } else {
+                res.json(0);
             }
-        })
-        if(likeEntity){
-            res.send("like cancel success")
-        }else{
-            res.send("like cancel fail")
+        } catch (error) {
+            console.log("error", error);
+            next(error);
         }
-    }catch(error){
-        console.log('error', error);
-        next(error)
+    } else {
+        console.log("error");
     }
+});
 
-})
-
-module.exports = router
+module.exports = router;

@@ -15,8 +15,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
-import org.json.JSONArray
-import org.json.JSONObject
+import com.smhrd.stucamp.VO.UserVO
 
 class MemInfoActivity : AppCompatActivity() {
 
@@ -63,7 +62,7 @@ class MemInfoActivity : AppCompatActivity() {
             if (inputPw == inputPwCheck) {
                 val request = object : StringRequest(
                     Request.Method.PUT,
-                    "http://172.30.1.25:8888/user/update",
+                    "http://172.30.1.42:8888/user/update",
                     { response ->
                         Log.d("update response", response)
 

@@ -78,6 +78,7 @@ class TimerActivity : AppCompatActivity() {
 
                 // save time to server
                 val reqQueue = Volley.newRequestQueue(applicationContext)
+                val url = "http://172.30.1.42:8888/record/add"
 
                 val subject_name = subName // 또는 사용자가 선택한 과목 이름 가져오기
 

@@ -1,16 +1,19 @@
 package com.smhrd.stucamp
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -20,8 +23,9 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.smhrd.stucamp.VO.FeedVO
 import com.smhrd.stucamp.VO.LikeVO
+import com.smhrd.stucamp.VO.UserVO
 
-class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
+class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var activity: Fragment1)
     : RecyclerView.Adapter<FeedViewHolder>(){
 
     lateinit var reqQueue : RequestQueue
@@ -50,77 +54,29 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
         tvId.text = feed.user_nickname
         val heartOn = ContextCompat.getDrawable(context, R.drawable.heart_on)
         val heartOff = ContextCompat.getDrawable(context, R.drawable.heart_off)
-        var isLiked : Boolean = false
+//        var isLiked : Boolean = false
 
         //feed id 가져오기
         val feedId = feed.feed_id
 
         //SharedPreference 생성
         val spf = context.getSharedPreferences("mySPF", Context.MODE_PRIVATE)
+
         val user = Gson().fromJson(spf.getString("user", ""), UserVO::class.java)
         val user_email = user.user_email
+        //좋아요 정보 저장 spf
+        var like = spf.getBoolean(user.user_email, false) //spf 초기세팅
+        val editor = spf.edit()
 
-        ibHeart.setOnClickListener(){
-            if(!isLiked){ //좋아요 클릭했을 때
-                ibHeart.setImageDrawable(heartOn)
-                isLiked = true
-
-                //서버와 통신
-                val request = object : StringRequest(
-                    Request.Method.POST,
-                    "http://172.30.1.42:8888/like/add",
-                    {
-                        response ->
-//                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
-                    },{
-                        error ->
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
-                    }
-                ){
-                    override fun getParams(): MutableMap<String, String>? {
-                        val params : MutableMap<String, String> = HashMap()
-                        val addLike : LikeVO = LikeVO(user_email, feedId)
-                        params.put("addLike", Gson().toJson(addLike))
-                        Log.d("params", addLike.toString())
-                        return params
-                    }
-                }
-                reqQueue.add(request)
-
-            }else { //좋아요 취소했을 때
-                ibHeart.setImageDrawable(heartOff)
-                isLiked = false
-
-                //서버와 통신
-                val request = object : StringRequest(
-                    Request.Method.POST,
-                    "http://172.30.1.42:8888/like/cancel",
-                    {
-                            response ->
-                        Log.d("response" , response.toString())
-                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
-                    },{
-                            error ->
-                        Log.d("error", error.toString())
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
-                    }
-                ){
-                    override fun getParams(): MutableMap<String, String>? {
-                        val params : MutableMap<String, String> = HashMap()
-                        val addLike : LikeVO = LikeVO(user_email, feedId)
-                        params.put("addLike", Gson().toJson(addLike))
-                        Log.d("params", addLike.toString())
-                        return params
-                    }
-                }
-                reqQueue.add(request)
-            }
-
+        if(like){
+            ibHeart.setImageDrawable(heartOn)
+        }else{
+            ibHeart.setImageDrawable(heartOff)
         }
 
         tvLikeCnt.text = feed.feed_like_cnt.toString()
         tvContent.text = feed.feed_content
-        Log.d("1111sfeed", feed.toString())
+//        Log.d("1111sfeed", feed.toString())
 
         tvId.text = feed.user_nickname.toString()
         //이미지 변환
@@ -133,8 +89,71 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context)
         tvContent.text = feed.feed_content
         //edtComment.text = feed.edtComment
 
+        ibHeart.setOnClickListener(){
 
+            if(!like){ //좋아요 클릭했을 때
+                ibHeart.setImageDrawable(heartOn)
+                feed.feed_like_cnt++
+                notifyItemChanged(position)
+                editor.putBoolean(user.user_email, true)
+                editor.commit()
 
+                //서버와 통신
+                val request = object : StringRequest(
+                    Request.Method.POST,
+                    "http://172.30.1.42:8888/like/add",
+                    {
+                        response ->
+//                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
+                        if(response == "1"){
+                            //좋아요 클릭 여부 spf 생성
+                        }
+                    },{
+                        error ->
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                ) {
+                    override fun getParams(): MutableMap<String, String>? {
+                        val params: MutableMap<String, String> = HashMap()
+                        val addLike: LikeVO = LikeVO(user_email, feedId)
+                        params.put("addLike", Gson().toJson(addLike))
+                        Log.d("params", addLike.toString())
+                        return params
+                    }
+                }
+                reqQueue.add(request)
+
+            }else { //좋아요 취소했을 때
+                ibHeart.setImageDrawable(heartOff)
+                feed.feed_like_cnt--
+                notifyItemChanged(position)
+                editor.putBoolean(user.user_email, false)
+                editor.commit()
+
+                //서버와 통신
+                val request = object : StringRequest(
+                    Request.Method.POST,
+                    "http://172.30.1.42:8888/like/cancel",
+                    {
+                            response ->
+                            if(response == "1"){
+                            }
+                    },{
+                            error ->
+                        Log.d("error", error.toString())
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                ){
+                    override fun getParams(): MutableMap<String, String>? {
+                        val params : MutableMap<String, String> = HashMap()
+                        val cancelLike : LikeVO = LikeVO(user_email, feedId)
+                        params.put("cancelLike", Gson().toJson(cancelLike))
+                        Log.d("params", cancelLike.toString())
+                        return params
+                    }
+                }
+                reqQueue.add(request)
+            }
+        }
     }
-
 }

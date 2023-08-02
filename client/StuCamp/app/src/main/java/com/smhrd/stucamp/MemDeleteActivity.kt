@@ -14,7 +14,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
-import org.json.JSONArray
+import com.smhrd.stucamp.VO.UserVO
 
 class MemDeleteActivity : AppCompatActivity() {
 
