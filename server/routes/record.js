@@ -30,16 +30,20 @@ router.get("/:user_email", async (req, res, next) => {
             record_date: date,
           },
         });
-        recordDetails = [
-          ...recordDetails,
-          await RecordDetail.findAll({
-            where: {
-              record_id: recordEntity.record_id,
-            },
-          }),
-        ];
-        const findOneResDTO = new FindOneResDTO(recordEntity, recordDetails);
-        res.json(findOneResDTO);
+        if (recordEntity) {
+          recordDetails = [
+            ...recordDetails,
+            await RecordDetail.findAll({
+              where: {
+                record_id: recordEntity.record_id,
+              },
+            }),
+          ];
+          const findOneResDTO = new FindOneResDTO(recordEntity, recordDetails);
+          res.json(findOneResDTO);
+        } else {
+          res.json(-1);
+        }
       } else {
         // 전체 조회
         const recordEntity = await Record.findAll({

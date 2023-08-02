@@ -85,12 +85,17 @@ router.get("/:user_email", async (req, res, next) => {
         user_email: wishFindDTO.user_email,
       },
     });
-    const wishEntity = await Feed.findAll({
+    const wishEntity = await Wish.findAll({
       where: {
         user_id: userEntity.user_id,
       },
+      include: [Feed],
     });
-    res.json(wishEntity);
+    if (wishEntity.length > 0) {
+      res.json(wishEntity);
+    } else {
+      res.json(-1);
+    }
   } catch (error) {
     console.log("error", error);
     next(error);
