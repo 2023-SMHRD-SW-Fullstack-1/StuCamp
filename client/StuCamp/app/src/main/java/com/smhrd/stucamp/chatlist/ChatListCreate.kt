@@ -17,9 +17,9 @@ import com.google.gson.Gson
 import com.smhrd.stucamp.Fragment4
 import com.smhrd.stucamp.MainActivity
 import com.smhrd.stucamp.R
-import com.smhrd.stucamp.UserVO
 import com.smhrd.stucamp.VO.ChatListVO
 import com.smhrd.stucamp.VO.KakaoVO
+import com.smhrd.stucamp.VO.UserVO
 
 
 class ChatListCreate : AppCompatActivity() {
