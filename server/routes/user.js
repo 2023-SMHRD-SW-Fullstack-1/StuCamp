@@ -102,7 +102,7 @@ router.post("/join", async (req, res, next) => {
 
   if (userEntity) {
     console.log("이미 존재하는 사용자");
-    res.json("existed email");
+    res.send("existed email");
   } else {
     userEntity = await User.build({
       user_email: joinDto.user_email,
@@ -114,11 +114,11 @@ router.post("/join", async (req, res, next) => {
       .save()
       .then((user) => {
         console.log("User saved:", user.toJSON);
-        res.json("join success");
+        res.send("join success");
       })
       .catch((error) => {
         console.log("Error saving user:", error);
-        res.json("join fail");
+        res.send("join fail");
       });
   }
 });

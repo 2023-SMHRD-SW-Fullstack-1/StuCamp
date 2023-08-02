@@ -40,7 +40,6 @@ class MemDeleteActivity : AppCompatActivity() {
         // spf 처리
         val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
         val user = spf.getString("user", " ")
-        Log.d("에러", "user" + user.toString())
         val userVO = Gson().fromJson(user, UserVO::class.java)
         val userEmail = userVO.user_email
 
@@ -69,6 +68,7 @@ class MemDeleteActivity : AppCompatActivity() {
                             // editor를 통해 로그인한 회원의 정보 저장
                             editor.clear()
                             editor.commit()
+                            Toast.makeText(this, "탈퇴가 완료되었습니다.", Toast.LENGTH_LONG).show()
 
                             // MainActivity로 전환 (Intent)joinUser
                             val it = Intent(this, LoginActivity::class.java)

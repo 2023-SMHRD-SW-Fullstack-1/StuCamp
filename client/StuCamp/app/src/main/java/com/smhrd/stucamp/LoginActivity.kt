@@ -42,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
         // SharedPreference 생성
         val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
         val user = spf.getString("user", " ")
-        Log.d("userState", user.toString())
 
         btnLogin.setOnClickListener{
             val inputEmail = etLoginEmail.text.toString()
