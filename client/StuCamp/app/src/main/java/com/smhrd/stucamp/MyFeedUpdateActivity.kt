@@ -53,7 +53,6 @@ class MyFeedUpdateActivity : AppCompatActivity() {
         btnWrite = findViewById(R.id.btnWrite)
         etContent = findViewById(R.id.etContent)
 
-
         reqQueue = Volley.newRequestQueue(this@MyFeedUpdateActivity)
 
         //이전화면으로 돌아가기(Main)

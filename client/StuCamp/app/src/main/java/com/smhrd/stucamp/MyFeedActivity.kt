@@ -40,7 +40,7 @@ class MyFeedActivity : AppCompatActivity() {
         Log.d("user_email",user_email)
 
         val feedList = ArrayList<FeedVO>()
-//
+
 //        feedList.add(MyFeedVO("hihi", 3, "하이하이"))
 //        feedList.add(MyFeedVO("ID1", 2, "하이하이1"))
 //        feedList.add(MyFeedVO("ID2", 5, "하이하이2"))

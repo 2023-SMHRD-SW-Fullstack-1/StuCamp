@@ -47,8 +47,10 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
         var tvLikeCnt2 : TextView = holder.tvLikeCnt2
         var tvContent2 : TextView = holder.tvContent2
         //var edtComment : EditText = holder.edtComment
+        var btnFeedUpate : Button = holder.btnFeedUpdate
         var btnFeedDelete : Button = holder.btnFeedDelete
         var btnFeedUpdate : Button = holder.btnFeedUpdate
+
 
         var reqQueue : RequestQueue = Volley.newRequestQueue(context)
 

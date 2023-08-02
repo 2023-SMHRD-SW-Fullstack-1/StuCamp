@@ -1,6 +1,7 @@
 package com.smhrd.stucamp
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,6 +17,7 @@ class FeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
     lateinit var tvLikeCnt : TextView
     lateinit var tvContent : TextView
     //lateinit var edtComment : EditText
+    lateinit var btnCom : Button
 
     init {
         tvId = itemView.findViewById(R.id.tv_roomTitle)
@@ -25,5 +27,6 @@ class FeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         tvLikeCnt = itemView.findViewById(R.id.tvLikeCnt2)
         tvContent = itemView.findViewById(R.id.tvContent2)
         //edtComment = itemView.findViewById(R.id.edtComment)
+        btnCom = itemView.findViewById(R.id.btnCom)
     }
 }
