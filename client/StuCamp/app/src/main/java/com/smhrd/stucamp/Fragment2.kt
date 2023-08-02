@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.smhrd.stucamp.VO.UserVO
 import org.json.JSONObject
+import java.util.Date
 import java.util.Locale
 
 class Fragment2 : Fragment() {
@@ -42,27 +44,30 @@ class Fragment2 : Fragment() {
         val userVO = Gson().fromJson(user, UserVO::class.java)
         val userEmail = userVO.user_email
 
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
 
         reqQueue = Volley.newRequestQueue(requireActivity())
 
         val request = object : StringRequest(
-            Method.GET,
-            "http://172.30.1.50:8888/record/${userEmail}",
+            Request.Method.GET,
+,
+            "http://172.30.1.50:8888/record/${userEmail}?record_date=${today}",
             { response ->
                 Log.d("response", response.toString())
                 val result = JSONObject(response)
-                val recordDetails = result.getJSONArray("recordDetails")
+
+                val abc = result.getJSONArray("recordDetails")
+                val recordDetails = abc.getJSONArray(0)
+
+
 
                 for (i in 0 until recordDetails.length()) {
                     val recordDetail = recordDetails.getJSONObject(i)
-                    val details = recordDetail.getJSONArray("details")
 
-                    for (j in 0 until details.length()) {
-                        val detail = details.getJSONObject(j)
-                        val recordSubject = detail.getString("record_subject")
-                        val recordElapsedTime = detail.getLong("record_elapsed_time")
-                        recordData[recordSubject] = recordData.getOrDefault(recordSubject, 0L) + recordElapsedTime
-                    }
+                    val recordSubject = recordDetail.getString("record_subject")
+                    val recordElapsedTime = recordDetail.getLong("record_elapsed_time")
+                    recordData[recordSubject] = recordData.getOrDefault(recordSubject, 0L) + recordElapsedTime
                 }
 
                 for ((recordSubject, recordElapsedTime) in recordData) {
@@ -70,7 +75,6 @@ class Fragment2 : Fragment() {
                     adapter.addItem(recordSubject, formattedElapsedTime)
                     timerData.add(recordElapsedTime)
                     totalTime += recordElapsedTime
-
                 }
                 updateResultTime(totalTime)
                 adapter.notifyDataSetChanged()
@@ -79,12 +83,9 @@ class Fragment2 : Fragment() {
                 Log.d("error", error.toString())
             }
         ) {}
-
-
-
-
-// 이것을 요청 큐에 추가해야 합니다.
         reqQueue.add(request)
+
+
 
         // 과목 추가 액티비티로 이동
         val addButton: Button = view.findViewById(R.id.add)
