@@ -1,6 +1,7 @@
 package com.smhrd.stucamp
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.media.Image
 import java.io.FileInputStream
@@ -8,13 +9,24 @@ import java.io.FileOutputStream
 
 import android.view.View
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.smhrd.stucamp.VO.UserVO
+import org.json.JSONObject
+import java.net.URL
+import java.util.Locale
 
 
 class CalendarActivity : AppCompatActivity() {
@@ -23,14 +35,12 @@ class CalendarActivity : AppCompatActivity() {
     lateinit var str: String
     lateinit var calendarView: CalendarView
 
-    lateinit var deleteBtn:Button
-    lateinit var saveBtn:Button
     lateinit var diaryTextView: TextView
-    lateinit var diaryContent:TextView
     lateinit var title:TextView
     lateinit var contextEditText: EditText
     lateinit var back : ImageButton
 
+    lateinit var reqQueue : RequestQueue
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,54 +52,61 @@ class CalendarActivity : AppCompatActivity() {
         // UI값 생성
         calendarView=findViewById(R.id.calendarView)
         diaryTextView=findViewById(R.id.diaryTextView)
-        saveBtn=findViewById(R.id.saveBtn)
-        deleteBtn=findViewById(R.id.deleteBtn)
 
-        diaryContent=findViewById(R.id.diaryContent)
         title=findViewById(R.id.title)
-        contextEditText=findViewById(R.id.contextEditText)
         back = findViewById(R.id.back)
 
-
-
-
-        title.text = "캘린더"
-
-        val totalTime = intent.getStringExtra("totalTime")
-        totalTime?.let {
-            val diaryContentTextView: TextView = findViewById(R.id.diaryContent)
-            diaryContentTextView.text = "오늘 공부 시간 : $it"
-        }
-
+        reqQueue = Volley.newRequestQueue(this@CalendarActivity)
 
         back.setOnClickListener{
             var it_back: Intent = Intent(this, MainActivity::class.java)
             startActivity(it_back)
         }
 
+        val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
+        val user = Gson().fromJson(spf.getString("user", " "), UserVO::class.java)
+
+        fun formatToyyyyMMdd(year: Int, month: Int, dayOfMonth: Int): String {
+            return String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth)
+        }
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             diaryTextView.visibility = View.VISIBLE
-            saveBtn.visibility = View.VISIBLE
-            contextEditText.visibility = View.VISIBLE
-            diaryContent.visibility = View.INVISIBLE
 
-            deleteBtn.visibility = View.INVISIBLE
-            diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
-            contextEditText.setText("")
+            var selectedDate = formatToyyyyMMdd(year, month, dayOfMonth)
+            var userID = user.user_email
+
+            diaryTextView.text = String.format("%d-%d-%d", year, month + 1, dayOfMonth)
             checkDay(year, month, dayOfMonth, userID)
+
+            val request = object : StringRequest(
+                Request.Method.GET,
+                "http://172.30.1.22:8888/record/${userID}?record_date=${selectedDate}",
+                {
+                        response ->
+                    Log.d("response", response)
+//                    Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show()
+                    
+
+                },
+                {
+                        error ->
+                    Log.d("error", error.toString())
+                    Toast.makeText(this, "에러발생!", Toast.LENGTH_LONG).show()
+                }
+            ){
+//                override fun getParams(): MutableMap<String, String>? {
+//                    val params : MutableMap<String, String> = HashMap()
+//                    val user : UserVO = UserVO(inputEmail, inputPassword, null)
+//                    params.put("loginUser", Gson().toJson(user))
+//
+//                    return params
+//                }
+            }
+            reqQueue.add(request)
+
         }
 
-        saveBtn.setOnClickListener {
-            saveDiary(fname)
-            contextEditText.visibility = View.INVISIBLE
-            saveBtn.visibility = View.INVISIBLE
-
-            deleteBtn.visibility = View.VISIBLE
-            str = contextEditText.text.toString()
-            diaryContent.text = str
-            diaryContent.visibility = View.VISIBLE
-        }
 
     }
 
@@ -97,71 +114,21 @@ class CalendarActivity : AppCompatActivity() {
     // 달력 내용 조회, 수정
     fun checkDay(cYear: Int, cMonth: Int, cDay: Int, userID: String) {
         //저장할 파일 이름설정
-        fname = "" + userID + cYear + "-" + (cMonth + 1) + "" + "-" + cDay + ".txt"
 
-        var fileInputStream: FileInputStream
-        try {
-            fileInputStream = openFileInput(fname)
-            val fileData = ByteArray(fileInputStream.available())
-            fileInputStream.read(fileData)
-            fileInputStream.close()
-            str = String(fileData)
-            contextEditText.visibility = View.INVISIBLE
-            diaryContent.visibility = View.VISIBLE
-            diaryContent.text = str
-            saveBtn.visibility = View.INVISIBLE
 
-            deleteBtn.visibility = View.VISIBLE
-
-            deleteBtn.setOnClickListener {
-                diaryContent.visibility = View.INVISIBLE
-
-                deleteBtn.visibility = View.INVISIBLE
-                contextEditText.setText("")
-                contextEditText.visibility = View.VISIBLE
-                saveBtn.visibility = View.VISIBLE
-                removeDiary(fname)
-            }
-            if (diaryContent.text == null) {
-                diaryContent.visibility = View.INVISIBLE
-
-                deleteBtn.visibility = View.INVISIBLE
-                diaryTextView.visibility = View.VISIBLE
-                saveBtn.visibility = View.VISIBLE
-                contextEditText.visibility = View.VISIBLE
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
 
     // 달력 내용 제거
     @SuppressLint("WrongConstant")
     fun removeDiary(readDay: String?) {
-        var fileOutputStream: FileOutputStream
-        try {
-            fileOutputStream = openFileOutput(readDay, MODE_NO_LOCALIZED_COLLATORS)
-            val content = ""
-            fileOutputStream.write(content.toByteArray())
-            fileOutputStream.close()
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
+
     }
 
 
     // 달력 내용 추가
     @SuppressLint("WrongConstant")
     fun saveDiary(readDay: String?) {
-        var fileOutputStream: FileOutputStream
-        try {
-            fileOutputStream = openFileOutput(readDay, MODE_NO_LOCALIZED_COLLATORS)
-            val content = contextEditText.text.toString()
-            fileOutputStream.write(content.toByteArray())
-            fileOutputStream.close()
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
+
     }
 }

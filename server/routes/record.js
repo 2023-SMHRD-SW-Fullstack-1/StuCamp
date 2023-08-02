@@ -76,7 +76,7 @@ router.get("/:user_email?date={date}");
 
 // 기록 저장
 router.post("/add", async (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
   // 사용자로부터 받은 데이터(더미)
   // const requestData = {
   //   record: {
@@ -93,7 +93,7 @@ router.post("/add", async (req, res, next) => {
   // 실제
   const requestData = req.body;
 
-  const recordSaveReqDTO = new RecordSaveReqDTO(requestData.record)
+  const recordSaveReqDTO = new RecordSaveReqDTO(requestData.record);
   try {
     // 이메일을 기준으로 사용자 데이터 조회
     const userEntity = await User.findOne({
