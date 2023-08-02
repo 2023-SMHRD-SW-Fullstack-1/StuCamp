@@ -3,6 +3,7 @@ package com.smhrd.stucamp
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +28,7 @@ class MyFeedAdapter (var datas : ArrayList<MyFeedVO>, var context : Context)
         var ibHeart2 : ImageButton = holder.ibHeart2
         var tvLikeCnt2 : TextView = holder.tvLikeCnt2
         var tvContent2 : TextView = holder.tvContent2
-        //var edtComment : EditText = holder.edtComment
+
 
         var myFeed : MyFeedVO = datas.get(position)
 
@@ -35,6 +36,9 @@ class MyFeedAdapter (var datas : ArrayList<MyFeedVO>, var context : Context)
 
         tvLikeCnt2.text = myFeed.feedLikeCnt.toString()
         tvContent2.text = myFeed.feedContent
+
+
+
     }
 
 }

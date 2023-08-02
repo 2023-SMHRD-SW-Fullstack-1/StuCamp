@@ -86,10 +86,20 @@
         android:paddingTop="3dp"
         android:paddingRight="10dp"
         android:paddingBottom="3dp"
-        android:text="마이홈"
+        android:text="마이피드"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/btnWrite"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!-- -->
+    <EditText
+        android:id="@+id/editText_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="8dp"
+        android:hint="Write a comment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
