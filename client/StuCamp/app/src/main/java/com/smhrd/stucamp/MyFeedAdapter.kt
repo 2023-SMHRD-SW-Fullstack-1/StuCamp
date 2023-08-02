@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.smhrd.stucamp.VO.FeedDelVO
+import com.smhrd.stucamp.VO.FeedUpdateVO
 import com.smhrd.stucamp.VO.FeedVO
 import com.smhrd.stucamp.VO.MyFeedVO
 import com.smhrd.stucamp.VO.UserVO
@@ -47,6 +48,7 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
         var tvContent2 : TextView = holder.tvContent2
         //var edtComment : EditText = holder.edtComment
         var btnFeedDelete : Button = holder.btnFeedDelete
+        var btnFeedUpdate : Button = holder.btnFeedUpdate
 
         var reqQueue : RequestQueue = Volley.newRequestQueue(context)
 
@@ -104,42 +106,14 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
             reqQueue.add(request)
         }
 
-        //피드 삭제
-        btnFeedDelete.setOnClickListener {
-            val request = object : StringRequest(
-                Request.Method.POST,
-                "http://172.30.1.42:8888/feed/delete",
-                {
-                        response ->
-                    Log.d("response", response)
-//                    Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
-                    if(response == "1"){
-                        val intent = Intent(context, MainActivity::class.java)
-                        context.startActivity(intent)
-                    }
-
-                    if(response.equals("0")) {
-                        Toast.makeText(context, "error", Toast.LENGTH_LONG).show()
-                    }else{
-
-                    }
-                },
-                {
-                        error ->
-                    Log.d("error", error.toString())
-                    Toast.makeText(context, "에러발생!", Toast.LENGTH_LONG).show()
-                }
-            ){
-                override fun getParams(): MutableMap<String, String>? {
-                    val params : MutableMap<String, String> = HashMap()
-                    val deleteFeed : FeedDelVO = FeedDelVO(feed.feed_id, user_email)
-                    params.put("deleteFeed", Gson().toJson(deleteFeed))
-
-                    return params
-                }
-            }
-            reqQueue.add(request)
+        //피드 수정 -> 페이지 이동
+        btnFeedUpdate.setOnClickListener {
+            val intent = Intent(context, MyFeedUpdateActivity::class.java)
+            intent.putExtra("feed_id", feed.feed_id)
+            intent.putExtra("feed_content", feed.feed_content)
+            intent.putExtra("feed_img", feed.feed_img)
+            context.startActivity(intent)
         }
-    }
 
+    }
 }
