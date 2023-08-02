@@ -1,6 +1,7 @@
 package com.smhrd.stucamp
 // 현록
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -18,7 +19,10 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.smhrd.stucamp.VO.FeedDelVO
 import com.smhrd.stucamp.VO.FeedVO
+import com.smhrd.stucamp.VO.UserVO
 import org.json.JSONObject
 
 class Fragment1 : Fragment() {
@@ -36,6 +40,12 @@ class Fragment1 : Fragment() {
         rc = view.findViewById(R.id.rcFeed)
         reqQueue = Volley.newRequestQueue(requireActivity())
         feedList = ArrayList<FeedVO>()
+
+        //spf(로그인한 이메일 가져오기)
+        val spf = requireActivity().getSharedPreferences("mySPF", Context.MODE_PRIVATE)
+        val user = Gson().fromJson(spf.getString("user", ""), UserVO::class.java)
+        val user_email = user.user_email
+        Log.d("user_email",user_email)
 
         val request = object : StringRequest(
             Request.Method.GET,
@@ -62,7 +72,8 @@ class Fragment1 : Fragment() {
             { error ->
                 Log.d("error", error.toString())
             }
-        ) {}
+        ) {
+        }
 
         reqQueue.add(request)
 

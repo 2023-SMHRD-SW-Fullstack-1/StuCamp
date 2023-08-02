@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -24,7 +25,6 @@ class MyFeedActivity : AppCompatActivity() {
     lateinit var btnFeedDelete : Button
 
     lateinit var reqQueue: RequestQueue
-    lateinit var myFeedList: ArrayList<MyFeedVO>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,8 @@ class MyFeedActivity : AppCompatActivity() {
 //        feedList.add(MyFeedVO("hihi", 3, "하이하이"))
 //        feedList.add(MyFeedVO("ID1", 2, "하이하이1"))
 //        feedList.add(MyFeedVO("ID2", 5, "하이하이2"))
-//        feedList.add(MyFeedVO("ID3", 3, "하이하이3"))
+//        feedList.add(MyFeedVO("ID3", 3, "하이하이3")
+
 
         //myfeed 불러오기(서버 통신)
         val request = object : StringRequest(
@@ -65,7 +66,7 @@ class MyFeedActivity : AppCompatActivity() {
                     feedList.add(FeedVO(user_nickname, feed_like_cnt, feed_content, feed_img, feed_id))
                 }
                 Log.d("feedList", feedList.toString())
-                val adapter = FeedAdapter(feedList, this, Fragment1())
+                val adapter = MyFeedAdapter(feedList, this)
                 rc.layoutManager = LinearLayoutManager(this)
                 rc.adapter = adapter
             },

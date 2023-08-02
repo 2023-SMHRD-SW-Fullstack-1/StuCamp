@@ -18,6 +18,7 @@ router.post("/add", async (req, res) => {
     console.log("add 통신 확인");
 
     const feedAddReqDTO = new FeedAddReqDto(JSON.parse(req.body.feed));
+    console.log("+++++++++++++++++++++++++++++++++++++++");
     console.log(feedAddReqDTO);
     try {
         //이미지 처리
@@ -25,6 +26,7 @@ router.post("/add", async (req, res) => {
         // let decode = await Buffer.from(base64String, 'base64')
         // console.log("34343")
         // console.log(decode)
+        console.log(feedAddReqDTO.feed_img);
         const feed_imgpath = uuidv4();
         await fs.writeFileSync("public/img/feed/" + feed_imgpath + ".jpg", decode);
 
@@ -64,6 +66,12 @@ router.post("/add", async (req, res) => {
 //피드 수정
 router.patch("/update", async (req, res) => {
     const feedUpdateReqDTO = new FeedUpdateReqDto(JSON.parse(req.body.feed));
+    //이메일 조회
+    const userEntity = await User.findOne({
+        where: {
+            user_email: likeAddDTO.user_email,
+        },
+    });
     try {
         const feedEntity = await Feed.update(
             {
@@ -96,22 +104,31 @@ router.patch("/update", async (req, res) => {
 router.post("/delete", async (req, res, next) => {
     const feedDeleteDTO = new FeedDeleteReqDto(JSON.parse(req.body.deleteFeed));
 
-    try {
-        const feedEntity = await Feed.destroy({
-            where: {
-                feed_id: feedDeleteDTO.feed_id,
-                user_id: feedDeleteDTO.user_id,
-            },
-        });
+    //이메일 조회
+    const userEntity = await User.findOne({
+        where: {
+            user_email: feedDeleteDTO.user_email,
+        },
+    });
 
-        if (feedEntity) {
-            res.json(1);
-        } else {
-            res.json(0);
+    if (userEntity) {
+        try {
+            const feedEntity = await Feed.destroy({
+                where: {
+                    feed_id: feedDeleteDTO.feed_id,
+                    user_id: userEntity.user_id,
+                },
+            });
+
+            if (feedEntity) {
+                res.json(1);
+            } else {
+                res.json(0);
+            }
+        } catch (error) {
+            console.log("error", error);
+            next(error);
         }
-    } catch (error) {
-        console.log("error", error);
-        next(error);
     }
 });
 
@@ -123,16 +140,18 @@ router.get("/findall", async (req, res, next) => {
         const feedEntity = await Feed.findAll();
         let feedList = [];
 
-        for (let i = feedEntity.length; i >= 1; i--) {
+        for (let item of feedEntity) {
+            // console.log(feedEntity.length);
             try {
                 const feedOneEntity = await Feed.findOne({
                     where: {
-                        feed_id: i,
+                        feed_id: item.feed_id,
                     },
                 });
+                console.log("--------------------", feedOneEntity);
                 const commentEntity = await Comment.findAll({
                     where: {
-                        feed_id: i,
+                        feed_id: item.feed_id,
                     },
                 });
 
@@ -151,17 +170,54 @@ router.get("/findall", async (req, res, next) => {
                 feedResDTO.feed_imgpath = encode;
 
                 feedList.push(feedResDTO);
-                // console.log(feedResDTO);
+                console.log(feedResDTO);
             } catch (error) {
-                console.log("error", error);
+                console.log("피드 조회 error", error);
             }
         }
 
+        // for (let i = feedEntity.length; i >= 1; i--) {
+        //     console.log(feedEntity.length);
+        //     try {
+        //         const feedOneEntity = await Feed.findOne({
+        //             where: {
+        //                 feed_id: i,
+        //             },
+        //         });
+        //         console.log("--------------------", i, feedOneEntity);
+        //         const commentEntity = await Comment.findAll({
+        //             where: {
+        //                 feed_id: i,
+        //             },
+        //         });
+
+        //         //이메일 꺼내기
+        //         const userEntity = await User.findOne({
+        //             where: {
+        //                 user_id: feedOneEntity.user_id,
+        //             },
+        //         });
+
+        //         const feedResDTO = new FeedResDTO(feedOneEntity, commentEntity, userEntity);
+        //         const imgPath = feedResDTO.feed_imgpath;
+
+        //         const data = await fs2.readFile("public/img/feed/" + imgPath + ".jpg");
+        //         const encode = Buffer.from(data).toString("base64");
+        //         feedResDTO.feed_imgpath = encode;
+
+        //         feedList.push(feedResDTO);
+        //         console.log(feedResDTO);
+        //     } catch (error) {
+        //         console.log("피드 조회 error", error);
+        //     }
+        // }
+
         // 모든 파일 읽기 작업이 완료된 후에 응답을 보냅니다.
         const allfeeds = new FeedAllResDTO(feedList);
+        // console.log(allfeeds);
         res.json(allfeeds);
     } catch (error) {
-        console.log("error", error);
+        console.log("error : ", error);
         next(error);
     }
 });
@@ -187,16 +243,18 @@ router.get("/:user_email", async (req, res, next) => {
             });
             let feedList = [];
 
-            for (let i = feedEntity.length; i >= 1; i--) {
+            for (const item of feedEntity) {
+                console.log(item.feed_id);
                 try {
                     const feedOneEntity = await Feed.findOne({
                         where: {
-                            feed_id: i,
+                            feed_id: item.feed_id,
                         },
                     });
+                    console.log(feedOneEntity);
                     const commentEntity = await Comment.findAll({
                         where: {
-                            feed_id: i,
+                            feed_id: item.feed_id,
                         },
                     });
 
@@ -210,9 +268,35 @@ router.get("/:user_email", async (req, res, next) => {
                     feedList.push(feedResDTO);
                     // console.log(feedResDTO);
                 } catch (error) {
-                    console.log("error", error);
+                    console.log("error---------", error);
                 }
             }
+
+            // for (let i = feedEntity.length; i >= 1; i--) {
+            // console.log(feedEntity.length);
+            // try {
+            //     const feedOneEntity = await Feed.findOne({
+            //         where: {
+            //             feed_id: i,
+            //         },
+            //     });
+            //     console.log(feedOneEntity);
+            //     const commentEntity = await Comment.findAll({
+            //         where: {
+            //             feed_id: i,
+            //         },
+            //     });
+            //     const feedResDTO = new FeedResDTO(feedOneEntity, commentEntity, userEntity);
+            //     const imgPath = feedResDTO.feed_imgpath;
+            //     const data = await fs2.readFile("public/img/feed/" + imgPath + ".jpg");
+            //     const encode = Buffer.from(data).toString("base64");
+            //     feedResDTO.feed_imgpath = encode;
+            //     feedList.push(feedResDTO);
+            //     // console.log(feedResDTO);
+            // } catch (error) {
+            //     console.log("error---------", error);
+            // }
+            // }
 
             // 모든 파일 읽기 작업이 완료된 후에 응답을 보냅니다.
             const allfeeds = new FeedAllResDTO(feedList);

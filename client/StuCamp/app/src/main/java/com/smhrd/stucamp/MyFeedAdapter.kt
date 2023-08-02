@@ -2,11 +2,14 @@ package com.smhrd.stucamp
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -38,7 +41,7 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
         var feed : FeedVO = datas.get(position)
 
         var tvId2 : TextView = holder.tvId2
-        //var ivFeed : ImageView = holder.ivFeed
+        var ivFeed : ImageView = holder.ivFeed
         var ibHeart2 : ImageButton = holder.ibHeart2
         var tvLikeCnt2 : TextView = holder.tvLikeCnt2
         var tvContent2 : TextView = holder.tvContent2
@@ -55,7 +58,14 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
 //        tvLikeCnt2.text = myFeed.feedLikeCnt.toString()
 //        tvContent2.text = myFeed.feedContent
 
-
+        //데이터 저장
+        tvId2.text = feed.user_nickname
+        tvLikeCnt2.text = feed.feed_like_cnt.toString()
+        tvContent2.text = feed.feed_content
+        //이미지 변환
+        val imageBytes = Base64.decode(feed.feed_img, 0)
+        val feed_img2 = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        ivFeed.setImageBitmap(feed_img2)
 
         //피드 삭제
         btnFeedDelete.setOnClickListener {
@@ -65,14 +75,17 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
                 {
                         response ->
                     Log.d("response", response)
-                    Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
+//                    Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
+                    if(response == "1"){
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
+                    }
 
-                    if(response.equals("-1")) {
-                        Toast.makeText(context, "아이디나 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
+                    if(response.equals("0")) {
+                        Toast.makeText(context, "error", Toast.LENGTH_LONG).show()
                     }else{
 
                     }
-
                 },
                 {
                         error ->
@@ -82,8 +95,45 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
             ){
                 override fun getParams(): MutableMap<String, String>? {
                     val params : MutableMap<String, String> = HashMap()
-                    val user : FeedDelVO = FeedDelVO(feed.feed_id, user_email)
-                    params.put("loginUser", Gson().toJson(user))
+                    val deleteFeed : FeedDelVO = FeedDelVO(feed.feed_id, user_email)
+                    params.put("deleteFeed", Gson().toJson(deleteFeed))
+
+                    return params
+                }
+            }
+            reqQueue.add(request)
+        }
+
+        //피드 삭제
+        btnFeedDelete.setOnClickListener {
+            val request = object : StringRequest(
+                Request.Method.POST,
+                "http://172.30.1.42:8888/feed/delete",
+                {
+                        response ->
+                    Log.d("response", response)
+//                    Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
+                    if(response == "1"){
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
+                    }
+
+                    if(response.equals("0")) {
+                        Toast.makeText(context, "error", Toast.LENGTH_LONG).show()
+                    }else{
+
+                    }
+                },
+                {
+                        error ->
+                    Log.d("error", error.toString())
+                    Toast.makeText(context, "에러발생!", Toast.LENGTH_LONG).show()
+                }
+            ){
+                override fun getParams(): MutableMap<String, String>? {
+                    val params : MutableMap<String, String> = HashMap()
+                    val deleteFeed : FeedDelVO = FeedDelVO(feed.feed_id, user_email)
+                    params.put("deleteFeed", Gson().toJson(deleteFeed))
 
                     return params
                 }
