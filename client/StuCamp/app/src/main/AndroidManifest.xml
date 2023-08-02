@@ -23,6 +23,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".MyFeedUpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FeedChangeActivity"
+            android:exported="false" />
+        <activity
             android:name=".CommentActivity"
             android:exported="true" />
         <activity
@@ -65,7 +71,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

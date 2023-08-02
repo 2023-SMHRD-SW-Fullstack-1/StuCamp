@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -24,6 +26,7 @@ import com.google.gson.Gson
 import com.smhrd.stucamp.VO.FeedVO
 import com.smhrd.stucamp.VO.LikeVO
 import com.smhrd.stucamp.VO.UserVO
+import org.w3c.dom.Comment
 
 class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var activity: Fragment1)
     : RecyclerView.Adapter<FeedViewHolder>(){
@@ -48,6 +51,8 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
         var tvLikeCnt : TextView = holder.tvLikeCnt
         var tvContent : TextView = holder.tvContent
         //var edtComment : EditText = holder.edtComment
+        var btnCom : Button = holder.btnCom
+
         reqQueue = Volley.newRequestQueue(context)
         var feed : FeedVO = datas.get(position)
 
@@ -88,6 +93,12 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
         tvLikeCnt.text = feed.feed_like_cnt.toString()
         tvContent.text = feed.feed_content
         //edtComment.text = feed.edtComment
+
+        //댓글 버튼 클릭
+        btnCom.setOnClickListener(){
+            val intent = Intent(context, CommentActivity::class.java)
+            context.startActivity(intent)
+        }
 
         ibHeart.setOnClickListener(){
 
