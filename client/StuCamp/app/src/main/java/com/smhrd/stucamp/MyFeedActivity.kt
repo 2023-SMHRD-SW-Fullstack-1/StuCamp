@@ -1,6 +1,7 @@
 package com.smhrd.stucamp
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import com.google.gson.Gson
 import com.smhrd.stucamp.VO.FeedVO
 import com.smhrd.stucamp.VO.MyFeedVO
 import com.smhrd.stucamp.VO.UserVO
+import com.smhrd.stucamp.wish.WishListActivity
 import org.json.JSONObject
 
 class MyFeedActivity : AppCompatActivity() {
@@ -23,6 +25,8 @@ class MyFeedActivity : AppCompatActivity() {
     lateinit var rc : RecyclerView
     lateinit var btnFeedUpdate : Button
     lateinit var btnFeedDelete : Button
+    lateinit var btnPrev : Button
+    lateinit var btnMoveWish : Button
 
     lateinit var reqQueue: RequestQueue
 
@@ -30,6 +34,9 @@ class MyFeedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_feed)
 
+        //view 찾기
+        btnPrev = findViewById(R.id.btnPrev)
+        btnMoveWish = findViewById(R.id.btnMoveWish)
         rc = findViewById(R.id.rcMyFeed)
         reqQueue = Volley.newRequestQueue(this)
 
@@ -75,5 +82,19 @@ class MyFeedActivity : AppCompatActivity() {
             }
         ) {}
         reqQueue.add(request)
+
+        //main버튼 클릭시 main 뷰로 이동
+        btnPrev.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        //찜목록 버튼 클릭시 찜목록 뷰로 이동
+        btnMoveWish.setOnClickListener {
+            val intent = Intent(this, WishListActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 }
