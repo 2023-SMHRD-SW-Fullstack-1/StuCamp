@@ -15,7 +15,7 @@ class MyFeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
     //lateinit var edtComment : EditText
 
     init {
-        tvId2 = itemView.findViewById(R.id.tvId2)
+        tvId2 = itemView.findViewById(R.id.tv_roomTitle)
         //ivFeed = itemView.findViewById(R.id.ivFeed)
         ibHeart2 = itemView.findViewById(R.id.ibHeart2)
         tvLikeCnt2 = itemView.findViewById(R.id.tvLikeCnt2)

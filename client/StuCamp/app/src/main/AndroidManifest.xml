@@ -23,6 +23,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".chatlist.ChatListCreate"
+            android:exported="false" />
+        <activity
+            android:name=".chatlist.ChatList"
+            android:exported="false" />
+        <activity
             android:name=".chat.ChatActivity"
             android:exported="true" />
         <activity
