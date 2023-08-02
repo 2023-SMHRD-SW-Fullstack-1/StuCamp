@@ -15,10 +15,8 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
-import org.json.JSONArray
+import com.smhrd.stucamp.VO.UserVO
 import org.json.JSONObject
-import java.net.HttpURLConnection
 import java.net.URL
 
 class LoginActivity : AppCompatActivity() {
@@ -50,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
             val inputEmail = etLoginEmail.text.toString()
             val inputPassword = etLoginPw.text.toString()
 
-            val url = URL("http://172.30.1.22:8888/user/login")
+            val url = URL("http://172.30.1.42:8888/user/login")
 
 
             Log.d("inputEmail" , inputEmail)
@@ -59,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
             val request = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.22:8888/user/login",
+                "http://172.30.1.42:8888/user/login",
                 {
                         response ->
                     Log.d("response", response)

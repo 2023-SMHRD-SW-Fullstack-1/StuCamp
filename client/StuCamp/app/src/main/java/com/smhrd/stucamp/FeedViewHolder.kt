@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class FeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
+    lateinit var rv : RecyclerView
     lateinit var tvId : TextView
     //lateinit var ivFeed : ImageView
     lateinit var ibHeart : ImageButton

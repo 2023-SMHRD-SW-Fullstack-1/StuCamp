@@ -62,7 +62,7 @@ class TimerActivity : AppCompatActivity() {
 
                 // save time to server
                 val reqQueue = Volley.newRequestQueue(applicationContext)
-                val url = "http://172.30.1.50:8888/record/add"
+                val url = "http://172.30.1.42:8888/record/add"
 
                 val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
                 val user_email = spf.getString("user", "a") // user_email

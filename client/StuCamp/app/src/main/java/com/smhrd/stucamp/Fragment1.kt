@@ -39,7 +39,7 @@ class Fragment1 : Fragment() {
 
         val request = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.22:8888/feed/findall",
+            "http://172.30.1.42:8888/feed/findall",
             { response ->
                 Log.d("response", response.toString())
                 val result = JSONObject(response).getJSONArray("feedDetails")
@@ -55,7 +55,7 @@ class Fragment1 : Fragment() {
                     feedList.add(FeedVO(user_nickname, feed_like_cnt, feed_content, feed_img, feed_id))
                 }
                 Log.d("feedList", feedList.toString())
-                val adapter = FeedAdapter(feedList, requireActivity())
+                val adapter = FeedAdapter(feedList, requireActivity(), Fragment1())
                 rc.layoutManager = LinearLayoutManager(requireActivity())
                 rc.adapter = adapter
             },
