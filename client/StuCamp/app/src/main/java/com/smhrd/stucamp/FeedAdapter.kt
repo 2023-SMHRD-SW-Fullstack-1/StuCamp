@@ -120,7 +120,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
             ) {
                 override fun getParams(): MutableMap<String, String>? {
                     val params: MutableMap<String, String> = HashMap()
-                    val wish: WishVO = WishVO(user_email, feedId)
+                    val wish: WishVO = WishVO(user_email, feed_id)
                     params.put("wish", Gson().toJson(wish))
                     Log.d("params", wish.toString())
                     return params

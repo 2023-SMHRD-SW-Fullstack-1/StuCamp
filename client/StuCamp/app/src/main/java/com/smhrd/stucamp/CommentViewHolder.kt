@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val tvComId: TextView = view.findViewById(R.id.tvComId)
-    val tvComContent: TextView = view.findViewById(R.id.tvComContent)
+    val tvComId: TextView
+    val tvComContent: TextView
 
 
     init {
