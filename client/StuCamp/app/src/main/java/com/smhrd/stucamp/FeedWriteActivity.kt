@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -98,12 +99,14 @@ class FeedWriteActivity : AppCompatActivity() {
                     if(response == "1"){
                         var intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
+
+                        Toast.makeText(this, "피드 작성 완료", Toast.LENGTH_SHORT).show()
                     }
                 },
                 {
                         error ->
                     Log.d("error", error.toString())
-
+                    Toast.makeText(this, "피드 작성 실패", Toast.LENGTH_SHORT).show()
                 }
             ){
                 override fun getParams() : MutableMap<String, String>?{
@@ -155,6 +158,8 @@ class FeedWriteActivity : AppCompatActivity() {
             val extras: Bundle? = data?.extras
             val imageBitmap = extras?.get("data") as Bitmap
             ivUpload.setImageBitmap(imageBitmap)
+
+            encodeBitmapImg(imageBitmap)
         }
     }
 

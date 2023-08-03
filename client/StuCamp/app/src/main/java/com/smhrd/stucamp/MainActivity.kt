@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // 마이홈
+        // 마이피드
         btnMyHome.setOnClickListener(){
             var intent = Intent(this, MyFeedActivity::class.java)
             startActivity(intent)
@@ -89,9 +89,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-
-        // 로그아웃 버튼 클릭
+        // MyPage 버튼 클릭
         btnMyPage.setOnClickListener(){
 
             var intent = Intent(this, MemInfoActivity::class.java)
