@@ -46,7 +46,7 @@ class CommentActivity : AppCompatActivity() {
         //전체 댓글 불러오기
         val request = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.42:8888/comment/:feed_id",
+            "http://172.30.1.22:8888/comment/:feed_id",
             { response ->
                 Log.d("response", response.toString())
                 val result = JSONObject(response).getJSONArray("commentAll")
@@ -73,7 +73,7 @@ class CommentActivity : AppCompatActivity() {
         btnCommentSend.setOnClickListener() {
             val request1 = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.42:8888/comment/add",
+                "http://172.30.1.22:8888/comment/add",
                 { response ->
                     Log.d("response", response.toString())
                     val result = JSONObject(response).getJSONArray("commentAdd")

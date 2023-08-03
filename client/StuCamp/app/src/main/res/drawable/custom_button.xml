@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#F57C00" /> <!-- Pressed 상태에서의 배경색 -->
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFA726" /> <!-- Focused 상태에서의 배경색 -->
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FF9800" /> <!-- 일반 상태에서의 배경색 -->
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</selector>

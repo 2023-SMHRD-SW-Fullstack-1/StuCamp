@@ -45,12 +45,12 @@ class Fragment1 : Fragment() {
         //spf(로그인한 이메일 가져오기)
         val spf = requireActivity().getSharedPreferences("mySPF", Context.MODE_PRIVATE)
         val user = Gson().fromJson(spf.getString("user", ""), UserVO::class.java)
-        val user_email = user.user_email
-        Log.d("user_email",user_email)
+//        val user_email = user.user_email
+//        Log.d("user_email",user_email)
 
         val request = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.42:8888/feed/findall",
+            "http://172.30.1.22:8888/feed/findall",
             { response ->
                 Log.d("response", response.toString())
                 val result = JSONObject(response).getJSONArray("feedDetails")

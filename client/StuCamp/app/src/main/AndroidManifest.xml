@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.smhrd.stucamp">
     <!-- 인터넷 사용 허용하기 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -45,7 +46,9 @@
             android:exported="false" />
         <activity
             android:name=".MapActivity"
-            android:exported="false" />
+            android:exported="true" />
+
+
         <activity
             android:name=".TimerActivity"
             android:exported="true" />
@@ -60,13 +63,8 @@
             android:exported="true" />
         <activity
             android:name=".IntroActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".MemDeleteActivity" />
         <activity
             android:name=".LoginActivity"
@@ -80,11 +78,20 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="7480995f399f515c42165e970519c34d" />
+            android:value="7f8a68c564fcb4c3990a8c8963fd2d71" />
     </application>
 
 </manifest>
