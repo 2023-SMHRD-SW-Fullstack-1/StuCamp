@@ -241,7 +241,7 @@ router.get("/:user_email", async (req, res, next) => {
         },
     });
 
-    console.log("userEntitiy:", userEntity);
+    // console.log("userEntitiy:", userEntity);
 
     if (userEntity) {
         try {
@@ -348,9 +348,9 @@ router.get("/find/:id", async (req, res, next) => {
 
         const feedResDTO = new FeedResDTO(feedEntity, commentEntity, userEntitiy);
         const imgPath = feedResDTO.feed_imgpath;
-        console.log(imgPath);
-        console.log("public/img/feed/" + imgPath + ".jpg");
-        console.log(`public/img/feed/${imgPath}.jpg`);
+        // console.log(imgPath);
+        // console.log("public/img/feed/" + imgPath + ".jpg");
+        // console.log(`public/img/feed/${imgPath}.jpg`);
         //비동기 방식으로 파일 읽기)
 
         await fs.readFile("public/img/feed/" + imgPath + ".jpg", (err, data) => {

@@ -8,8 +8,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import com.smhrd.stucamp.VO.CommentResVO
 import com.smhrd.stucamp.VO.CommentVO
 import com.smhrd.stucamp.VO.FeedVO
@@ -36,14 +39,6 @@ class CommentAdapter(var datas: ArrayList<CommentVO>, var context: Context)
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         var tvComId : TextView = holder.tvComId
         var tvComContent : TextView = holder.tvComContent
-//        var etComment : EditText = holder.etComment
-//        var btnCommentSend : Button = holder.btnCommentSend
-//        var rvComment : RecyclerView = holder.rvComment
-//        var comment : CommentVO = datas.get(position)
 
-//        reqQueue = Volley.newRequestQueue(context)
-
-        //tvComId.text = comment.user_email
-        //tvComContent.text = comment.comment_content
     }
 }

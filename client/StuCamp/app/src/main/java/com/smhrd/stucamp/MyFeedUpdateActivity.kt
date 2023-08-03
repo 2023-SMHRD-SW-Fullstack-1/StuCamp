@@ -35,7 +35,8 @@ class MyFeedUpdateActivity : AppCompatActivity() {
 
     lateinit var reqQueue : RequestQueue
 
-    lateinit var encodeImgString : String
+//    lateinit var encodeImgString : String
+    var encodeImgString : String ? = null
 
     val STORAGE_CODE = 1000
 
@@ -85,16 +86,16 @@ class MyFeedUpdateActivity : AppCompatActivity() {
         etContent.setText(intent.getStringExtra("feed_content"))
         //이미지 변환
         val feed_img = intent.getStringExtra("feed_img")
+//        Log.d("feed img : ", feed_img.toString())
         val imageBytes = Base64.decode(feed_img, 0)
         val feed_img2 = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
         ivUpload.setImageBitmap(feed_img2)
-
 
         //피드 수정하기
         btnWrite.setOnClickListener {
             val request = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.22:8888/feed/update",
+                "http://172.30.1.42:8888/feed/update",
                 {
                         response ->
                     Log.d("response", response)
@@ -118,8 +119,13 @@ class MyFeedUpdateActivity : AppCompatActivity() {
             ){
                 override fun getParams(): MutableMap<String, String>? {
                     val params : MutableMap<String, String> = HashMap()
-
-                    val updateFeed : FeedUpdateVO = FeedUpdateVO(etContent.text.toString(), encodeImgString, user_email, feed_id)
+                    val updateFeed : FeedUpdateVO
+                    if(encodeImgString != null){
+//                        Log.d("aaaaaaaaaaa", encodeImgString)
+                        updateFeed = FeedUpdateVO(etContent.text.toString(), encodeImgString!!, user_email, feed_id)
+                    }else{
+                        updateFeed = FeedUpdateVO(etContent.text.toString(), feed_img.toString(), user_email, feed_id)
+                    }
                     params.put("updateFeed", Gson().toJson(updateFeed))
 
                     return params
@@ -146,6 +152,8 @@ class MyFeedUpdateActivity : AppCompatActivity() {
             STORAGE_CODE ->{
                 //image uri 가져오기
                 val selectedImgUri = data?.data
+
+                Log.d("selectedImgUri", selectedImgUri.toString())
 
                 if(selectedImgUri != null){
                     //uri -> bitmap 형태로 변환

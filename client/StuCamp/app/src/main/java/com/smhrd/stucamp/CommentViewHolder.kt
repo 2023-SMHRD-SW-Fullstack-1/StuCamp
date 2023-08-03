@@ -7,15 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val tvComId: TextView
-    val tvComContent: TextView
+    lateinit var tvComId: TextView
+    lateinit var tvComContent: TextView
+    lateinit var btnCommentDel : Button
 
 
     init {
         tvComId = itemView.findViewById(R.id.tvComId)
         tvComContent = itemView.findViewById(R.id.tvComContent)
-//        rvComment = itemView.findViewById(R.id.rvComment)
-//        etComment = itemView.findViewById(R.id.etComment)
-//        btnCommentSend = itemView.findViewById(R.id.btnCommentSend)
+        btnCommentDel = itemView.findViewById(R.id.btnCommentDel)
     }
 }
