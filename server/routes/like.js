@@ -5,7 +5,7 @@ const router = express.Router();
 
 //좋아요 클릭했을 때
 router.post("/add", async (req, res) => {
-    // console.log("like add 통신 확인");
+    console.log("like add 통신 확인");
     const likeAddDTO = new LikeAddReqDTO(JSON.parse(req.body.addLike));
 
     //이메일 조회
@@ -15,8 +15,20 @@ router.post("/add", async (req, res) => {
         },
     });
 
+    // console.log("==================", userEntity);
+
+    // //중복 좋아요 제외 처리
+    // let likeEntity = await Like.findAll({
+    //     where: {
+    //         user_id: userEntity.user_id,
+    //         feed_id: likeAddDTO.feed_id,
+    //     },
+    // });
+
+    // console.log("======================", likeEntity);
+
     if (userEntity) {
-        const likeEntity = await Like.build({
+        likeEntity = await Like.build({
             user_id: userEntity.user_id,
             feed_id: likeAddDTO.feed_id,
         });
@@ -108,6 +120,28 @@ router.post("/cancel", async (req, res, next) => {
         }
     } else {
         console.log("error");
+    }
+});
+
+//해당 게시물에 대한 좋아요 조회
+router.get("/:feed_id", async (req, res, next) => {
+    let result = req.params.feed_id;
+
+    try {
+        const likeEntity = await Like.findAll({
+            where: {
+                feed_id: result,
+            },
+        });
+
+        if (likeEntity) {
+            res.json(likeEntity);
+        } else {
+            res.json(0);
+        }
+    } catch {
+        console.log("error", error);
+        next(error);
     }
 });
 

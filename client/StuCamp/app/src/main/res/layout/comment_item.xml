@@ -30,4 +30,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvComId"
         app:layout_constraintStart_toEndOf="@+id/tvComId"
         app:layout_constraintTop_toTopOf="@+id/tvComId" />
+
+    <Button
+        android:id="@+id/btnCommentDel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="삭제"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

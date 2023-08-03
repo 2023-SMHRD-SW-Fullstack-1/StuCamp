@@ -75,14 +75,14 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
         btnFeedDelete.setOnClickListener {
             val request = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.22:8888/feed/delete",
+                "http://172.30.1.42:8888/feed/delete",
                 {
                         response ->
                     Log.d("response", response)
 //                    Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
                     if(response == "1"){
-                        val intent = Intent(context, MainActivity::class.java)
-                        context.startActivity(intent)
+                        datas.removeAt(position)
+                        notifyDataSetChanged()
                     }
 
                     if(response.equals("0")) {

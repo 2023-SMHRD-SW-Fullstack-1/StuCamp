@@ -1,6 +1,7 @@
 package com.smhrd.stucamp
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +30,6 @@ class CommentActivity : AppCompatActivity() {
     lateinit var adapter: CommentAdapter
     lateinit var resAdapter : CommentResAdapter
 
-    val commentList : ArrayList<CommentVO> = ArrayList()
     val commentResList : ArrayList<CommentResVO> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +56,7 @@ class CommentActivity : AppCompatActivity() {
         val request = object : StringRequest(
             Request.Method.GET,
 
-            "http://172.30.1.52:8888/comment/$feed_id",
+            "http://172.30.1.42:8888/comment/$feed_id",
             { response ->
                 val result = JSONObject(response).getJSONArray("commentDetails")
 
@@ -71,8 +71,8 @@ class CommentActivity : AppCompatActivity() {
 
                     Log.d("commentResList", commentResList.toString())
                 }
-                //                adapter.notifyDataSetChanged() // 어댑터에게 데이터가 변경되었음을 알림
                 resAdapter = CommentResAdapter(commentResList, this)
+                resAdapter.notifyDataSetChanged()
                 rvComment.layoutManager = LinearLayoutManager(this)
                 rvComment.adapter = resAdapter
             },
@@ -88,10 +88,19 @@ class CommentActivity : AppCompatActivity() {
         btnCommentSend.setOnClickListener() {
             val request = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.52:8888/comment/add",
+                "http://172.30.1.42:8888/comment/add",
                 { response ->
                     Log.d("responseAdd", response.toString())
+                    resAdapter.notifyDataSetChanged()
+//                    resAdapter.notifyItemInserted(commentResList.size)
+//                    // 스크롤을 가장 하단으로 이동
 
+                    //TODO 액티비티 화면 재갱신 시키는 코드
+                    intent = getIntent();
+                    finish(); //현재 액티비티 종료 실시
+                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                    startActivity(intent); //현재 액티비티 재실행 실시
+                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
                 },
                 { error ->
                     Log.d("error", error.toString())
@@ -99,18 +108,17 @@ class CommentActivity : AppCompatActivity() {
             ) {
                 override fun getParams(): MutableMap<String, String>? {
                     val params: MutableMap<String, String> = HashMap()
-                    //user_email : SPF 사용 해서 가져오고, content =>
-                    val comment: CommentVO =
-                        CommentVO(user_email, feed_id, etComment.text.toString())
+                    val comment: CommentVO = CommentVO(user_email, feed_id, etComment.text.toString())
                     params.put("addComment", Gson().toJson(comment))
                     etComment.text.clear()
-
                     return params
                 }
             }
-
             reqQueue.add(request)
         }
+
+
+
     }
 
 }

@@ -55,20 +55,28 @@ router.post("/add", async (req, res, next) => {
 });
 
 // 찜 삭제
-router.delete("/delete", async (req, res, next) => {
-    const wishDeleteReqDTO = new WishDeleteReqDTO(req.body.deleteFeed);
+router.post("/delete", async (req, res, next) => {
+    let result = JSON.parse(req.body.wish);
+    // const wishDeleteReqDTO = new WishDeleteReqDTO(JSON.parse(req.body.wish));
 
     try {
+        const userEntitiy = await User.findOne({
+            where: {
+                user_email: result.user_email,
+            },
+        });
+
         const wishEntity = await Wish.destroy({
             where: {
-                feed_id: wishDeleteReqDTO.feed_id,
+                feed_id: result.feed_id,
+                user_id: userEntitiy.user_id,
             },
         });
 
         if (wishEntity) {
-            res.json("wish delete success");
+            res.json(1);
         } else {
-            res.json("wish delete fail");
+            res.json(0);
         }
     } catch (error) {
         console.log("error", error);
@@ -93,7 +101,7 @@ router.get("/:user_email", async (req, res, next) => {
             },
             include: [Feed],
         });
-        console.log(wishEntity);
+        // console.log(wishEntity);
         if (wishEntity.length > 0) {
             //이미지 변환
             for (let item of wishEntity) {
@@ -108,7 +116,7 @@ router.get("/:user_email", async (req, res, next) => {
                 // console.log("encode : ", encode);
                 item.Feed.set("feed_imgpath", encode);
             }
-
+            // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", wishEntity);
             res.json(wishEntity);
         } else {
             res.json(-1);

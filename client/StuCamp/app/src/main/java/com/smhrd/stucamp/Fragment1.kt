@@ -24,6 +24,8 @@ import com.google.gson.Gson
 import com.smhrd.stucamp.VO.FeedDelVO
 import com.smhrd.stucamp.VO.FeedVO
 import com.smhrd.stucamp.VO.UserVO
+import com.smhrd.stucamp.VO.WishListVO
+import org.json.JSONArray
 import org.json.JSONObject
 
 class Fragment1 : Fragment() {
@@ -45,12 +47,12 @@ class Fragment1 : Fragment() {
         //spf(로그인한 이메일 가져오기)
         val spf = requireActivity().getSharedPreferences("mySPF", Context.MODE_PRIVATE)
         val user = Gson().fromJson(spf.getString("user", ""), UserVO::class.java)
-//        val user_email = user.user_email
+        val user_email = user.user_email
 //        Log.d("user_email",user_email)
 
         val request = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.22:8888/feed/findall",
+            "http://172.30.1.42:8888/feed/findall",
             { response ->
                 Log.d("response", response.toString())
                 val result = JSONObject(response).getJSONArray("feedDetails")
@@ -67,8 +69,10 @@ class Fragment1 : Fragment() {
                 }
                 Log.d("feedList", feedList.toString())
                 val adapter = FeedAdapter(feedList, requireActivity(), Fragment1())
+                adapter.notifyDataSetChanged()
                 rc.layoutManager = LinearLayoutManager(requireActivity())
                 rc.adapter = adapter
+
             },
             { error ->
                 Log.d("error", error.toString())
