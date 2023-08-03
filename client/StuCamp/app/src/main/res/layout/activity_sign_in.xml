@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F6F4F1"
     tools:context=".SignInActivity">
 
     <TextView
@@ -11,8 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="회원가입"
-        android:textSize="34sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -49,11 +51,14 @@
     <EditText
         android:id="@+id/etSignInPw"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/edit_text_design"
         android:ems="10"
+        android:fontFamily="@font/nanum_square_neo_brg"
         android:hint="비밀번호"
-        android:inputType="text"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
         android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="@+id/etSignInEmail"
         app:layout_constraintStart_toStartOf="@+id/etSignInEmail"
@@ -62,11 +67,14 @@
     <EditText
         android:id="@+id/etSignInPwCheck"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/edit_text_design"
         android:ems="10"
+        android:fontFamily="@font/nanum_square_neo_brg"
         android:hint="비밀번호 확인"
-        android:inputType="text"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
         android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="@+id/etSignInPw"
         app:layout_constraintStart_toStartOf="@+id/etSignInPw"
@@ -75,27 +83,35 @@
     <EditText
         android:id="@+id/etSignInEmail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/edit_text_design"
         android:ems="10"
+        android:fontFamily="@font/nanum_square_neo_brg"
         android:hint="이메일"
         android:inputType="text"
+        android:paddingLeft="10dp"
         android:textSize="19sp"
         app:layout_constraintBottom_toTopOf="@+id/btnSignIn"
         app:layout_constraintEnd_toEndOf="@+id/tvSingIn"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="@+id/tvSingIn"
         app:layout_constraintTop_toBottomOf="@+id/tvSingIn"
-        app:layout_constraintVertical_bias="0.24000001" />
+        app:layout_constraintVertical_bias="0.123" />
 
     <Button
         android:id="@+id/btnSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="#7A7A7A"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#E0D9C9"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="가입하기"
+        android:textColor="#3A3730"
+        app:cornerRadius="15dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
         app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/guideline12" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -115,16 +131,17 @@
     <EditText
         android:id="@+id/etSignInNick"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/edit_text_design"
         android:ems="10"
+        android:fontFamily="@font/nanum_square_neo_brg"
         android:hint="닉네임"
         android:inputType="text"
+        android:paddingLeft="10dp"
         android:textSize="19sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSignIn"
         app:layout_constraintEnd_toEndOf="@+id/etSignInPwCheck"
         app:layout_constraintStart_toStartOf="@+id/etSignInPwCheck"
-        app:layout_constraintTop_toBottomOf="@+id/etSignInPwCheck"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/etSignInPwCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

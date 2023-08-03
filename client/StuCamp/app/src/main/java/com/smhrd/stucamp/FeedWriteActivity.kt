@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -90,7 +91,7 @@ class FeedWriteActivity : AppCompatActivity() {
             val request = object : StringRequest(
                 //일반적으로 크기가 큰 경우엔 POST 방식 사용
                 Request.Method.POST,
-                "http://172.30.1.22:8888/feed/add",
+                "http://172.30.1.25:8888/feed/add",
                 {
                         response ->
                     Log.d("response", response.toString())
@@ -98,12 +99,14 @@ class FeedWriteActivity : AppCompatActivity() {
                     if(response == "1"){
                         var intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
+
+                        Toast.makeText(this, "피드 작성 완료", Toast.LENGTH_SHORT).show()
                     }
                 },
                 {
                         error ->
                     Log.d("error", error.toString())
-
+                    Toast.makeText(this, "피드 작성 실패", Toast.LENGTH_SHORT).show()
                 }
             ){
                 override fun getParams() : MutableMap<String, String>?{
@@ -140,7 +143,7 @@ class FeedWriteActivity : AppCompatActivity() {
                     ivUpload.setImageBitmap(bitmap)
 
                     val options = BitmapFactory.Options()
-                    options.inSampleSize = 2 // 4개의 픽셀 -> 1개의 픽셀 => 1/4 크기로 변환
+                    options.inSampleSize = 16 // 4개의 픽셀 -> 1개의 픽셀 => 1/4 크기로 변환
 
                     // filter => true(선명하게) / false(흐릿하게)
                     val resized = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
@@ -155,6 +158,8 @@ class FeedWriteActivity : AppCompatActivity() {
             val extras: Bundle? = data?.extras
             val imageBitmap = extras?.get("data") as Bitmap
             ivUpload.setImageBitmap(imageBitmap)
+
+            encodeBitmapImg(imageBitmap)
         }
     }
 

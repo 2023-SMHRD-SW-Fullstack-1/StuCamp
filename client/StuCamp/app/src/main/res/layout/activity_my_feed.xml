@@ -20,8 +20,12 @@
         android:id="@+id/btnPrev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="main"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="#E0D9C9"
+        android:fontFamily="@font/nanum_square_neo_deb"
+        android:text="메인"
+        android:textColor="#3A3730"
+        app:cornerRadius="15dp"
         app:layout_constraintBottom_toTopOf="@+id/rcMyFeed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,8 +35,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:text="찜목록"
-        app:layout_constraintBottom_toTopOf="@+id/rcMyFeed"
+        android:backgroundTint="#E0D9C9"
+        android:fontFamily="@font/nanum_square_neo_deb"
+        android:text="찜 목록"
+        android:textColor="#3A3730"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPrev"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/btnPrev" />
 </androidx.constraintlayout.widget.ConstraintLayout>

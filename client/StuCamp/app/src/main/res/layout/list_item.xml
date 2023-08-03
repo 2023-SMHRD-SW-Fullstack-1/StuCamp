@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="Name"
         android:textSize="18sp" />
 
@@ -18,6 +19,7 @@
         android:id="@+id/time_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="00:00:00"
         android:textSize="18sp" />
 </LinearLayout>

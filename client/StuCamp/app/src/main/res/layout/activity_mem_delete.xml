@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F6F4F1"
     tools:context=".MemDeleteActivity">
 
     <EditText
         android:id="@+id/etDeletePw"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_design"
         android:ems="10"
-        android:hint="비밀번호를 입력해주세요"
-        android:inputType="text"
+        android:fontFamily="@font/nanum_square_neo_brg"
+        android:hint="비밀번호 입력"
+        android:inputType="textPassword"
         android:paddingLeft="10dp"
         android:textSize="19sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
@@ -23,11 +26,13 @@
     <EditText
         android:id="@+id/etDeletePwCheck"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_design"
         android:ems="10"
+        android:fontFamily="@font/nanum_square_neo_brg"
         android:hint="비밀번호 확인"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:paddingLeft="10dp"
         android:textSize="19sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
@@ -37,28 +42,31 @@
     <EditText
         android:id="@+id/etDeleteEmail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="204dp"
+        android:background="@drawable/edit_text_design"
         android:ems="10"
+        android:fontFamily="@font/nanum_square_neo_brg"
         android:hint="이메일"
         android:inputType="text"
         android:paddingLeft="10dp"
         android:textSize="19sp"
         app:layout_constraintBottom_toTopOf="@+id/btnDelelte"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/tvDelete"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintStart_toStartOf="@+id/guideline6" />
 
     <TextView
         android:id="@+id/la"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:fontFamily="@font/nanum_square_neo_brg"
         android:text="정말 탈퇴하시겠습니까?"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/etDeleteEmail"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toTopOf="@+id/guideline21" />
+        app:layout_constraintTop_toTopOf="@+id/guideline21"
+        app:layout_constraintVertical_bias="0.65999997" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline21"
@@ -78,9 +86,12 @@
         android:id="@+id/btnDelelte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:backgroundTint="#7A7A7A"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#E0D9C9"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="탈퇴하기"
+        android:textColor="#3A3730"
+        app:cornerRadius="15dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline22"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6" />
