@@ -18,6 +18,7 @@ class FeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
     lateinit var tvContent : TextView
     //lateinit var edtComment : EditText
     lateinit var btnCom : Button
+    var btnAddWish : Button
 
     init {
         tvId = itemView.findViewById(R.id.tv_roomTitle)
@@ -28,5 +29,6 @@ class FeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         tvContent = itemView.findViewById(R.id.tvContent2)
         //edtComment = itemView.findViewById(R.id.edtComment)
         btnCom = itemView.findViewById(R.id.btnCom)
+        btnAddWish = itemView.findViewById(R.id.btnAddWish)
     }
 }

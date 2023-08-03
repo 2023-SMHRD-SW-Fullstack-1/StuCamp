@@ -23,7 +23,9 @@ class MemInfoActivity : AppCompatActivity() {
     lateinit var etInfoPw: EditText
     lateinit var etInfoPwCheck: EditText
     lateinit var etInfoNick: EditText
-    lateinit var btnInfo: Button
+    lateinit var btnLogout : Button
+    lateinit var btnSetInfo: Button
+    lateinit var btnToDelete : Button
 
     lateinit var reqQueue: RequestQueue
 
@@ -36,13 +38,16 @@ class MemInfoActivity : AppCompatActivity() {
         etInfoPw = findViewById(R.id.etInfoPw)
         etInfoPwCheck = findViewById(R.id.etInfoPwCheck)
         etInfoNick = findViewById(R.id.etInfoNick)
-        btnInfo = findViewById(R.id.btnInfo)
+        btnLogout = findViewById(R.id.btnLogout)
+        btnSetInfo = findViewById(R.id.btnSetInfo)
+        btnToDelete = findViewById(R.id.btnToDelete)
 
         reqQueue = Volley.newRequestQueue(this@MemInfoActivity)
 
         // spf 처리
         val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
         val user = spf.getString("user", " ")
+        val editor = spf.edit()
         val userVO = Gson().fromJson(user, UserVO::class.java)
 
         val userEmail = userVO.user_email
@@ -53,7 +58,7 @@ class MemInfoActivity : AppCompatActivity() {
         etInfoEmail.setText(userEmail.toString())
         etInfoNick.setText(userNick.toString())
 
-        btnInfo.setOnClickListener {
+        btnSetInfo.setOnClickListener {
             val inputPw = etInfoPw.text.toString()
             val inputPwCheck = etInfoPwCheck.text.toString()
             val inputNick = etInfoNick.text.toString()
@@ -62,28 +67,25 @@ class MemInfoActivity : AppCompatActivity() {
             if (inputPw == inputPwCheck) {
                 val request = object : StringRequest(
                     Request.Method.PUT,
-                    "http://172.30.1.42:8888/user/update",
+                    "http://172.30.1.25:8888/user/update",
                     { response ->
                         Log.d("update response", response)
 
                         val result = response
 
                         if (result == "1") {
-                            Log.d("update result", result.toString())
-                            Toast.makeText(this, "수정 성공!", Toast.LENGTH_LONG).show()
 
                             val updatedUser = UserVO(userEmail, inputPw, inputNick)
                             val updatedUserJson = Gson().toJson(updatedUser)
 
-                            // Editor 생성
-                            val editor = spf.edit()
                             // editor를 통해 로그인한 회원의 정보 저장
                             editor.putString("user", updatedUserJson)
                             editor.commit()
 
-                            // MainActivity 혹은 다른 화면으로 전환할 때 사용하는 코드 (예시로 MemDeleteActivity를 사용하였슴)
-                            val it = Intent(this, MemDeleteActivity::class.java)
-                            startActivity(it)
+                            Toast.makeText(this, "수정 성공!", Toast.LENGTH_LONG).show()
+
+                            var intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
                         } else {
                             Log.d("response", response)
                             Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_LONG).show()
@@ -110,6 +112,19 @@ class MemInfoActivity : AppCompatActivity() {
                 Toast.makeText(this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
             } // 비밀번호 확인 불일치 끝
         } //btnInfo 클릭리스너 끝
+
+        btnToDelete.setOnClickListener{
+            val it = Intent(this, MemDeleteActivity::class.java)
+            startActivity(it)
+        }
+
+        btnLogout.setOnClickListener{
+            editor.remove("user")
+            editor.commit()
+
+            var intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }

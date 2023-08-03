@@ -3,13 +3,14 @@ const router = express.Router();
 const Wish = require("../models/wish");
 const User = require("../models/user");
 const Feed = require("../models/feed");
+const fs2 = require("fs").promises;
 const WishSaveDTO = require("../dto/wishDTO/WishSaveDTO");
 const WishDeleteReqDTO = require("../dto/wishDTO/WishDeleteReqDTO");
 const WishFindDTO = require("../dto/wishDTO/WishFindDTO");
 
 // 찜 등록
 router.post("/add", async (req, res, next) => {
-  let result = req.body.wish;
+  let result = JSON.parse(req.body.wish);
 
   const user = await User.findOne({
     where: {
@@ -27,6 +28,7 @@ router.post("/add", async (req, res, next) => {
   let wishEntity = await Wish.findOne({
     where: {
       user_id: user.user_id,
+      feed_id: feed.feed_id,
     },
   });
 
@@ -43,11 +45,11 @@ router.post("/add", async (req, res, next) => {
       .save()
       .then((wish) => {
         console.log("wish saved:", wish.toJSON);
-        res.json("wish success");
+        res.json(1);
       })
       .catch((error) => {
         console.log("Error saving user:", error);
-        res.json("wish fail");
+        res.json(0);
       });
   }
 });
@@ -85,12 +87,17 @@ router.get("/:user_email", async (req, res, next) => {
         user_email: wishFindDTO.user_email,
       },
     });
-    const wishEntity = await Feed.findAll({
+    const wishEntity = await Wish.findAll({
       where: {
         user_id: userEntity.user_id,
       },
+      include: [Feed],
     });
-    res.json(wishEntity);
+    if (wishEntity.length > 0) {
+      res.json(wishEntity);
+    } else {
+      res.json(-1);
+    }
   } catch (error) {
     console.log("error", error);
     next(error);

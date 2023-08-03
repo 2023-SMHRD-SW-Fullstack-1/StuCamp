@@ -50,55 +50,34 @@ class SignInActivity : AppCompatActivity() {
 
             reqQueue = Volley.newRequestQueue(this@SignInActivity)
 
-            // SharedPreference 생성
-            val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
-            val test = spf.getString("joinUser", " ")
-            Log.d("userState", test.toString())
-
 
             if(inputPassword==inputPwCheck){
-                 val request = object : StringRequest(
+                val request = object : StringRequest(
                     Request.Method.POST,
                     "http://172.30.1.50:8888/user/join",
                     {
                         response ->
                         Log.d("response", response)
-//                        Toast.makeText(this, "성공", Toast.LENGTH_LONG).show()
 
                         if(response == "existed email") {
                             Toast.makeText(this, "이미 존재하는 이메일입니다", Toast.LENGTH_LONG).show()
                         } else if(response == "join fail") {
                             Toast.makeText(this, "가입실패! 다시 시도해주세요.", Toast.LENGTH_LONG).show()
-                        }
+                        } else {
+                            Toast.makeText(this, "가입성공!", Toast.LENGTH_LONG).show()
 
-                        else {
-                            Log.d("response", response)
-//                            Toast.makeText(this, "성공", Toast.LENGTH_LONG).show()
-                            Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show()
-
-                            val result = response
-//                            Log.d("result", result.toString())
-//                            val joinUser  = result.getJSONObject(0)
-//                            Log.d("joinUser", joinUser.toString())
-                            // Editor 생성
-                            val editor = spf.edit()
-                            // editor를 통해 로그인한 회원의 정보 저장
-                            editor.putString("joinUser", response)
-                            editor.commit()
 
                             // firebase 에 user 저장
                             val database = Firebase.database
                             val userRef = database.getReference("User")
                             userRef.push().setValue(UserVO(inputEmail, inputPassword, InputNickname))
 
-                            // MainActivity로 전환 (Intent)joinUser
-                            val it = Intent(this, MainActivity::class.java)
+                            val it = Intent(this, LoginActivity::class.java)
                             startActivity(it)
                         }
 
                     },
-                    {
-                        error ->
+                    { error ->
                         Log.d("error", error.toString())
                         Toast.makeText(this, "에러발생!", Toast.LENGTH_LONG).show()
                     }
@@ -113,7 +92,8 @@ class SignInActivity : AppCompatActivity() {
                     }
                 }
                 reqQueue.add(request)
-            } // 비밀번호 일치 끝
+            }
+            // 비밀번호 일치 끝
 
             else{
              Toast.makeText(this,"비밀번호가 일치하지 않습니다",Toast.LENGTH_LONG).show()
