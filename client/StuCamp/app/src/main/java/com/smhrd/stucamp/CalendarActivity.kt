@@ -186,8 +186,10 @@ class CalendarActivity : AppCompatActivity() {
                     if (response == "-1") {
                         // 빈 Date 보냈을시
                         diaryTextView.text = "총 공부시간 : 0분"
-                        pieChart.visibility = 0
+                        pieChart.visibility = View.INVISIBLE
                     } else {
+                        pieChart.visibility = View.VISIBLE
+
                         var result = response.trimIndent()
                         Log.d("response222", result)
 
