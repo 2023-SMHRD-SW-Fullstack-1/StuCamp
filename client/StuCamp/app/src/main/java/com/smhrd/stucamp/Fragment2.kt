@@ -1,6 +1,4 @@
-package com.smhrd.stucamp
-
-import android.content.Intent
+package com.smhrd.stucamp import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,8 +22,7 @@ import com.smhrd.stucamp.VO.UserVO
 import org.json.JSONObject
 import java.util.Date
 import java.util.Locale
-
-class Fragment2 : Fragment() {
+import java.util.HashMap class Fragment2 : Fragment() {
     private lateinit var adapter: CustomAdapter
     private var totalTime: Long = 0L
     private lateinit var resultTimeTextView: TextView
@@ -38,14 +35,16 @@ class Fragment2 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_2, container, false)
-        // 유저 spf처리
+
+        // 유저 spf 처리
         val userSpf = requireActivity().getSharedPreferences("mySPF", Context.MODE_PRIVATE)
         val user = userSpf.getString("user", " ")
         val userVO = Gson().fromJson(user, UserVO::class.java)
         val userEmail = userVO.user_email
 
-        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-
+        val currentDate = Date()
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val today = format.format(currentDate)
 
         reqQueue = Volley.newRequestQueue(requireActivity())
 
@@ -59,8 +58,6 @@ class Fragment2 : Fragment() {
 
                 val abc = result.getJSONArray("recordDetails")
                 val recordDetails = abc.getJSONArray(0)
-
-
 
                 for (i in 0 until recordDetails.length()) {
                     val recordDetail = recordDetails.getJSONObject(i)
@@ -85,7 +82,25 @@ class Fragment2 : Fragment() {
         ) {}
         reqQueue.add(request)
 
+        val listView: ListView = view.findViewById(R.id.listView)
+        adapter = CustomAdapter(requireContext())
+        listView.adapter = adapter
 
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val currentSubject = adapter.getItem(position)?.first ?: return@setOnItemClickListener
+            val intent = Intent(activity, TimerActivity::class.java).apply {
+                putExtra("position", position)
+                putExtra("elapsedTime", recordData[currentSubject])
+            }
+            startActivityForResult(intent, 2)
+
+            val currentName = adapter.getItem(position)?.first
+            val sharedPreferences = requireActivity().getSharedPreferences("SubjectSpf", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("SubjectSpf", currentName)
+            Log.d("SubjectSpf", sharedPreferences.toString())
+            editor.commit()
+        }
 
         // 과목 추가 액티비티로 이동
         val addButton: Button = view.findViewById(R.id.add)
@@ -97,52 +112,15 @@ class Fragment2 : Fragment() {
         // 캘린더 액티비티로 이동
         val calendarbtn: Button = view.findViewById(R.id.calendarbtn)
         calendarbtn.setOnClickListener {
-            var next: Intent = Intent(requireActivity(), CalendarActivity::class.java).apply {
+            val next = Intent(requireActivity(), CalendarActivity::class.java).apply {
                 putExtra("totalTime", formatElapsedTime(totalTime))
             }
             startActivity(next)
         }
 
-
-        // 리스트뷰 어댑터
-        val listView: ListView = view.findViewById(R.id.listView)
-        adapter = CustomAdapter(requireContext())
-        listView.adapter = adapter
-
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val currentSubject = adapter.getItem(position)?.first ?: return@setOnItemClickListener
-            val intent = Intent(activity, TimerActivity::class.java).apply {
-                putExtra("position", position)
-//                putExtra("elapsedTime", timerData[position])
-                putExtra("elapsedTime", recordData[currentSubject])
-            }
-            startActivityForResult(intent, 2)
-
-            // 항목의 이름 값을 가져옵니다.
-            val currentName = adapter.getItem(position)?.first
-
-            // SharedPreferences에 이름 값을 저장합니다.
-            val sharedPreferences = requireActivity().getSharedPreferences("SubjectSpf", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putString("SubjectSpf", currentName)
-            Log.d("SubjectSpf", sharedPreferences.toString())
-            editor.commit()
-        }
-
-        val subjectsPreferences = requireActivity().getSharedPreferences("Subjects", Context.MODE_PRIVATE)
-        val subjectsIds = subjectsPreferences.getStringSet("SubjectsIds", mutableSetOf<String>()) ?: mutableSetOf()
-
-        // 저장된 과목 데이터를 불러와 adapter에 추가합니다.
-        for (subjectId in subjectsIds) {
-            val subject = subjectsPreferences.getString(subjectId, "")
-            val elapsedTime = subjectsPreferences.getLong("${subjectId}_time", 0L)
-//            adapter.addItem(subject!!, formatElapsedTime(elapsedTime))
-            timerData.add(elapsedTime)
-            totalTime += elapsedTime // 여기에서 이전에 측정한 시간을 합산합니다.
-        }
-
         return view
-    } // view끝
+    }
+
     private fun isSubjectDuplicated(subject: String): Boolean {
         for (i in 0 until adapter.count) {
             if (adapter.getItem(i)?.first == subject) {
@@ -151,26 +129,15 @@ class Fragment2 : Fragment() {
         }
         return false
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-
-        // 과목명 데려오기
+        // 과목명 가져오기
         if (requestCode == 1 && resultCode == RESULT_OK) {
             val name = data?.getStringExtra("name") ?: ""
 
             if (!isSubjectDuplicated(name)) {
-                val newSubjectId = "subject_${System.currentTimeMillis()}"
-
-                val subjectsPreferences = requireActivity().getSharedPreferences("Subjects", Context.MODE_PRIVATE)
-                val subjectsIds = subjectsPreferences.getStringSet("SubjectsIds", mutableSetOf<String>()) ?: mutableSetOf()
-                val editor = subjectsPreferences.edit()
-
-                editor.putString(newSubjectId, name)
-                subjectsIds.add(newSubjectId)
-                editor.putStringSet("SubjectsIds", subjectsIds)
-                editor.apply()
-
                 adapter.addItem(name)
                 timerData.add(0L)
             } else {
@@ -178,13 +145,13 @@ class Fragment2 : Fragment() {
             }
         }
 
-        // 시간 데려오기
+        // 시간 가져오기
         if (requestCode == 2 && resultCode == RESULT_OK) {
             val elapsedTime = data?.getLongExtra("elapsedTime", 0) ?: 0
             val position = data?.getIntExtra("position", 0)!!
             val subjectId = adapter.getItem(position)?.first
 
-            totalTime +=  elapsedTime
+            totalTime += elapsedTime
 
             updateResultTime(totalTime)
 
@@ -197,38 +164,59 @@ class Fragment2 : Fragment() {
             val editor = sharedPreferences.edit()
             editor.putLong("${subjectId}_time", elapsedTime)
             editor.apply()
+
+            sendDateUpdateRequest(totalTime)
         }
-    } //onActivityResult끝
+    }
+
+    private fun sendDateUpdateRequest(totalTime: Long) {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val updatedStartDate = sdf.format(Date())
+        val updatedEndDate = sdf.format(Date(totalTime))
+
+        val updateDateRequest = object : StringRequest(
+            Request.Method.PUT,
+            "http://172.30.1.50:8888/record/update",
+            { response ->
+                Log.d("response", response.toString())
+            },
+            { error ->
+                Log.d("error", error.toString())
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["record_start_date"] = updatedStartDate
+                params["record_end_date"] = updatedEndDate
+                return params
+            }
+        }
+        reqQueue.add(updateDateRequest)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         resultTimeTextView = view.findViewById(R.id.ResultTime)
         updateResultTime(totalTime)
-    }// 시분초 계산 후 화면에 띄우기
+    }
 
     private fun updateResultTime(totalTime: Long) {
         val formattedTotalTime = formatElapsedTime(totalTime)
         resultTimeTextView.text = formattedTotalTime
-    }// 시분초 계산 후 return 끝
+    }
 
     private fun formatElapsedTime(elapsedTime: Long): String {
         val hours = (elapsedTime / 3600000)
         val minutes = (elapsedTime % 3600000) / 60000
         val seconds = (elapsedTime % 60000) / 1000
         return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
-    }// 시분초 계산 후 return 끝
-} // class 끝
-
-
-
-// ------------------------------------------
-
-class CustomAdapter(context: Context) : ArrayAdapter<Pair<String, String>>(context, R.layout.list_item) {
-
+    }
+} class CustomAdapter(context: Context) : ArrayAdapter<Pair<String, String>>(context, R.layout.list_item) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var listItem = convertView
-        if (listItem == null)
+        if (listItem == null) {
             listItem = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
+        }
 
         val name = this.getItem(position)?.first ?: ""
         val time = this.getItem(position)?.second ?: ""
@@ -253,5 +241,4 @@ class CustomAdapter(context: Context) : ArrayAdapter<Pair<String, String>>(conte
             this.insert(Pair(item.first, time), position)
         }
     }
-
-} // CustomAdapter(과목 추가) 끝
+}
