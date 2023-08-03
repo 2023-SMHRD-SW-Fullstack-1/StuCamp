@@ -38,7 +38,7 @@ class TimerActivity : AppCompatActivity() {
     private var startTime: Long = 0
     private var stopTime: Long = 0
     private var differenceTime: Long = 0
-
+    private val pauseTimestamps = ArrayList<Pair<Long, Long>>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +85,7 @@ class TimerActivity : AppCompatActivity() {
                 stopTime = System.currentTimeMillis()
                 differenceTime = stopTime - startTime +1000
 //                elapsedTime += differenceTime
-
+                pauseTimestamps.add(Pair(startTime, stopTime)) // 추가합니다.
                 handler.removeCallbacks(runnable)
                 Log.d("MainActivity", "경과 시간: ${differenceTime} ms")
 
@@ -180,8 +180,22 @@ class TimerActivity : AppCompatActivity() {
 //            finish()
 
             // subSpf 데이터 없애기
-            subEditor.clear()
-            subEditor.commit()
+            val gson = Gson()
+            val pauseTimesJsonArray = gson.toJson(pauseTimestamps)
+            val recordDetailJson = JSONObject()
+            recordDetailJson.put("record_start_date", getCurrentDate())
+            recordDetailJson.put("record_end_date", getCurrentDate())
+            recordDetailJson.put("record_elapsed_time", differenceTime)
+            recordDetailJson.put("record_subject", subName)
+            recordDetailJson.put("pause_timestamps", pauseTimesJsonArray)  // 추가합니다.
+
+            val recordJson = JSONObject()
+            recordJson.put("record_date", getCurrentDate())
+            recordJson.put("user_email", userEmail)
+            recordJson.put("record_detail", recordDetailJson)
+
+            val jsonBody = JSONObject()
+            jsonBody.put("record", recordJson)
 
             val it = Intent(this, MainActivity::class.java)
             startActivity(it)

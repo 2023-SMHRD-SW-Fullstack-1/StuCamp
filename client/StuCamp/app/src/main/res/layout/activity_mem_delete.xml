@@ -37,10 +37,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/tvDelete" />
+        app:layout_constraintTop_toBottomOf="@+id/la" />
 
     <TextView
-        android:id="@+id/tvDelete"
+        android:id="@+id/la"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"

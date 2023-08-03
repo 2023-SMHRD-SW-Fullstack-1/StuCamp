@@ -3,13 +3,10 @@ package com.smhrd.stucamp
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.smhrd.stucamp.databinding.ActivityIntroBinding
+
 
 class IntroActivity : AppCompatActivity() {
 
@@ -17,12 +14,15 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
-        //인트로 화면을 몇초동안 보여주고 넘어가고 싶다 => Handler() 사용
+        // 애니메이션 로드
+        val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+
+        findViewById<ImageView>(R.id.tvDelete).startAnimation(fadeInAnimation)
+
         val handler = Handler()
-        handler.postDelayed({ //말 그대로 지연시키기({딜레이 후 뭘 할건지}, 몇 초동안 딜레이 시킬건지
-            // Intro 화면이 보이고 3초 뒤에 MainActivity 전환 -> Intent
-            var intent = Intent(this, LoginActivity::class.java)
+        handler.postDelayed({
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-        } , 500) //3000에서 잠시 수정
+        }, 1500)
     }
 }

@@ -15,13 +15,10 @@ import com.android.volley.toolbox.Volley
 import com.smhrd.stucamp.VO.CommentVO
 import com.smhrd.stucamp.VO.FeedVO
 
-class CommentAdapter (var datas : ArrayList<CommentVO>, var context : Context)
-    : RecyclerView.Adapter<CommentViewHolder>(){
+class CommentAdapter(val datas: ArrayList<CommentVO>, val context: Context) :
+    RecyclerView.Adapter<CommentViewHolder>() {
 
-    lateinit var reqQueue : RequestQueue
-//    lateinit var rvComment : RecyclerView
-//    lateinit var etComment : EditText
-//    lateinit var btnCommentSend : Button
+    lateinit var reqQueue: RequestQueue
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
         return CommentViewHolder(
@@ -34,19 +31,11 @@ class CommentAdapter (var datas : ArrayList<CommentVO>, var context : Context)
     }
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        var tvComId : TextView = holder.tvComId
-        var tvComContent : TextView = holder.tvComContent
-        var etComment : EditText = holder.etComment
-        var btnCommentSend : Button = holder.btnCommentSend
-
-        var comment : CommentVO = datas.get(position)
+        val comment: CommentVO = datas[position]
 
         reqQueue = Volley.newRequestQueue(context)
 
-
-        tvComId.text = comment.user_id
-        tvComContent.text = comment.comment_content
-
-
+        holder.tvComId.text = comment.user_id
+        holder.tvComContent.text = comment.comment_content
     }
 }
