@@ -47,7 +47,7 @@ class Fragment2 : Fragment() {
 
         val request = object : StringRequest(
             Method.GET,
-            "http://172.30.1.50:8888/record/${userEmail}",
+            "http://172.30.1.52:8888/record/${userEmail}",
             { response ->
                 Log.d("response", response.toString())
                 val result = JSONObject(response)

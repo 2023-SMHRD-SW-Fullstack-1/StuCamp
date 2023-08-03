@@ -89,33 +89,20 @@
         app:layout_constraintStart_toEndOf="@+id/ibHeart2"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
-    <EditText
-        android:id="@+id/edtComment2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:hint="댓글"
-        android:inputType="text"
-        android:paddingRight="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnCom"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvContent2" />
-
     <Button
         android:id="@+id/btnCom"
-        android:layout_width="50dp"
+        android:layout_width="80dp"
         android:layout_height="40dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:paddingLeft="0dp"
         android:paddingTop="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
-        android:text="댓"
+        android:text="댓글"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvContent2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

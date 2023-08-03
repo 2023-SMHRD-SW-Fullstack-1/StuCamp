@@ -62,7 +62,7 @@ class MemInfoActivity : AppCompatActivity() {
             if (inputPw == inputPwCheck) {
                 val request = object : StringRequest(
                     Request.Method.PUT,
-                    "http://172.30.1.42:8888/user/update",
+                    "http://172.30.1.52:8888/user/update",
                     { response ->
                         Log.d("update response", response)
 

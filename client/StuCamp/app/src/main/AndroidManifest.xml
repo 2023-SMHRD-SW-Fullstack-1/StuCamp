@@ -26,9 +26,6 @@
             android:name=".MyFeedUpdateActivity"
             android:exported="false" />
         <activity
-            android:name=".FeedChangeActivity"
-            android:exported="false" />
-        <activity
             android:name=".CommentActivity"
             android:exported="true" />
         <activity
