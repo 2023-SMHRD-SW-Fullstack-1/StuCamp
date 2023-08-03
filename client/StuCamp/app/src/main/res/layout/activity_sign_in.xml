@@ -10,20 +10,51 @@
         android:id="@+id/tvSingIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="30dp"
         android:text="회원가입"
         android:textSize="34sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline14" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10123119" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
     <EditText
         android:id="@+id/etSignInPw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="비밀번호"
-        android:inputType="textPassword"
+        android:inputType="text"
+        android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="@+id/etSignInEmail"
         app:layout_constraintStart_toStartOf="@+id/etSignInEmail"
         app:layout_constraintTop_toBottomOf="@+id/etSignInEmail" />
@@ -32,9 +63,11 @@
         android:id="@+id/etSignInPwCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="비밀번호 확인"
-        android:inputType="textPassword"
+        android:inputType="text"
+        android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="@+id/etSignInPw"
         app:layout_constraintStart_toStartOf="@+id/etSignInPw"
         app:layout_constraintTop_toBottomOf="@+id/etSignInPw" />
@@ -43,22 +76,27 @@
         android:id="@+id/etSignInEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
         android:ems="10"
         android:hint="이메일"
         android:inputType="text"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSignIn"
         app:layout_constraintEnd_toEndOf="@+id/tvSingIn"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/tvSingIn"
-        app:layout_constraintTop_toBottomOf="@+id/tvSingIn" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSingIn"
+        app:layout_constraintVertical_bias="0.24000001" />
 
     <Button
         android:id="@+id/btnSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원가입"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#7A7A7A"
+        android:text="가입하기"
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintStart_toStartOf="@+id/guideline12" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -78,11 +116,15 @@
         android:id="@+id/etSignInNick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="닉네임"
         android:inputType="text"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSignIn"
         app:layout_constraintEnd_toEndOf="@+id/etSignInPwCheck"
         app:layout_constraintStart_toStartOf="@+id/etSignInPwCheck"
-        app:layout_constraintTop_toBottomOf="@+id/etSignInPwCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/etSignInPwCheck"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

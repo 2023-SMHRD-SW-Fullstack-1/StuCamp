@@ -151,7 +151,7 @@ class CalendarActivity : AppCompatActivity() {
 
 
             val request = object : StringRequest(Request.Method.GET,
-                "http://172.30.1.22:8888/record/${userID}?record_date=${selectedDate}",
+                "http://172.30.1.25:8888/record/${userID}?record_date=${selectedDate}",
                 { response ->
                     tv_detailStudy.text = ""
                     diaryTextView.text = "총 공부시간"
@@ -184,7 +184,6 @@ class CalendarActivity : AppCompatActivity() {
                             val subjectTimeFormatted = millisecondsToHHMM(time)
                             tv_detailStudy.text = "${tv_detailStudy.text}$subject : $subjectTimeFormatted 분\n"
                         }
-
                     }
 
 
