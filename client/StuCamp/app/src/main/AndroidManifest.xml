@@ -67,7 +67,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MemDeleteActivity" />
+        <activity
+            android:name=".MemDeleteActivity"
+            android:exported="false"/>
         <activity
             android:name=".LoginActivity"
             android:exported="true"
@@ -77,7 +79,7 @@
             android:exported="false" />
         <activity
             android:name=".SignInActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />

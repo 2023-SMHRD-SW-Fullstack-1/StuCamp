@@ -22,8 +22,10 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.smhrd.stucamp.VO.UserVO
 import org.json.JSONObject
-import java.util.Date
+import java.time.LocalDate
+import java.util.Calendar
 import java.util.Locale
+
 
 class Fragment2 : Fragment() {
     private lateinit var adapter: CustomAdapter
@@ -42,42 +44,50 @@ class Fragment2 : Fragment() {
         val userSpf = requireActivity().getSharedPreferences("mySPF", Context.MODE_PRIVATE)
         val user = userSpf.getString("user", " ")
         val userVO = Gson().fromJson(user, UserVO::class.java)
-        val userEmail = userVO.user_email
+        var userEmail = userVO.user_email
 
-        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        var calendar = Calendar.getInstance()
+        var todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+        var today = todayDate.toString()
+//        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
+        Log.d("today", today)
 
         reqQueue = Volley.newRequestQueue(requireActivity())
 
         val request = object : StringRequest(
             Request.Method.GET,
-
-            "http://172.30.1.50:8888/record/${userEmail}?record_date=${today}",
+//                "http://172.30.1.25:8888/record/"
+            "http://172.30.1.25:8888/record/${userEmail}?record_date=${today}",
             { response ->
                 Log.d("response", response.toString())
-                val result = JSONObject(response)
-
-                val abc = result.getJSONArray("recordDetails")
-                val recordDetails = abc.getJSONArray(0)
 
 
+                if(response == "-1"){
+                    Log.d("response", response)
+                } else {
+                    val result = JSONObject(response)
 
-                for (i in 0 until recordDetails.length()) {
-                    val recordDetail = recordDetails.getJSONObject(i)
+                    val abc = result.getJSONArray("recordDetails")
+                    val recordDetails = abc.getJSONArray(0)
+                    for (i in 0 until recordDetails.length()) {
+                        val recordDetail = recordDetails.getJSONObject(i)
 
-                    val recordSubject = recordDetail.getString("record_subject")
-                    val recordElapsedTime = recordDetail.getLong("record_elapsed_time")
-                    recordData[recordSubject] = recordData.getOrDefault(recordSubject, 0L) + recordElapsedTime
+                        val recordSubject = recordDetail.getString("record_subject")
+                        val recordElapsedTime = recordDetail.getLong("record_elapsed_time")
+                        recordData[recordSubject] =
+                            recordData.getOrDefault(recordSubject, 0L) + recordElapsedTime
+                    }
+
+                    for ((recordSubject, recordElapsedTime) in recordData) {
+                        val formattedElapsedTime = formatElapsedTime(recordElapsedTime)
+                        adapter.addItem(recordSubject, formattedElapsedTime)
+                        timerData.add(recordElapsedTime)
+                        totalTime += recordElapsedTime
+                    }
+                    updateResultTime(totalTime)
+                    adapter.notifyDataSetChanged()
                 }
-
-                for ((recordSubject, recordElapsedTime) in recordData) {
-                    val formattedElapsedTime = formatElapsedTime(recordElapsedTime)
-                    adapter.addItem(recordSubject, formattedElapsedTime)
-                    timerData.add(recordElapsedTime)
-                    totalTime += recordElapsedTime
-                }
-                updateResultTime(totalTime)
-                adapter.notifyDataSetChanged()
             },
             { error ->
                 Log.d("error", error.toString())

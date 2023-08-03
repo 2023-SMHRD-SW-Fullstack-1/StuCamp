@@ -10,10 +10,10 @@
         android:id="@+id/tvMemInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MemberInfo Page"
+        android:layout_marginTop="30dp"
+        android:text="내 정보"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
-        app:layout_constraintHorizontal_bias="0.583"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
@@ -21,53 +21,70 @@
         android:id="@+id/etInfoEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="text"
+        android:paddingLeft="10sp"
         android:text="이메일"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSetInfo"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toBottomOf="@+id/tvMemInfo"
-        tools:layout_editor_absoluteX="110dp" />
+        app:layout_constraintVertical_bias="0.19999999" />
 
     <EditText
         android:id="@+id/etInfoPw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="비밀번호"
         android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@+id/etInfoEmail"
-        tools:layout_editor_absoluteX="89dp" />
+        android:paddingLeft="10sp"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/etInfoEmail" />
 
     <EditText
         android:id="@+id/etInfoNick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="닉네임"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etInfoPwCheck"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="89dp" />
+        android:paddingLeft="10sp"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/etInfoPwCheck" />
 
     <EditText
         android:id="@+id/etInfoPwCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="비밀번호 확인"
         android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@+id/etInfoPw"
-        tools:layout_editor_absoluteX="90dp" />
+        android:paddingLeft="10sp"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/etInfoPw" />
 
     <Button
         android:id="@+id/btnSetInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#7A7A7A"
         android:text="회원정보수정"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
-        app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="@+id/guideline9" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -103,16 +120,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:backgroundTint="#7A7A7A"
         android:text="로그아웃"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
-        app:layout_constraintEnd_toStartOf="@+id/guideline10" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline20" />
 
     <Button
         android:id="@+id/btnToDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원탈퇴"
-        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        android:layout_marginTop="20dp"
+        android:background="#00FFFFFF"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="0dp"
+        android:text="탈퇴하기"
+        android:textColor="#FF0000"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.94" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
