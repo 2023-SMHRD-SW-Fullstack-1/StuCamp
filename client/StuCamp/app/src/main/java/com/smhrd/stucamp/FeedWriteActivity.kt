@@ -59,6 +59,8 @@ class FeedWriteActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+
         //갤러리 버튼 클릭
         ibGallery.setOnClickListener(){
             val intent = Intent(Intent.ACTION_GET_CONTENT)

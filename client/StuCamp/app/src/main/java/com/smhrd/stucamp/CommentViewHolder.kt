@@ -16,8 +16,8 @@ class CommentViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
     init {
         tvComId = itemView.findViewById(R.id.tvComId)
         tvComContent = itemView.findViewById(R.id.tvComContent)
-        rvComment = itemView.findViewById(R.id.rvComment)
-        etComment = itemView.findViewById(R.id.etComment)
-        btnCommentSend = itemView.findViewById(R.id.btnCommentSend)
+//        rvComment = itemView.findViewById(R.id.rvComment)
+//        etComment = itemView.findViewById(R.id.etComment)
+//        btnCommentSend = itemView.findViewById(R.id.btnCommentSend)
     }
 }

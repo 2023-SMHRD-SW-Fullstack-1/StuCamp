@@ -64,7 +64,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 //        var isLiked : Boolean = false
 
         //feed id 가져오기
-        val feedId = feed.feed_id
+        val feed_id = feed.feed_id
 
         //SharedPreference 생성
         val spf = context.getSharedPreferences("mySPF", Context.MODE_PRIVATE)
@@ -132,6 +132,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
         //댓글 버튼 클릭
         btnCom.setOnClickListener(){
             val intent = Intent(context, CommentActivity::class.java)
+            intent.putExtra("feed_id", feed_id)
             context.startActivity(intent)
         }
 
@@ -161,7 +162,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 ) {
                     override fun getParams(): MutableMap<String, String>? {
                         val params: MutableMap<String, String> = HashMap()
-                        val addLike: LikeVO = LikeVO(user_email, feedId)
+                        val addLike: LikeVO = LikeVO(user_email, feed_id)
                         params.put("addLike", Gson().toJson(addLike))
                         Log.d("params", addLike.toString())
                         return params
@@ -192,7 +193,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 ){
                     override fun getParams(): MutableMap<String, String>? {
                         val params : MutableMap<String, String> = HashMap()
-                        val cancelLike : LikeVO = LikeVO(user_email, feedId)
+                        val cancelLike : LikeVO = LikeVO(user_email, feed_id)
                         params.put("cancelLike", Gson().toJson(cancelLike))
                         Log.d("params", cancelLike.toString())
                         return params
