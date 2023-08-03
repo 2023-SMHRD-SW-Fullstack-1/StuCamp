@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#FEFAFD"
     android:orientation="vertical">
-
 
 
     <CalendarView
@@ -22,19 +22,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/diaryTextView"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="12dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginEnd="12dp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="총 공부시간"-->
-<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/calendarView" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/diaryTextView"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="12dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginEnd="12dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="총 공부시간"-->
+    <!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/calendarView" />-->
 
     <TextView
         android:id="@+id/diaryTextView"
@@ -58,7 +58,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/nanum_square_neo_deb"
         android:gravity="center"
@@ -74,25 +74,28 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#FEFAFD"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/tv_detailStudy"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:lineSpacingExtra="10sp"-->
-<!--        android:textSize="16sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/diaryTextView"-->
-<!--        app:layout_constraintHorizontal_bias="0.498"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/diaryTextView"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/diaryTextView" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_detailStudy"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:layout_marginEnd="16dp"-->
+    <!--        android:layout_marginBottom="16dp"-->
+    <!--        android:lineSpacingExtra="10sp"-->
+    <!--        android:textSize="16sp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/diaryTextView"-->
+    <!--        app:layout_constraintHorizontal_bias="0.498"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/diaryTextView"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/diaryTextView" />-->
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"

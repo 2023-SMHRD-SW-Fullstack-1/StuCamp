@@ -18,6 +18,7 @@
         android:fontFamily="@font/nanum_square_neo_deb"
         android:text="방 생성"
         android:textColor="#3A3730"
+        android:textSize="14sp"
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toTopOf="@+id/rcChatList"
         app:layout_constraintEnd_toEndOf="parent"

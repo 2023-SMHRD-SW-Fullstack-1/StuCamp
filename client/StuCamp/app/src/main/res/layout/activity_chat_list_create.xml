@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanum_square_neo_cbd"
         android:text="새 채팅방"
-        android:textSize="60sp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
