@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         bnv = findViewById(R.id.bnv)
-        fl = findViewById(R.id.fl)
+        fl = findViewById(R.id.wishFl)
 
         //tvId = findViewById(R.id.tvId)
         btnMyPage = findViewById(R.id.btnMyPage)
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
 
         supportFragmentManager.beginTransaction().replace(
-            R.id.fl,
+            R.id.wishFl,
             Fragment1()
         ).commit()
 
@@ -46,28 +46,28 @@ class MainActivity : AppCompatActivity() {
                 R.id.tab1 -> {
                     Log.d("id", "1")
                     supportFragmentManager.beginTransaction().replace(
-                        R.id.fl,
+                        R.id.wishFl,
                         Fragment1()
                     ).commit()
                 }
                 R.id.tab2 -> {
                     Log.d("id", "2")
                     supportFragmentManager.beginTransaction().replace(
-                        R.id.fl,
+                        R.id.wishFl,
                         Fragment2()
                     ).commit()
                 }
                 R.id.tab3 -> {
                     Log.d("id", "3")
                     supportFragmentManager.beginTransaction().replace(
-                        R.id.fl,
+                        R.id.wishFl,
                         Fragment3()
                     ).commit()
                 }
                 R.id.tab4 -> {
                     Log.d("id", "4")
                     supportFragmentManager.beginTransaction().replace(
-                        R.id.fl,
+                        R.id.wishFl,
                         Fragment4()
                     ).commit()
                 }

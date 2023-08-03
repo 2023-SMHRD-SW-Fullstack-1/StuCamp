@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
@@ -27,11 +29,13 @@ class WishListActivity : AppCompatActivity() {
 
     lateinit var reqQueue : RequestQueue
     lateinit var rc : RecyclerView
+    lateinit var btnMoveMain : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wish_list)
         rc = findViewById(R.id.rc)
+        btnMoveMain = findViewById(R.id.btnMoveMain)
 
         reqQueue = Volley.newRequestQueue(this)
 
@@ -44,23 +48,29 @@ class WishListActivity : AppCompatActivity() {
 
         val wishList = ArrayList<WishListVO>()
 
+        //main버튼 클릭시 main 뷰로 이동
+        btnMoveMain.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         //mywish 불러오기(서버 통신)
         val request = object : StringRequest(
             Request.Method.GET,
             "http://172.30.1.42:8888/wish/$user_email",
             { response ->
-                Log.d("response232323", response.toString())
+                Log.d("wish 불러오기 response", response.toString())
                 val result = JSONArray(response)
 
                 for (i in 0 until result.length()) {
                     val wish = result.getJSONObject(i)
-                    val feed_img = wish.getString("feed_imgpath").toString()
+                    val feed_img = wish.getJSONObject("Feed").getString("feed_imgpath").toString()
                     val feed_id = wish.getInt("feed_id")
                     wishList.add(WishListVO(feed_img, feed_id))
                 }
                 Log.d("wishList", wishList.toString())
                 val adapter = WishListAdapter(wishList, this)
-                rc.layoutManager = LinearLayoutManager(this)
+                rc.layoutManager = GridLayoutManager(this, 3)
                 rc.adapter = adapter
             },
             { error ->

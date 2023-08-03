@@ -105,11 +105,13 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 "http://172.30.1.22:8888/wish/add",
                 {
                         response ->
-//                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
                     if(response == "1"){
                         //좋아요 클릭 여부 spf 생성
                         Log.d("response", response)
                         btnAddWish.text = "찜완료"
+                        Toast.makeText(context, "찜목록에 추가되었습니다", Toast.LENGTH_SHORT).show()
+                    }else if(response == "-1"){
+                        Toast.makeText(context, "이미 찜 목록에 있습니다", Toast.LENGTH_SHORT).show()
                     }
                 },{
                         error ->
