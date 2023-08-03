@@ -91,7 +91,7 @@ class FeedWriteActivity : AppCompatActivity() {
             val request = object : StringRequest(
                 //일반적으로 크기가 큰 경우엔 POST 방식 사용
                 Request.Method.POST,
-                "http://172.30.1.42:8888/feed/add",
+                "http://172.30.1.25:8888/feed/add",
                 {
                         response ->
                     Log.d("response", response.toString())
@@ -143,7 +143,7 @@ class FeedWriteActivity : AppCompatActivity() {
                     ivUpload.setImageBitmap(bitmap)
 
                     val options = BitmapFactory.Options()
-                    options.inSampleSize = 2 // 4개의 픽셀 -> 1개의 픽셀 => 1/4 크기로 변환
+                    options.inSampleSize = 16 // 4개의 픽셀 -> 1개의 픽셀 => 1/4 크기로 변환
 
                     // filter => true(선명하게) / false(흐릿하게)
                     val resized = Bitmap.createScaledBitmap(bitmap, 300, 300, true)

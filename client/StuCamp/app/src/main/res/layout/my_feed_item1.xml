@@ -21,7 +21,11 @@
         android:layout_width="368dp"
         android:layout_height="43dp"
         android:layout_marginTop="12dp"
+        android:backgroundTint="#E0D9C9"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="메시지 보내기"
+        android:textColor="#3A3730"
+        app:cornerRadius="15dp"
         app:layout_constraintStart_toStartOf="@+id/tvIntro"
         app:layout_constraintTop_toBottomOf="@+id/tvIntro" />
 
@@ -40,6 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="닉네임"
         android:textColor="#272727"
         android:textSize="24sp"
@@ -52,6 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="이름"
         app:layout_constraintStart_toStartOf="@+id/ivProfile"
         app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
@@ -61,6 +67,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="소개글"
         android:textColor="#272727"
         app:layout_constraintStart_toStartOf="@+id/tvName"

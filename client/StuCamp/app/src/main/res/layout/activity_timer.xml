@@ -4,26 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F6F4F1"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/ResultTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nanum_square_neo_ehv"
         android:text="00:00:00"
-        android:textSize="24sp"
+        android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintVertical_bias="0.42000002" />
 
     <Button
         android:id="@+id/start_stop_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#E0D9C9"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="시작"
+        android:textColor="#3A3730"
+        app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ResultTime" />
 
@@ -31,20 +39,25 @@
         android:id="@+id/reset_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#E0D9C9"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="Reset"
+        android:textColor="#3A3730"
+        app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/start_stop_button"
-        />
+        app:layout_constraintTop_toBottomOf="@id/start_stop_button" />
 
     <ImageButton
         android:id="@+id/back1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#F6F4F1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
-
+        app:srcCompat="?attr/homeAsUpIndicator" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

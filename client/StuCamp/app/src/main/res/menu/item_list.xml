@@ -7,14 +7,14 @@
         android:title="Main" />
     <item
         android:id="@+id/tab2"
-        android:icon="@drawable/board"
+        android:icon="@drawable/timer2"
         android:title="Timer" />
     <item
         android:id="@+id/tab3"
-        android:icon="@drawable/news"
+        android:icon="@drawable/map"
         android:title="Map" />
     <item
         android:id="@+id/tab4"
-        android:icon="@drawable/settings"
+        android:icon="@drawable/chat"
         android:title="Chatting" />
 </menu>

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/nanum_square_neo_deb"
         android:text="게시물 작성"
         android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
             android:id="@+id/textView_content2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/nanum_square_neo_deb"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:text="내용"
@@ -92,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="152dp"
             android:ems="10"
+            android:fontFamily="@font/nanum_square_neo_deb"
             android:hint="텍스트를 입력해주세요"
             android:inputType="text"
             android:paddingLeft="10dp"
@@ -101,12 +102,13 @@
             android:id="@+id/btnWrite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#737373"
-            android:fontFamily="sans-serif"
-            android:text="수정완료"
+            android:backgroundTint="#E0D9C9"
+            android:fontFamily="@font/nanum_square_neo_deb"
+            android:text="글 올리기"
+            android:textColor="#3A3730"
+            app:cornerRadius="15dp"
             android:textAlignment="center"
-            android:textSize="16sp"
-            app:cornerRadius="10dp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -39,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
 
         reqQueue = Volley.newRequestQueue(this@LoginActivity)
 
+
         // SharedPreference 생성
         val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
         val user = spf.getString("user", " ")
@@ -56,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
 
             val request = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.52:8888/user/login",
+                "http://172.30.1.25:8888/user/login",
                 {
                         response ->
                     Log.d("response", response)
@@ -99,5 +102,7 @@ class LoginActivity : AppCompatActivity() {
             val it = Intent(this, SignInActivity::class.java)
             startActivity(it)
         } // btnToSignIn 클릭리스너 끝
+
+
     }
 }

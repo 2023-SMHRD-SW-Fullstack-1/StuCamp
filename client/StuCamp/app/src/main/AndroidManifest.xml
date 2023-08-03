@@ -84,7 +84,7 @@
         </activity>
         <activity
             android:name=".MemInfoActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".SignInActivity"
             android:exported="true" />

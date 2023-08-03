@@ -24,7 +24,6 @@
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnCommentSend"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/rvComment" />
 
     <Button
@@ -33,7 +32,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#E0D9C9"
         android:fontFamily="@font/nanum_square_neo_deb"
-        android:text="Send"
+        android:text="작성"
         android:textColor="#3A3730"
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/etComment"
