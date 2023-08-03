@@ -79,7 +79,6 @@ class WishListActivity : AppCompatActivity() {
                     rc.layoutManager = GridLayoutManager(this, 3)
                     rc.adapter = adapter
                 }
-
             },
             { error ->
                 Log.d("error", error.toString())
