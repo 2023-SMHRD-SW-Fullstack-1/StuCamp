@@ -57,6 +57,7 @@ class CommentActivity : AppCompatActivity() {
             Request.Method.GET,
 
             "http://172.30.1.42:8888/comment/$feed_id",
+
             { response ->
                 val result = JSONObject(response).getJSONArray("commentDetails")
 
@@ -89,6 +90,7 @@ class CommentActivity : AppCompatActivity() {
             val request = object : StringRequest(
                 Request.Method.POST,
                 "http://172.30.1.42:8888/comment/add",
+
                 { response ->
                     Log.d("responseAdd", response.toString())
                     resAdapter.notifyDataSetChanged()
