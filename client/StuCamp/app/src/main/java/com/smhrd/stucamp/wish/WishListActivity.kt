@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,18 +61,25 @@ class WishListActivity : AppCompatActivity() {
             "http://172.30.1.42:8888/wish/$user_email",
             { response ->
                 Log.d("wish 불러오기 response", response.toString())
-                val result = JSONArray(response)
 
-                for (i in 0 until result.length()) {
-                    val wish = result.getJSONObject(i)
-                    val feed_img = wish.getJSONObject("Feed").getString("feed_imgpath").toString()
-                    val feed_id = wish.getInt("feed_id")
-                    wishList.add(WishListVO(feed_img, feed_id))
+                if(response == "0"){
+                    Toast.makeText(this, "찜한 피드가 없습니다.", Toast.LENGTH_SHORT).show()
+                    finish()
+
+                }else{
+                    val result = JSONArray(response)
+
+                    for (i in 0 until result.length()) {
+                        val wish = result.getJSONObject(i)
+                        val feed_img = wish.getJSONObject("Feed").getString("feed_imgpath").toString()
+                        val feed_id = wish.getInt("feed_id")
+                        wishList.add(WishListVO(feed_img, feed_id))
+                    }
+                    Log.d("wishList", wishList.toString())
+                    val adapter = WishListAdapter(wishList, this)
+                    rc.layoutManager = GridLayoutManager(this, 3)
+                    rc.adapter = adapter
                 }
-                Log.d("wishList", wishList.toString())
-                val adapter = WishListAdapter(wishList, this)
-                rc.layoutManager = GridLayoutManager(this, 3)
-                rc.adapter = adapter
             },
             { error ->
                 Log.d("error", error.toString())

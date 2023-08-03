@@ -119,7 +119,7 @@ router.get("/:user_email", async (req, res, next) => {
             // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", wishEntity);
             res.json(wishEntity);
         } else {
-            res.json(-1);
+            res.json(0);
         }
     } catch (error) {
         console.log("error", error);
