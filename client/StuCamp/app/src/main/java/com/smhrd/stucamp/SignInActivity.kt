@@ -66,7 +66,6 @@ class SignInActivity : AppCompatActivity() {
                         } else {
                             Toast.makeText(this, "가입성공!", Toast.LENGTH_LONG).show()
 
-
                             // firebase 에 user 저장
                             val database = Firebase.database
                             val userRef = database.getReference("User")

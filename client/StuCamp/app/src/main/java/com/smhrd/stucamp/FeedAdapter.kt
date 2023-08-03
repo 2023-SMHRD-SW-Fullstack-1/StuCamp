@@ -51,15 +51,11 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
 
-        //좋아요 여부 확인
-//        var isLikedMap = isLikedMap[position] ?: false
-
         var tvId : TextView = holder.tvId
         var ibHeart : ImageButton = holder.ibHeart
         var ivFeed : ImageView = holder.ivFeed
         var tvLikeCnt : TextView = holder.tvLikeCnt
         var tvContent : TextView = holder.tvContent
-        //var edtComment : EditText = holder.edtComment
         var btnCom : Button = holder.btnCom
         var btnAddWish : Button = holder.btnAddWish
 
@@ -67,6 +63,8 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
         var feed : FeedVO = datas.get(position)
 
         tvId.text = feed.user_nickname
+
+        //좋아요 관련
         val heartOn = ContextCompat.getDrawable(context, R.drawable.heart_on)
         val heartOff = ContextCompat.getDrawable(context, R.drawable.heart_off)
         var isLiked : Boolean = false
@@ -82,18 +80,12 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 
         tvLikeCnt.text = feed.feed_like_cnt.toString()
         tvContent.text = feed.feed_content
-//        Log.d("1111sfeed", feed.toString())
+        tvId.text = feed.user_nickname
 
-        tvId.text = feed.user_nickname.toString()
         //이미지 변환
         val imageBytes = Base64.decode(feed.feed_img.toString(), 0)
         val feed_img = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
         ivFeed.setImageBitmap(feed_img)
-
-//        ivFeed.setImageBitmap(feed_img)
-        tvLikeCnt.text = feed.feed_like_cnt.toString()
-        tvContent.text = feed.feed_content
-        //edtComment.text = feed.edtComment
 
         //좋아요 여부 확인
         //1. 서버 통신
@@ -104,7 +96,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
             "http://172.30.1.42:8888/like/$feed_id",
             { response ->
                 if(response != "-1"){
-                    Log.d("wish 불러오기 response", response.toString())
+                    Log.d("like 불러오기 response", response.toString())
                     val result = JSONArray(response)
 
                     for (i in 0 until result.length()) {
@@ -117,12 +109,12 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                     for(like_feed_id : String in likeList){
                         Log.d("like = feedid", like_feed_id)
                         Log.d("feed_id", feed_id.toString())
-                        if(like_feed_id == feed_id.toString()) {
-                                ibHeart.setImageDrawable(heartOn)
-                                isLiked = true
+                        isLiked = if(like_feed_id == feed_id.toString()) {
+                            ibHeart.setImageDrawable(heartOn)
+                            true
                         }else{
                             ibHeart.setImageDrawable(heartOff)
-                            isLiked = false
+                            false
                         }
                     }
             }
@@ -145,7 +137,6 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
             Request.Method.GET,
             "http://172.30.1.42:8888/wish/$user_email",
             { response ->
-                Log.d(">>>>>>>>>>>>>>>", response.toString())
                 if(response != "-1"){
                     Log.d("wish 불러오기 response", response.toString())
                     val result = JSONArray(response)
@@ -168,14 +159,8 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                             Log.d("같다 : ", wish.feed_id.toString())
                             textBtnAddWish = "찜취소"
                         }
-//                        }else{
-//                            Log.d("다르다", wish.feed_id.toString())
-//                            textBtnAddWish = "찜하기"
-//                        }
                         btnAddWish.text = textBtnAddWish
                     }
-//                btnAddWish.text = textBtnAddWish
-
                 }
 
             },
@@ -259,10 +244,10 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
             Log.d("ibHeart", ibHeart.context.toString())
 
             if(!isLiked){ //좋아요 클릭했을 때
-                ibHeart.setImageDrawable(heartOn)
+//                ibHeart.setImageDrawable(heartOn)
                 feed.feed_like_cnt++
-                notifyItemChanged(position)
                 isLiked = true
+                notifyItemChanged(position)
 
                 //서버와 통신
                 val request = object : StringRequest(
@@ -291,10 +276,10 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 reqQueue.add(request)
 
             }else { //좋아요 취소했을 때
-                ibHeart.setImageDrawable(heartOff)
+//                ibHeart.setImageDrawable(heartOff)
                 feed.feed_like_cnt--
-                notifyItemChanged(position)
                 isLiked = false
+                notifyItemChanged(position)
 
                 //서버와 통신
                 val request = object : StringRequest(
