@@ -57,7 +57,7 @@ class Fragment2 : Fragment() {
         val request = object : StringRequest(
             Request.Method.GET,
 //                "http://172.30.1.25:8888/record/"
-            "http://172.30.1.25:8888/record/${userEmail}?record_date=${today}",
+            "http://172.30.1.52:8888/record/${userEmail}?record_date=${today}",
             { response ->
                 Log.d("response", response.toString())
 
@@ -188,7 +188,7 @@ class Fragment2 : Fragment() {
 
         val updateDateRequest = object : StringRequest(
             Request.Method.PUT,
-            "http://172.30.1.50:8888/record/update",
+            "http://172.30.1.52:8888/record/update",
             { response ->
                 Log.d("response", response.toString())
             },

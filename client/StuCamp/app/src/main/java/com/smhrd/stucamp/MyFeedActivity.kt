@@ -57,7 +57,7 @@ class MyFeedActivity : AppCompatActivity() {
         //myfeed 불러오기(서버 통신)
         val request = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.22:8888/feed/$user_email",
+            "http://172.30.1.52:8888/feed/$user_email",
             { response ->
                 Log.d("response", response.toString())
                 val result = JSONObject(response).getJSONArray("feedDetails")

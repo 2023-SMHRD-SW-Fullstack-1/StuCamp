@@ -75,7 +75,7 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
         btnFeedDelete.setOnClickListener {
             val request = object : StringRequest(
                 Request.Method.POST,
-                "http://172.30.1.22:8888/feed/delete",
+                "http://172.30.1.52:8888/feed/delete",
                 {
                         response ->
                     Log.d("response", response)
