@@ -1,6 +1,7 @@
 package com.smhrd.stucamp.wish
 
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.smhrd.stucamp.R

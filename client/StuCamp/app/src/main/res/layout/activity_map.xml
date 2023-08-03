@@ -27,7 +27,7 @@
         app:menu="@menu/item_list" />
 
     <FrameLayout
-        android:id="@+id/fl"
+        android:id="@+id/wishFl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:backgroundTint="#FEFAFD"

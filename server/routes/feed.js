@@ -317,56 +317,63 @@ router.get("/:user_email", async (req, res, next) => {
     }
 });
 
-//단일 피드 조회
-// router.get("/find/:id", async (req, res, next) => {
-//     // console.log("find 통신 확인");
-//     console.log(req.params);
-//     const findReqFeedId = req.params.id;
+// 단일 피드 조회
+router.get("/find/:id", async (req, res, next) => {
+    // console.log("find 통신 확인");
+    console.log(req.params);
+    const findReqFeedId = req.params.id;
 
-//     try {
-//         const feedEntity = await Feed.findOne({
-//             where: {
-//                 feed_id: findReqFeedId,
-//             },
-//         });
+    try {
+        const feedEntity = await Feed.findOne({
+            where: {
+                feed_id: findReqFeedId,
+            },
+        });
 
-//         //해당 게시글에 대한 댓글 조회
-//         const commentEntity = await Comment.findAll({
-//             where: {
-//                 feed_id: findReqFeedId,
-//             },
-//         });
+        //해당 게시글에 대한 댓글 조회
+        const commentEntity = await Comment.findAll({
+            where: {
+                feed_id: findReqFeedId,
+            },
+        });
 
-//         console.log(commentEntity);
+        //작성자 닉네임 조회
+        const userEntitiy = await User.findOne({
+            where: {
+                user_id: feedEntity.user_id,
+            },
+        });
 
-//         const feedResDTO = new FeedResDTO(feedEntity, commentEntity);
-//         const imgPath = feedResDTO.feed_imgpath;
-//         console.log(imgPath);
-//         console.log("public/img/feed/" + imgPath + ".jpg");
-//         console.log(`public/img/feed/${imgPath}.jpg`);
-//         //비동기 방식으로 파일 읽기)
+        // console.log(commentEntity);
 
-//         await fs.readFile("public/img/feed/" + imgPath + ".jpg", (err, data) => {
-//             console.log("------------");
-//             console.log(data);
-//             console.log("---------------");
-//             if (err) {
-//                 console.log("error", err);
-//                 next(err);
-//             } else {
-//                 let encode = Buffer.from(data).toString("base64");
-//                 // console.log(encode);
-//                 // console.log(feedResDTO);
-//                 feedResDTO.feed_imgpath = encode;
-//                 // console.log(encode);
-//                 // console.log(feedResDTO);
-//                 res.json(feedResDTO);
-//             }
-//         });
-//     } catch (error) {
-//         console.log("error", error);
-//         next(error);
-//     }
-// });
+        const feedResDTO = new FeedResDTO(feedEntity, commentEntity, userEntitiy);
+        const imgPath = feedResDTO.feed_imgpath;
+        console.log(imgPath);
+        console.log("public/img/feed/" + imgPath + ".jpg");
+        console.log(`public/img/feed/${imgPath}.jpg`);
+        //비동기 방식으로 파일 읽기)
+
+        await fs.readFile("public/img/feed/" + imgPath + ".jpg", (err, data) => {
+            console.log("------------");
+            console.log(data);
+            console.log("---------------");
+            if (err) {
+                console.log("error", err);
+                next(err);
+            } else {
+                let encode = Buffer.from(data).toString("base64");
+                // console.log(encode);
+                // console.log(feedResDTO);
+                feedResDTO.feed_imgpath = encode;
+                // console.log(encode);
+                // console.log(feedResDTO);
+                res.json(feedResDTO);
+            }
+        });
+    } catch (error) {
+        console.log("error", error);
+        next(error);
+    }
+});
 
 module.exports = router;
