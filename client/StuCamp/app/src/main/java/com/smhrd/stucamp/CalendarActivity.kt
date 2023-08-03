@@ -3,6 +3,7 @@ package com.smhrd.stucamp
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.Image
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -27,11 +28,30 @@ import com.google.gson.JsonParser
 import com.smhrd.stucamp.VO.RecordDetail
 import com.smhrd.stucamp.VO.RecordDetailList
 import com.smhrd.stucamp.VO.UserVO
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.ViewPortHandler
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
 import java.util.Locale
+// ...
 
+class CustomPercentFormatter(private val pieChart: PieChart) : PercentFormatter(pieChart) {
+    override fun getFormattedValue(value: Float): String {
+        return super.getFormattedValue(value) + "%"
+    }
+
+    override fun getFormattedValue(value: Float, entry: Entry?, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
+        return super.getFormattedValue(value, entry, dataSetIndex, viewPortHandler) + "%"
+    }
+}
 
 class CalendarActivity : AppCompatActivity() {
     var userID: String = "userID"
@@ -45,7 +65,11 @@ class CalendarActivity : AppCompatActivity() {
     lateinit var back: ImageButton
     lateinit var tv_detailStudy: TextView
 
+    lateinit var pieChart: PieChart
+
     lateinit var reqQueue: RequestQueue
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +84,8 @@ class CalendarActivity : AppCompatActivity() {
         title = findViewById(R.id.title)
         back = findViewById(R.id.back)
         tv_detailStudy = findViewById(R.id.tv_detailStudy)
+        pieChart = findViewById(R.id.pieChart)
+
 
         reqQueue = Volley.newRequestQueue(this@CalendarActivity)
 
@@ -137,7 +163,7 @@ class CalendarActivity : AppCompatActivity() {
             val hours = totalSeconds / 3600
             val minutes = (totalSeconds % 3600) / 60
 
-            return String.format("%02d 시간 %02d", hours, minutes)
+            return String.format("%02d:%02d", hours, minutes)
         }
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
@@ -151,7 +177,7 @@ class CalendarActivity : AppCompatActivity() {
 
 
             val request = object : StringRequest(Request.Method.GET,
-                "http://172.30.1.25:8888/record/${userID}?record_date=${selectedDate}",
+                "http://172.30.1.22:8888/record/${userID}?record_date=${selectedDate}",
                 { response ->
                     tv_detailStudy.text = ""
                     diaryTextView.text = "총 공부시간"
@@ -160,6 +186,7 @@ class CalendarActivity : AppCompatActivity() {
                     if (response == "-1") {
                         // 빈 Date 보냈을시
                         diaryTextView.text = "총 공부시간 : 0분"
+                        pieChart.visibility = 0
                     } else {
                         var result = response.trimIndent()
                         Log.d("response222", result)
@@ -180,10 +207,61 @@ class CalendarActivity : AppCompatActivity() {
                             }
                         }
                         diaryTextView.text = "총 공부시간 : " + millisecondsToHHMM(sumOfStudy) + "분"
+
+//                        for ((subject, time) in sumOfSubject) {
+//                            val subjectTimeFormatted = millisecondsToHHMM(time)
+//                            tv_detailStudy.text = "${tv_detailStudy.text}$subject : $subjectTimeFormatted 분\n"
+//                        }
+
+                        val entries = mutableListOf<PieEntry>()
+
+                        var totalStudyTime = 0L
+                        for ((subject, time) in sumOfSubject) {
+                            totalStudyTime += time
+                        }
                         for ((subject, time) in sumOfSubject) {
                             val subjectTimeFormatted = millisecondsToHHMM(time)
-                            tv_detailStudy.text = "${tv_detailStudy.text}$subject : $subjectTimeFormatted 분\n"
+//                            tv_detailStudy.text = "${tv_detailStudy.text}$subject : $subjectTimeFormatted 분\n"
+                            val percentage = (time.toDouble() / totalStudyTime.toDouble()) * 100
+//                            entries.add(PieEntry(time.toFloat(), "$subject : $subjectTimeFormatted 분"))
+                            entries.add(PieEntry(percentage.toFloat(), "$subject : $subjectTimeFormatted 분"))
                         }
+
+
+                        val dataSet = PieDataSet(entries, "")
+                        dataSet.sliceSpace = 3f
+                        dataSet.selectionShift = 5f
+                        dataSet.valueTextColor = Color.BLACK
+                        dataSet.valueTextSize = 16f
+
+                        // 색상을 설정합니다. 여기서는 Android에서 기본으로 제공하는 색상을 사용합니다.
+
+
+                        dataSet.colors = mutableListOf(
+                            Color.BLUE,
+                            Color.GREEN,
+                            Color.RED,
+                            Color.YELLOW,
+                            Color.CYAN
+                            // 원하는 만큼 색상을 추가할 수 있습니다.
+                        )
+
+                        val legend = pieChart.legend
+                        legend.orientation = Legend.LegendOrientation.VERTICAL
+                        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                        legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+                        legend.textSize = 14f
+
+                        dataSet.valueFormatter = CustomPercentFormatter(pieChart)
+
+                        val data = PieData(dataSet)
+                        pieChart.data = data
+                        pieChart.setDrawEntryLabels(false)
+                        pieChart.description.isEnabled = false
+                        pieChart.invalidate()
+
+
+
                     }
 
 
