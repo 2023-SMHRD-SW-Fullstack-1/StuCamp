@@ -43,7 +43,7 @@ class MyFeedAdapter (var datas : ArrayList<FeedVO>, var context : Context)
 
         var tvId2 : TextView = holder.tvId2
         var ivFeed : ImageView = holder.ivFeed
-        var ibHeart2 : ImageButton = holder.ibHeart2
+//        var ibHeart2 : ImageButton = holder.ibHeart2
         var tvLikeCnt2 : TextView = holder.tvLikeCnt2
         var tvContent2 : TextView = holder.tvContent2
         //var edtComment : EditText = holder.edtComment

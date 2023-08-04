@@ -19,6 +19,7 @@ import com.smhrd.stucamp.VO.MyFeedVO
 import com.smhrd.stucamp.VO.UserVO
 import com.smhrd.stucamp.wish.WishListActivity
 import org.json.JSONObject
+import org.w3c.dom.Text
 
 class MyFeedActivity : AppCompatActivity() {
 
@@ -27,6 +28,7 @@ class MyFeedActivity : AppCompatActivity() {
     lateinit var btnFeedDelete : Button
     lateinit var btnPrev : Button
     lateinit var btnMoveWish : Button
+    lateinit var tvUserNick : TextView
 
     lateinit var reqQueue: RequestQueue
 
@@ -38,6 +40,7 @@ class MyFeedActivity : AppCompatActivity() {
         btnPrev = findViewById(R.id.btnPrev)
         btnMoveWish = findViewById(R.id.btnMoveWish)
         rc = findViewById(R.id.rcMyFeed)
+        tvUserNick = findViewById(R.id.tvUserNick)
         reqQueue = Volley.newRequestQueue(this)
 
         //spf(로그인한 이메일 가져오기)
@@ -46,6 +49,7 @@ class MyFeedActivity : AppCompatActivity() {
         val user_email = user.user_email
         Log.d("user_email",user_email)
 
+        tvUserNick.text = user_email
         val feedList = ArrayList<FeedVO>()
 
 //        feedList.add(MyFeedVO("hihi", 3, "하이하이"))
