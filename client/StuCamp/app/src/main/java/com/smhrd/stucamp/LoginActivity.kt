@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
             val inputEmail = etLoginEmail.text.toString()
             val inputPassword = etLoginPw.text.toString()
 
-            val url = URL("http://172.30.1.22:8888/user/login")
+            val url = URL("http://172.30.1.42:8888/user/login")
 
 
             Log.d("inputEmail" , inputEmail)
@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
             val request = object : StringRequest(
                 Request.Method.POST,
 
-                "http://172.30.1.22:8888/user/login",
+                "http://172.30.1.42:8888/user/login",
 
                 {
                         response ->
