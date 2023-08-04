@@ -98,9 +98,9 @@
     <Button
         android:id="@+id/btnCom"
         android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="5dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/nanum_square_neo_cbd"
         android:paddingLeft="0dp"
@@ -110,9 +110,8 @@
         android:text="댓글"
         android:textColor="#3A3730"
         app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ibHeart2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ibHeart2"
+        app:layout_constraintTop_toBottomOf="@+id/ivFeed2"
         app:strokeWidth="0.8dp" />
 
     <Button
@@ -120,15 +119,16 @@
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:backgroundTint="#E0D9C9"
+        android:backgroundTint="#00FFFFFF"
         android:fontFamily="@font/nanum_square_neo_cbd"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
         android:text="찜하기"
         android:textColor="#3A3730"
-        app:cornerRadius="15dp"
+        app:cornerRadius="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

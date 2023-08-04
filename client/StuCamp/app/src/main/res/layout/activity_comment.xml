@@ -10,35 +10,55 @@
         android:id="@+id/rvComment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/etComment"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/etComment" />
 
     <EditText
         android:id="@+id/etComment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:ems="10"
-        android:hint="댓글"
+        android:hint="댓글 달기..."
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnCommentSend"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/rvComment" />
+        app:layout_constraintStart_toStartOf="@+id/rvComment"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnCommentSend"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#00E0D9C9"
+        android:fontFamily="@font/nanum_square_neo_deb"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:text="게시"
+        android:textColor="#2196F3"
+        android:textSize="16dp"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etComment"
+        app:layout_constraintTop_toTopOf="@+id/etComment" />
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#E0D9C9"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/nanum_square_neo_deb"
-        android:text="Send"
-        android:textColor="#3A3730"
-        android:textSize="14sp"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/etComment"
+        android:text="댓글"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvComment"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
