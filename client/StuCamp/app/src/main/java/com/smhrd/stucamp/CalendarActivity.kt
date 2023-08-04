@@ -154,7 +154,7 @@ class CalendarActivity : AppCompatActivity() {
         var userID = user.user_email
 
         val request = object : StringRequest(Request.Method.GET,
-            "http://172.30.1.22:8888/record/${userID}?record_date=${todayDate}",
+            "http://172.30.1.25:8888/record/${userID}?record_date=${todayDate}",
             { response ->
                 tv_detailStudy.text = ""
                 diaryTextView.text = "총 공부시간"

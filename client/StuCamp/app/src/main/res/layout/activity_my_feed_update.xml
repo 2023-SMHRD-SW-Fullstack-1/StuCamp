@@ -107,10 +107,10 @@
             android:backgroundTint="#E0D9C9"
             android:fontFamily="@font/nanum_square_neo_deb"
             android:text="글 올리기"
-            android:textColor="#3A3730"
-            app:cornerRadius="15dp"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textColor="#3A3730"
+            android:textSize="16sp"
+            app:cornerRadius="15dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

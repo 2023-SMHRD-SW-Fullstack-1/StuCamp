@@ -220,7 +220,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 //서버와 통신
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.22:8888/wish/delete",
+                    "http://172.30.1.25:8888/wish/delete",
                     {
                             response ->
                         if(response == "1"){
@@ -265,7 +265,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 //서버와 통신
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.22:8888/like/add",
+                    "http://172.30.1.25:8888/like/add",
 
                     {
                             response ->
@@ -297,7 +297,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 //서버와 통신
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.22:8888/like/cancel",
+                    "http://172.30.1.25:8888/like/cancel",
 
                     {
                             response ->

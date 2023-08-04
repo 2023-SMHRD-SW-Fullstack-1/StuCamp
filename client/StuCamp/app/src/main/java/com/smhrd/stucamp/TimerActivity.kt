@@ -211,7 +211,7 @@ class TimerActivity : AppCompatActivity() {
 
         val request = object : StringRequest(
             Request.Method.POST,
-            "http://http://172.30.1.22:8888/record/${userEmail}",
+            "http://http://172.30.1.25:8888/record/${userEmail}",
             { response ->
                 // 응답(Parsing the response)을 처리하고 업데이트된 시간을 표시하세요
                 val jsonObject = JSONObject(response)
