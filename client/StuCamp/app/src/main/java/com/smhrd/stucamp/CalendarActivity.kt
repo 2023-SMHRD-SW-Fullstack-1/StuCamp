@@ -233,7 +233,7 @@ class CalendarActivity : AppCompatActivity() {
                     legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
                     legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
                     legend.textSize = 14f
-
+                    legend.yOffset = -40f
                     val percentFormatter = PercentFormatter(pieChart)
                     dataSet.valueFormatter = percentFormatter
 
@@ -247,6 +247,9 @@ class CalendarActivity : AppCompatActivity() {
                     pieChart.setDrawEntryLabels(false)
                     pieChart.description.isEnabled = false
 
+                    //홀
+                    pieChart.holeRadius = 40f        // 홀 크기 조절 (0 ~ 100)
+                    pieChart.transparentCircleRadius = 45f  // 홀 주변 투명 원 크기 조절 (0 ~ 100)
                     // 애니메이션
                     pieChart.animateY(1000)
 
@@ -280,7 +283,7 @@ class CalendarActivity : AppCompatActivity() {
 
 
             val request = object : StringRequest(Request.Method.GET,
-                "http://172.30.1.25:8888/record/${userID}?record_date=${selectedDate}",
+                "http://172.30.1.22:8888/record/${userID}?record_date=${selectedDate}",
                 { response ->
                     tv_detailStudy.text = ""
                     diaryTextView.text = "총 공부시간"
@@ -346,11 +349,17 @@ class CalendarActivity : AppCompatActivity() {
 
                         // 색상 설정
                         dataSet.colors = mutableListOf(
-                            Color.BLUE,
-                            Color.GREEN,
-                            Color.RED,
-                            Color.YELLOW,
-                            Color.CYAN
+//                            Color.BLUE,
+//                            Color.GREEN,
+//                            Color.RED,
+//                            Color.YELLOW,
+//                            Color.CYAN
+                            Color.rgb(239,154,154),
+                            Color.rgb(179,157,219),
+                            Color.rgb(144,202,249),
+                            Color.rgb(128,203,196),
+                            Color.rgb(230,238,156),
+                            Color.rgb(255,204,128),
                         )
 
                         val legend = pieChart.legend
@@ -358,6 +367,7 @@ class CalendarActivity : AppCompatActivity() {
                         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
                         legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
                         legend.textSize = 14f
+                        legend.yOffset = -40f
 
 //                        dataSet.valueFormatter = CustomPercentFormatter(pieChart)
 //                        dataSet.valueFormatter = PercentFormatter(pieChart)
@@ -373,6 +383,9 @@ class CalendarActivity : AppCompatActivity() {
                         pieChart.setUsePercentValues(true)
                         pieChart.setDrawEntryLabels(false)
                         pieChart.description.isEnabled = false
+                        // 홀
+                        pieChart.holeRadius = 40f        // 홀 크기 조절 (0 ~ 100)
+                        pieChart.transparentCircleRadius = 45f  // 홀 주변 투명 원 크기 조절 (0 ~ 100)
 
                         // 애니메이션
                         pieChart.animateY(1000)
