@@ -221,13 +221,11 @@ class CalendarActivity : AppCompatActivity() {
 //                        Color.YELLOW,
 //                        Color.CYAN,
                         Color.rgb(239,154,154),
-                        Color.rgb(244,143,177),
-                        Color.rgb(206,157,219),
+                        Color.rgb(179,157,219),
                         Color.rgb(144,202,249),
-                        Color.rgb(129,212,250),
                         Color.rgb(128,203,196),
-                        Color.rgb(197,225,165),
-                        Color.rgb(230,238,156)
+                        Color.rgb(230,238,156),
+                        Color.rgb(255,204,128),
                     )
 
                     val legend = pieChart.legend
