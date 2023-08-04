@@ -69,7 +69,7 @@ class CommentResAdapter (var datas: ArrayList<CommentResVO>, var context : Conte
         btnCommentDel.setOnClickListener {
             val request = object : StringRequest(
                 Request.Method.GET,
-                "http://172.30.1.22:8888/comment/delete/$comment_id",
+                "http://172.30.1.42:8888/comment/delete/$comment_id",
                 { response ->
                     if (response == "1") {
                         datas.removeAt(position)

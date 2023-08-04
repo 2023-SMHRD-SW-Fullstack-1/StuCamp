@@ -68,7 +68,7 @@ class ChatActivity : AppCompatActivity() {
         rv.adapter = adapter
 
         btn_send.setOnClickListener {
-            chatsRef.push().setValue(KakaoVO(R.drawable.img1, user.user_nickname, edt_msg.text.toString(), getCurrentTimeInHHMMFormat()))
+            chatsRef.push().setValue(KakaoVO(R.drawable.chatimage, user.user_nickname, edt_msg.text.toString(), getCurrentTimeInHHMMFormat()))
             // adapter 새로고침
             adapter.notifyDataSetChanged()
             // 스크롤 옮기기
