@@ -38,6 +38,8 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 
     lateinit var reqQueue : RequestQueue
     val isLikedMap: MutableMap<Int, Boolean> = mutableMapOf()
+    val heartOn = ContextCompat.getDrawable(context, R.drawable.heart_on)
+    val heartOff = ContextCompat.getDrawable(context, R.drawable.heart_off)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         return FeedViewHolder(
@@ -64,11 +66,6 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 
         tvId.text = feed.user_nickname
 
-        //좋아요 관련
-        val heartOn = ContextCompat.getDrawable(context, R.drawable.heart_on)
-        val heartOff = ContextCompat.getDrawable(context, R.drawable.heart_off)
-        var isLiked : Boolean = false
-
         //feed id 가져오기
         val feed_id = feed.feed_id
         Log.d("feeddededed", feed_id.toString())
@@ -90,32 +87,49 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
         //좋아요 여부 확인
         //1. 서버 통신
         var likeList : ArrayList<String> = ArrayList<String>()
+        var heartImg = ContextCompat.getDrawable(context, R.drawable.heart_off)
+
+        // 좋아요 여부 확인
+        var isLiked = isLikedMap[position] ?: false // 해당 포지션에 해당하는 좋아요 상태를 가져옴 (없으면 기본값은 false)
+
+        // 좋아요 여부에 따라 하트 이미지 설정
+//        if (isLiked) {
+//            ibHeart.setImageDrawable(heartOn)
+//        } else {
+//            ibHeart.setImageDrawable(heartOff)
+//        }
 
         val likeRequest = object : StringRequest(
             Request.Method.GET,
             "http://172.30.1.42:8888/like/$feed_id",
             { response ->
-                if(response != "-1"){
+                if(response != "0"){
                     Log.d("like 불러오기 response", response.toString())
                     val result = JSONArray(response)
 
                     for (i in 0 until result.length()) {
                         val like = result.getJSONObject(i)
-                        val like_feed_id = like.getString("feed_id").toString()
-                        likeList.add(like_feed_id)
+                        val like_user_email = like.getJSONObject("User").getString("user_email")
+                        likeList.add(like_user_email)
                     }
+                    Log.d("likeList", likeList.toString())
 
                     //전체 피드 중 좋아요 여부 확인
-                    for(like_feed_id : String in likeList){
-                        Log.d("like = feedid", like_feed_id)
-                        Log.d("feed_id", feed_id.toString())
-                        isLiked = if(like_feed_id == feed_id.toString()) {
-                            ibHeart.setImageDrawable(heartOn)
-                            true
-                        }else{
-                            ibHeart.setImageDrawable(heartOff)
-                            false
+                    for(like_user_email : String in likeList){
+                        Log.d("like_user_id", like_user_email)
+                        Log.d("user_email", user_email)
+                        if(like_user_email == user_email) {
+                            isLiked = true
+                            break
                         }
+                    }
+                    isLikedMap[position] = isLiked
+
+                    // 좋아요 여부에 따라 하트 이미지 설정
+                    if (isLiked) {
+                        ibHeart.setImageDrawable(heartOn)
+                    } else {
+                        ibHeart.setImageDrawable(heartOff)
                     }
             }
         },
@@ -241,12 +255,11 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 
         //좋아요 클릭
         ibHeart.setOnClickListener(){
-            Log.d("ibHeart", ibHeart.context.toString())
 
             if(!isLiked){ //좋아요 클릭했을 때
-//                ibHeart.setImageDrawable(heartOn)
                 feed.feed_like_cnt++
-                isLiked = true
+                isLikedMap[position] = true
+//                ibHeart.setImageDrawable(heartOn)
                 notifyItemChanged(position)
 
                 //서버와 통신
@@ -276,9 +289,9 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 reqQueue.add(request)
 
             }else { //좋아요 취소했을 때
-//                ibHeart.setImageDrawable(heartOff)
                 feed.feed_like_cnt--
-                isLiked = false
+                isLikedMap[position] = false
+//                ibHeart.setImageDrawable(heartOff)
                 notifyItemChanged(position)
 
                 //서버와 통신
