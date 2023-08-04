@@ -115,7 +115,7 @@ class TimerActivity : AppCompatActivity() {
 
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.22:8888/record/add",
+                    "http://172.30.1.25:8888/record/add",
                     {
                             response ->
                         Log.d("Response", response)

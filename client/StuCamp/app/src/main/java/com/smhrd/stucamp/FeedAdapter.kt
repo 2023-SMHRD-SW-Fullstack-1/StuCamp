@@ -101,7 +101,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 
         val likeRequest = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.22:8888/like/$feed_id",
+            "http://172.30.1.25:8888/like/$feed_id",
             { response ->
                 if(response != "0"){
                     Log.d("like 불러오기 response", response.toString())
@@ -149,7 +149,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
         //1. 서버 통신
         val wishRequest = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.22:8888/wish/$user_email",
+            "http://172.30.1.25:8888/wish/$user_email",
             { response ->
                 if(response != "-1"){
                     Log.d("wish 불러오기 response", response.toString())
@@ -191,7 +191,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 //서버와 통신
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.22:8888/wish/add",
+                    "http://172.30.1.25:8888/wish/add",
                     {
                             response ->
                         if(response == "1"){

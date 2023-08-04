@@ -104,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#E0D9C9"
-        android:fontFamily="@font/nanum_square_neo_deb"
+        android:fontFamily="@font/nanum_square_neo_cbd"
         android:text="글작성"
         android:textAlignment="center"
         android:textColor="#3A3730"

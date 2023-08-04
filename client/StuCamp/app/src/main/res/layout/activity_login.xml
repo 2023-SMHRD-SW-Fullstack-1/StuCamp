@@ -67,12 +67,15 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="160dp"
         android:backgroundTint="#E0D9C9"
         android:fontFamily="@font/nanum_square_neo_deb"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
         android:text="로그인"
+        android:textAlignment="center"
         android:textColor="#3A3730"
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
@@ -98,11 +101,12 @@
 
     <Button
         android:id="@+id/btnToSignIn"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:backgroundTint="#E0D9C9"
         android:fontFamily="@font/nanum_square_neo_deb"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
         android:text="회원가입"
         android:textColor="#3A3730"
         app:cornerRadius="15dp"

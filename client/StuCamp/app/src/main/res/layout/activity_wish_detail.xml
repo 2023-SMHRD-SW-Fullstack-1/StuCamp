@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="7dp"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="#FEFAFD"
         android:src="@drawable/heart_off"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
