@@ -305,7 +305,7 @@ class CalendarActivity : AppCompatActivity() {
 
                         var sumOfStudy: Long = 0
                         val sumOfSubject = mutableMapOf<String, Long>()
-
+                        // 경과시간 누적
                         for (recordList in jsonDataObj.recordDetails) {
                             for (recordDetail in recordList) {
                                 sumOfStudy += recordDetail.record_elapsed_time
@@ -316,24 +316,18 @@ class CalendarActivity : AppCompatActivity() {
                                 ) + recordDetail.record_elapsed_time
                             }
                         }
+                        // 총 공부시간
                         diaryTextView.text = "총 공부시간 : " + millisecondsToHHMM(sumOfStudy) + "초"
-
-//                        for ((subject, time) in sumOfSubject) {
-//                            val subjectTimeFormatted = millisecondsToHHMM(time)
-//                            tv_detailStudy.text = "${tv_detailStudy.text}$subject : $subjectTimeFormatted 분\n"
-//                        }
-
                         val entries = mutableListOf<PieEntry>()
 
                         var totalStudyTime = 0L
                         for ((subject, time) in sumOfSubject) {
                             totalStudyTime += time
                         }
+                        // 주제별 공부시간
                         for ((subject, time) in sumOfSubject) {
                             val subjectTimeFormatted = millisecondsToHHMM(time)
-//                            tv_detailStudy.text = "${tv_detailStudy.text}$subject : $subjectTimeFormatted 분\n"
                             val percentage = (time.toDouble() / totalStudyTime.toDouble()) * 100
-//                            entries.add(PieEntry(time.toFloat(), "$subject : $subjectTimeFormatted 분"))
                             entries.add(
                                 PieEntry(
                                     percentage.toFloat(),
@@ -351,11 +345,6 @@ class CalendarActivity : AppCompatActivity() {
 
                         // 색상 설정
                         dataSet.colors = mutableListOf(
-//                            Color.BLUE,
-//                            Color.GREEN,
-//                            Color.RED,
-//                            Color.YELLOW,
-//                            Color.CYAN
                             Color.rgb(239,154,154),
                             Color.rgb(179,157,219),
                             Color.rgb(144,202,249),
@@ -375,9 +364,6 @@ class CalendarActivity : AppCompatActivity() {
 //                        dataSet.valueFormatter = PercentFormatter(pieChart)
                         val percentFormatter = PercentFormatter(pieChart)
                         dataSet.valueFormatter = percentFormatter
-
-
-
 
                         val data = PieData(dataSet)
                         data.setValueFormatter(percentFormatter)
