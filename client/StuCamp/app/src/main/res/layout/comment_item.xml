@@ -33,8 +33,11 @@
         android:text="Content"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvComId"
+        app:layout_constraintEnd_toStartOf="@+id/btnCommentDel"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvComId"
-        app:layout_constraintTop_toTopOf="@+id/tvComId" />
+        app:layout_constraintTop_toTopOf="@+id/tvComId"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnCommentDel"

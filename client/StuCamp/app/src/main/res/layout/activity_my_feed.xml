@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MyFeedActivity">
 
-    <TextView
-        android:id="@+id/tvUserNick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:fontFamily="@font/nanum_square_neo_deb"
-        android:text="tvNick"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnPrev"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnPrev" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcMyFeed"
         android:layout_width="0dp"
@@ -70,10 +58,11 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:fontFamily="@font/nanum_square_neo_brg"
-        android:text="님의 피드입니다."
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/nanum_square_neo_deb"
+        android:text="내 피드"
         android:textSize="18dp"
-        app:layout_constraintStart_toEndOf="@+id/tvUserNick"
-        app:layout_constraintTop_toTopOf="@+id/tvUserNick" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
