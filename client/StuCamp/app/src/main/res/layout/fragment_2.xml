@@ -27,7 +27,7 @@
         android:layout_marginTop="172dp"
         android:backgroundTint="#E0D9C9"
         android:fontFamily="@font/nanum_square_neo_deb"
-        android:text="내 캘린더"
+        android:text="통계"
         android:textColor="#3A3730"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"

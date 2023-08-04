@@ -48,6 +48,7 @@ class ChatListCreate : AppCompatActivity() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     // 데이터 스냅샷에서 데이터 개수 파악
                     val dataCount = dataSnapshot.childrenCount
+
                     Log.d("Firebase 데이터 개수", dataCount.toString())
                     Log.d("User spf 데이터", user.user_email.toString())
 //                    roomRef.push().setValue(ChatListVO(dataCount.toInt(),user.user_email ,edt_createRoomTitle.text.toString()))

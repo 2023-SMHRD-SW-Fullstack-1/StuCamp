@@ -40,18 +40,12 @@ import com.github.mikephil.charting.utils.ViewPortHandler
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
+import java.util.Calendar
 import java.util.Locale
+
 // ...
 
-class CustomPercentFormatter(private val pieChart: PieChart) : PercentFormatter(pieChart) {
-    override fun getFormattedValue(value: Float): String {
-        return super.getFormattedValue(value) + "%"
-    }
 
-    override fun getFormattedValue(value: Float, entry: Entry?, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
-        return super.getFormattedValue(value, entry, dataSetIndex, viewPortHandler) + "%"
-    }
-}
 
 class CalendarActivity : AppCompatActivity() {
     var userID: String = "userID"
@@ -68,7 +62,6 @@ class CalendarActivity : AppCompatActivity() {
     lateinit var pieChart: PieChart
 
     lateinit var reqQueue: RequestQueue
-
 
 
 
@@ -94,39 +87,15 @@ class CalendarActivity : AppCompatActivity() {
             startActivity(it_back)
         }
 
+        // 초기화면 세팅
+
+
         val spf = getSharedPreferences("mySPF", Context.MODE_PRIVATE)
         val user = Gson().fromJson(spf.getString("user", " "), UserVO::class.java)
 
         fun formatToyyyyMMdd(year: Int, month: Int, dayOfMonth: Int): String {
             return String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth)
         }
-
-//        fun parseJson(jsonData: String): RecordDetailList {
-//            // JSON 문자열을 파싱하여 RecordEntity 객체 생성
-//            val jsonObject = JsonParser.parseString(jsonData).asJsonObject
-//            val recordDetailsJson = jsonObject.getAsJsonArray("recordDetails")
-//
-//            val recordDetailsLists = mutableListOf<List<RecordDetail>>()
-//
-//            for (recordListJson in recordDetailsJson) {
-//                val recordList = mutableListOf<RecordDetail>()
-//                val recordListArray = recordListJson.asJsonArray
-//
-//                for (recordDetailJson in recordListArray) {
-//                    val recordDetail = recordDetailJson.asJsonObject
-//                    val startDate = recordDetail.get("record_start_date").asString
-//                    val endDate = recordDetail.get("record_end_date").asString
-//                    val elapsedTime = recordDetail.get("record_elapsed_time").asLong
-//                    val subject = recordDetail.get("record_subject").asString
-//
-//                    recordList.add(RecordDetail(startDate, endDate, elapsedTime, subject))
-//                }
-//
-//                recordDetailsLists.add(recordList)
-//            }
-//
-//            return RecordDetailList(recordDetailsLists)
-//        }
 
         fun parseJson(jsonData: String): RecordDetailList {
             val jsonObject = JsonParser.parseString(jsonData).asJsonObject
@@ -158,14 +127,150 @@ class CalendarActivity : AppCompatActivity() {
             return RecordDetailList(recordDetailsLists, sumOfSubject)
         }
 
+        //        fun millisecondsToHHMM(milliseconds: Long): String {
+//            val totalSeconds = milliseconds / 1000
+//            val hours = totalSeconds / 3600
+//            val minutes = (totalSeconds % 3600) / 60
+//
+//            return String.format("%02d:%02d", hours, minutes)
+//        }
         fun millisecondsToHHMM(milliseconds: Long): String {
             val totalSeconds = milliseconds / 1000
             val hours = totalSeconds / 3600
             val minutes = (totalSeconds % 3600) / 60
+            val seconds = totalSeconds % 60
 
-            return String.format("%02d:%02d", hours, minutes)
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds)
         }
 
+        // 초기화면 세팅
+        val currentDate = Calendar.getInstance()
+        val currentYear = currentDate.get(Calendar.YEAR)
+        val currentMonth = currentDate.get(Calendar.MONTH)
+        val currentDay = currentDate.get(Calendar.DAY_OF_MONTH)
+        diaryTextView.visibility = View.VISIBLE
+
+        var todayDate = formatToyyyyMMdd(currentYear, currentMonth, currentDay)
+        var userID = user.user_email
+
+        val request = object : StringRequest(Request.Method.GET,
+            "http://172.30.1.22:8888/record/${userID}?record_date=${todayDate}",
+            { response ->
+                tv_detailStudy.text = ""
+                diaryTextView.text = "총 공부시간"
+                Log.d("response", response)
+//                    Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show()
+                if (response == "-1") {
+                    // 빈 Date 보냈을시
+                    diaryTextView.text = "총 공부시간 : 0분"
+                    pieChart.visibility = View.INVISIBLE
+                } else {
+                    pieChart.visibility = View.VISIBLE
+
+                    var result = response.trimIndent()
+                    Log.d("response222", result)
+
+                    val jsonDataObj = parseJson(result)
+
+                    var sumOfStudy: Long = 0
+                    val sumOfSubject = mutableMapOf<String, Long>()
+
+                    for (recordList in jsonDataObj.recordDetails) {
+                        for (recordDetail in recordList) {
+                            sumOfStudy += recordDetail.record_elapsed_time
+
+                            val subject = recordDetail.record_subject
+                            sumOfSubject[subject] = sumOfSubject.getOrDefault(
+                                subject, 0
+                            ) + recordDetail.record_elapsed_time
+                        }
+                    }
+                    diaryTextView.text = "총 공부시간 : " + millisecondsToHHMM(sumOfStudy) + "초"
+
+                    val entries = mutableListOf<PieEntry>()
+
+                    var totalStudyTime = 0L
+                    for ((subject, time) in sumOfSubject) {
+                        totalStudyTime += time
+                    }
+                    for ((subject, time) in sumOfSubject) {
+                        val subjectTimeFormatted = millisecondsToHHMM(time)
+//                            tv_detailStudy.text = "${tv_detailStudy.text}$subject : $subjectTimeFormatted 분\n"
+                        val percentage = (time.toDouble() / totalStudyTime.toDouble()) * 100
+//                            entries.add(PieEntry(time.toFloat(), "$subject : $subjectTimeFormatted 분"))
+                        entries.add(
+                            PieEntry(
+                                percentage.toFloat(),
+                                "$subject : $subjectTimeFormatted 초"
+                            )
+                        )
+                    }
+
+                    val dataSet = PieDataSet(entries, "")
+                    dataSet.sliceSpace = 3f
+                    dataSet.selectionShift = 5f
+                    dataSet.valueTextColor = Color.BLACK
+                    dataSet.valueTextSize = 16f
+
+
+                    // 색상 설정
+                    dataSet.colors = mutableListOf(
+//                        Color.BLUE,
+//                        Color.GREEN,
+//                        Color.RED,
+//                        Color.YELLOW,
+//                        Color.CYAN,
+                        Color.rgb(239,154,154),
+                        Color.rgb(244,143,177),
+                        Color.rgb(206,157,219),
+                        Color.rgb(144,202,249),
+                        Color.rgb(129,212,250),
+                        Color.rgb(128,203,196),
+                        Color.rgb(197,225,165),
+                        Color.rgb(230,238,156)
+                    )
+
+                    val legend = pieChart.legend
+                    legend.orientation = Legend.LegendOrientation.VERTICAL
+                    legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                    legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+                    legend.textSize = 14f
+
+                    val percentFormatter = PercentFormatter(pieChart)
+                    dataSet.valueFormatter = percentFormatter
+
+
+
+
+                    val data = PieData(dataSet)
+                    data.setValueFormatter(percentFormatter)
+                    pieChart.data = data
+                    pieChart.setUsePercentValues(true)
+                    pieChart.setDrawEntryLabels(false)
+                    pieChart.description.isEnabled = false
+
+                    // 애니메이션
+                    pieChart.animateY(1000)
+
+                    pieChart.invalidate()
+
+
+
+                }
+
+
+            },
+            { error ->
+                Log.d("error", error.toString())
+                Toast.makeText(this, "에러발생!", Toast.LENGTH_LONG).show()
+            }) {
+
+        }
+        reqQueue.add(request)
+
+
+
+        // 데이트 체인지 이벤트
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             diaryTextView.visibility = View.VISIBLE
 
@@ -208,7 +313,7 @@ class CalendarActivity : AppCompatActivity() {
                                 ) + recordDetail.record_elapsed_time
                             }
                         }
-                        diaryTextView.text = "총 공부시간 : " + millisecondsToHHMM(sumOfStudy) + "분"
+                        diaryTextView.text = "총 공부시간 : " + millisecondsToHHMM(sumOfStudy) + "초"
 
 //                        for ((subject, time) in sumOfSubject) {
 //                            val subjectTimeFormatted = millisecondsToHHMM(time)
@@ -226,9 +331,13 @@ class CalendarActivity : AppCompatActivity() {
 //                            tv_detailStudy.text = "${tv_detailStudy.text}$subject : $subjectTimeFormatted 분\n"
                             val percentage = (time.toDouble() / totalStudyTime.toDouble()) * 100
 //                            entries.add(PieEntry(time.toFloat(), "$subject : $subjectTimeFormatted 분"))
-                            entries.add(PieEntry(percentage.toFloat(), "$subject : $subjectTimeFormatted 분"))
+                            entries.add(
+                                PieEntry(
+                                    percentage.toFloat(),
+                                    "$subject : $subjectTimeFormatted 초"
+                                )
+                            )
                         }
-
 
                         val dataSet = PieDataSet(entries, "")
                         dataSet.sliceSpace = 3f
@@ -236,16 +345,14 @@ class CalendarActivity : AppCompatActivity() {
                         dataSet.valueTextColor = Color.BLACK
                         dataSet.valueTextSize = 16f
 
-                        // 색상을 설정합니다. 여기서는 Android에서 기본으로 제공하는 색상을 사용합니다.
 
-
+                        // 색상 설정
                         dataSet.colors = mutableListOf(
                             Color.BLUE,
                             Color.GREEN,
                             Color.RED,
                             Color.YELLOW,
                             Color.CYAN
-                            // 원하는 만큼 색상을 추가할 수 있습니다.
                         )
 
                         val legend = pieChart.legend
@@ -254,12 +361,24 @@ class CalendarActivity : AppCompatActivity() {
                         legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
                         legend.textSize = 14f
 
-                        dataSet.valueFormatter = CustomPercentFormatter(pieChart)
+//                        dataSet.valueFormatter = CustomPercentFormatter(pieChart)
+//                        dataSet.valueFormatter = PercentFormatter(pieChart)
+                        val percentFormatter = PercentFormatter(pieChart)
+                        dataSet.valueFormatter = percentFormatter
+
+
+
 
                         val data = PieData(dataSet)
+                        data.setValueFormatter(percentFormatter)
                         pieChart.data = data
+                        pieChart.setUsePercentValues(true)
                         pieChart.setDrawEntryLabels(false)
                         pieChart.description.isEnabled = false
+
+                        // 애니메이션
+                        pieChart.animateY(1000)
+
                         pieChart.invalidate()
 
 

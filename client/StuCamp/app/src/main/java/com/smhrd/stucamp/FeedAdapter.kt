@@ -41,7 +41,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         return FeedViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.feed_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.feed_item, parent, false)
         )
     }
 
@@ -93,7 +93,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 
         val likeRequest = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.42:8888/like/$feed_id",
+            "http://172.30.1.22:8888/like/$feed_id",
             { response ->
                 if(response != "-1"){
                     Log.d("like 불러오기 response", response.toString())
@@ -117,8 +117,8 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                             false
                         }
                     }
-            }
-        },
+                }
+            },
             { error ->
                 Log.d("error", error.toString())
             }
@@ -127,7 +127,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
 
 
         var wishList = ArrayList<WishListVO>()
-        
+
         //찜버튼 텍스트
         var textBtnAddWish : String = "찜하기"
 
@@ -135,7 +135,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
         //1. 서버 통신
         val wishRequest = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.42:8888/wish/$user_email",
+            "http://172.30.1.22:8888/wish/$user_email",
             { response ->
                 if(response != "-1"){
                     Log.d("wish 불러오기 response", response.toString())
@@ -177,7 +177,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 //서버와 통신
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.42:8888/wish/add",
+                    "http://172.30.1.22:8888/wish/add",
                     {
                             response ->
                         if(response == "1"){
@@ -206,7 +206,7 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 //서버와 통신
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.42:8888/wish/delete",
+                    "http://172.30.1.22:8888/wish/delete",
                     {
                             response ->
                         if(response == "1"){
@@ -252,16 +252,16 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 //서버와 통신
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.42:8888/like/add",
+                    "http://172.30.1.22:8888/like/add",
 
                     {
-                        response ->
+                            response ->
 //                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
                         if(response == "1"){
                             //좋아요 클릭 여부 spf 생성
                         }
                     },{
-                        error ->
+                            error ->
                         Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
                     }
                 ) {
@@ -284,12 +284,12 @@ class FeedAdapter(var datas : ArrayList<FeedVO>, var context : Context, var acti
                 //서버와 통신
                 val request = object : StringRequest(
                     Request.Method.POST,
-                    "http://172.30.1.42:8888/like/cancel",
+                    "http://172.30.1.22:8888/like/cancel",
 
                     {
                             response ->
-                            if(response == "1"){
-                            }
+                        if(response == "1"){
+                        }
                     },{
                             error ->
                         Log.d("error", error.toString())
