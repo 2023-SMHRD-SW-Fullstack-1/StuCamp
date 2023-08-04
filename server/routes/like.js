@@ -132,6 +132,7 @@ router.get("/:feed_id", async (req, res, next) => {
       where: {
         feed_id: result,
       },
+      include: [User],
     });
 
     if (likeEntity) {
