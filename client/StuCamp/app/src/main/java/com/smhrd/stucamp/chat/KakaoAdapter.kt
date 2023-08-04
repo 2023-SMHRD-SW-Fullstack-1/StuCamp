@@ -64,7 +64,7 @@ class KakaoAdapter(var context: Context, var template : Int, var data: ArrayList
         }else{
             holder.tv_myMsg.visibility = GONE
             holder.tv_myTime.visibility = GONE
-
+            holder.img.setImageResource(KakaoMessage.imgId!!)
         }
 
 
