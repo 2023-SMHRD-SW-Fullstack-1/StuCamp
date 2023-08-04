@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnMyPage : Button
     lateinit var btnWrite : Button
     lateinit var btnMyHome : Button
+    lateinit var ivLogo : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +97,5 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(this, MemInfoActivity::class.java)
             startActivity(intent)
         }
-
     }
 }
