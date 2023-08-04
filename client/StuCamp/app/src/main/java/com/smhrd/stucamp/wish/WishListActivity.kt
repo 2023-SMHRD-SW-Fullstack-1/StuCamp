@@ -58,7 +58,7 @@ class WishListActivity : AppCompatActivity() {
         //mywish 불러오기(서버 통신)
         val request = object : StringRequest(
             Request.Method.GET,
-            "http://172.30.1.25:8888/wish/$user_email",
+            "http://172.30.1.42:8888/wish/$user_email",
             { response ->
                 Log.d("wish 불러오기 response", response.toString())
                 if(response == "-1"){

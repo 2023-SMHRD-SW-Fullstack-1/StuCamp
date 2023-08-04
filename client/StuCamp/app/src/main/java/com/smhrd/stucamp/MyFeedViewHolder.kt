@@ -11,7 +11,7 @@ class MyFeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
     lateinit var tvId2 : TextView
     lateinit var ivFeed : ImageView
-    lateinit var ibHeart2 : ImageButton
+//    lateinit var ibHeart2 : ImageButton
     lateinit var tvLikeCnt2 : TextView
     lateinit var tvContent2 : TextView
     lateinit var tvCommentId : TextView
@@ -23,7 +23,7 @@ class MyFeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
     init {
         tvId2 = itemView.findViewById(R.id.tv_roomTitle)
         ivFeed = itemView.findViewById(R.id.ivFeed2)
-        ibHeart2 = itemView.findViewById(R.id.ibHeart2)
+//        ibHeart2 = itemView.findViewById(R.id.ibHeart2)
         tvLikeCnt2 = itemView.findViewById(R.id.tvLikeCnt2)
         tvContent2 = itemView.findViewById(R.id.tvContent2)
         //tvCommentId = itemView.findViewById(R.id.tvCommentId)

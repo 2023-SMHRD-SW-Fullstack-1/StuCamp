@@ -6,11 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".MyFeedActivity">
 
+    <TextView
+        android:id="@+id/tvUserNick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/nanum_square_neo_deb"
+        android:text="tvNick"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPrev"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnPrev" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcMyFeed"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,17 +32,18 @@
         android:id="@+id/btnPrev"
         android:layout_width="55dp"
         android:layout_height="55dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="#E0D9C9"
-        android:fontFamily="@font/nanum_square_neo_deb"
+        android:fontFamily="@font/nanum_square_neo_cbd"
         android:paddingLeft="0dp"
         android:paddingTop="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
         android:text="Main"
         android:textColor="#3A3730"
+        android:textSize="14dp"
         app:cornerRadius="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/rcMyFeed"
         app:layout_constraintEnd_toStartOf="@+id/btnMoveWish"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,15 +53,27 @@
         android:layout_height="55dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="#E0D9C9"
-        android:fontFamily="@font/nanum_square_neo_deb"
+        android:fontFamily="@font/nanum_square_neo_cbd"
         android:paddingLeft="0dp"
         android:paddingTop="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
         android:text="찜목록"
         android:textColor="#3A3730"
+        android:textSize="14dp"
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/btnPrev"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnPrev" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:fontFamily="@font/nanum_square_neo_brg"
+        android:text="님의 피드입니다."
+        android:textSize="18dp"
+        app:layout_constraintStart_toEndOf="@+id/tvUserNick"
+        app:layout_constraintTop_toTopOf="@+id/tvUserNick" />
 </androidx.constraintlayout.widget.ConstraintLayout>

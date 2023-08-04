@@ -211,7 +211,7 @@ class CalendarActivity : AppCompatActivity() {
                     dataSet.sliceSpace = 3f
                     dataSet.selectionShift = 5f
                     dataSet.valueTextColor = Color.BLACK
-                    dataSet.valueTextSize = 13f
+                    dataSet.valueTextSize = 16f
 
 
                     // 색상 설정
@@ -285,7 +285,7 @@ class CalendarActivity : AppCompatActivity() {
 
 
             val request = object : StringRequest(Request.Method.GET,
-                "http://172.30.1.22:8888/record/${userID}?record_date=${selectedDate}",
+                "http://172.30.1.42:8888/record/${userID}?record_date=${selectedDate}",
                 { response ->
                     tv_detailStudy.text = ""
                     diaryTextView.text = "총 공부시간"
@@ -346,8 +346,7 @@ class CalendarActivity : AppCompatActivity() {
                         dataSet.sliceSpace = 3f
                         dataSet.selectionShift = 5f
                         dataSet.valueTextColor = Color.BLACK
-                        dataSet.valueTextSize = 13f
-
+                        dataSet.valueTextSize = 16f
 
 
                         // 색상 설정
