@@ -8,10 +8,10 @@
 
     <ImageButton
         android:id="@+id/ibHeart2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="7dp"
+        android:layout_width="26dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
         android:backgroundTint="#FEFAFD"
         android:src="@drawable/heart_off"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="100dp"
-        android:fontFamily="@font/nanum_square_neo_deb"
+        android:fontFamily="@font/nanum_square_neo_ehv"
         android:text="ID"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
@@ -54,33 +54,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.8245614" />
 
     <TextView
         android:id="@+id/tvContent2"
         android:layout_width="0dp"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/nanum_square_neo_deb"
-        android:paddingLeft="20dp"
+        android:fontFamily="@font/nanum_square_neo_cbd"
+        android:paddingLeft="3dp"
         android:paddingTop="10dp"
         android:paddingRight="15dp"
+        android:paddingBottom="20dp"
         android:text="TextView"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnCom"
+        app:layout_constraintStart_toStartOf="@+id/ibHeart2"
         app:layout_constraintTop_toBottomOf="@+id/tvLikeCnt2" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/nanum_square_neo_deb"
         android:text="명이 좋아합니다"
-        android:textSize="18sp"
+        android:textSize="18dp"
         app:layout_constraintStart_toEndOf="@+id/tvLikeCnt2"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
@@ -88,21 +87,21 @@
         android:id="@+id/tvLikeCnt2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/nanum_square_neo_deb"
         android:text="3"
-        android:textSize="18sp"
+        android:textSize="18dp"
         app:layout_constraintStart_toEndOf="@+id/ibHeart2"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
     <Button
         android:id="@+id/btnCom"
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="5dp"
-        android:backgroundTint="#E0D9C9"
+        android:backgroundTint="@color/white"
         android:fontFamily="@font/nanum_square_neo_cbd"
         android:paddingLeft="0dp"
         android:paddingTop="0dp"
@@ -111,9 +110,10 @@
         android:text="댓글"
         android:textColor="#3A3730"
         app:cornerRadius="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvContent2"
+        app:layout_constraintBottom_toBottomOf="@+id/ibHeart2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+        app:layout_constraintTop_toTopOf="@+id/ibHeart2"
+        app:strokeWidth="0.8dp" />
 
     <Button
         android:id="@+id/btnAddWish"
