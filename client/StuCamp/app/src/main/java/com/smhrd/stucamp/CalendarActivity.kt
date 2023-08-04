@@ -154,7 +154,7 @@ class CalendarActivity : AppCompatActivity() {
         var userID = user.user_email
 
         val request = object : StringRequest(Request.Method.GET,
-            "http://172.30.1.42:8888/record/${userID}?record_date=${todayDate}",
+            "http://172.30.1.22:8888/record/${userID}?record_date=${todayDate}",
             { response ->
                 tv_detailStudy.text = ""
                 diaryTextView.text = "총 공부시간"
@@ -197,6 +197,7 @@ class CalendarActivity : AppCompatActivity() {
                         val subjectTimeFormatted = millisecondsToHHMM(time)
 //                            tv_detailStudy.text = "${tv_detailStudy.text}$subject : $subjectTimeFormatted 분\n"
                         val percentage = (time.toDouble() / totalStudyTime.toDouble()) * 100
+
 //                            entries.add(PieEntry(time.toFloat(), "$subject : $subjectTimeFormatted 분"))
                         entries.add(
                             PieEntry(
@@ -210,7 +211,7 @@ class CalendarActivity : AppCompatActivity() {
                     dataSet.sliceSpace = 3f
                     dataSet.selectionShift = 5f
                     dataSet.valueTextColor = Color.BLACK
-                    dataSet.valueTextSize = 16f
+                    dataSet.valueTextSize = 13f
 
 
                     // 색상 설정
@@ -236,6 +237,7 @@ class CalendarActivity : AppCompatActivity() {
                     legend.yOffset = -40f
                     val percentFormatter = PercentFormatter(pieChart)
                     dataSet.valueFormatter = percentFormatter
+
 
 
 
@@ -344,7 +346,8 @@ class CalendarActivity : AppCompatActivity() {
                         dataSet.sliceSpace = 3f
                         dataSet.selectionShift = 5f
                         dataSet.valueTextColor = Color.BLACK
-                        dataSet.valueTextSize = 16f
+                        dataSet.valueTextSize = 13f
+
 
 
                         // 색상 설정
