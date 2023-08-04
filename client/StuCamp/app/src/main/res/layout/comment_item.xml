@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="#E0D9C9">
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF">
 
     <TextView
         android:id="@+id/tvComId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:fontFamily="@font/nanum_square_neo_deb"
         android:text="ID"
         android:textColor="#DC808080"
-        android:textSize="20sp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,25 +31,27 @@
         android:layout_marginStart="16dp"
         android:fontFamily="@font/nanum_square_neo_cbd"
         android:text="Content"
-        android:textSize="18sp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvComId"
         app:layout_constraintStart_toEndOf="@+id/tvComId"
         app:layout_constraintTop_toTopOf="@+id/tvComId" />
 
     <Button
         android:id="@+id/btnCommentDel"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="10dp"
-        android:backgroundTint="#E0D9C9"
+        android:backgroundTint="#00FFFFFF"
         android:fontFamily="@font/nanum_square_neo_cbd"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:text="삭제"
         android:textColor="#3A3730"
-        android:textSize="14sp"
-        app:cornerRadius="15dp"
+        android:textSize="14dp"
+        app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#3A3730"
+        app:strokeWidth="1dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
