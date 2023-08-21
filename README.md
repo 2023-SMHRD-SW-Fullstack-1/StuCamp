@@ -2,7 +2,8 @@
 <br>
 
 ## 👀 소셜, 타이머, 지도, 채팅 기능을 한 번에! <br>공부기록 공유 소셜 어플 '스투캠'
-![메인페이지](https://github.com/2023-SMHRD-SW-Fullstack-1/Haeksim_Hogward/assets/107793363/6cfdf45d-a43b-4be6-afce-4864dcda75bf)
+![StuCamp_intro](https://github.com/2023-SMHRD-SW-Fullstack-1/StuCamp/assets/130349912/229f9b1e-f114-4c86-9500-becffb642e5e)
+
 <br>
 <br>
 
@@ -21,17 +22,17 @@
 <br>
 
 ## ⛏ 기술스택
-![015](https://github.com/2023-SMHRD-SW-Fullstack-1/Haeksim_Hogward/assets/107793363/438e311f-eef2-462b-8973-76667e44b22b)
+![StuCamp_env](https://github.com/2023-SMHRD-SW-Fullstack-1/StuCamp/assets/130349912/707e3486-073c-4bdd-a206-1a409273faa5)
 <br>
 <br>
 
 ## ⚙ 서비스 흐름도
-
+![StuCamp_process](https://github.com/2023-SMHRD-SW-Fullstack-1/StuCamp/assets/130349912/e6fab11f-e0a9-4e5b-86bd-626accb0b76c)
 <br>
 <br>
 
 ## 🖥 시연 영상
-https://github.com/2023-SMHRD-SW-Fullstack-1/Haeksim_Hogward/assets/107793363/6bd4431e-73f9-4fb7-8d6c-919f3f1a924f
+https://github.com/2023-SMHRD-SW-Fullstack-1/StuCamp/assets/130349912/77761f92-386d-4d6f-9132-25531ace50e4
 <br>
 <br>
 
