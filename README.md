@@ -63,7 +63,7 @@ https://github.com/2023-SMHRD-SW-Fullstack-1/StuCamp/assets/130349912/77761f92-3
   
 #### Front-End
 - 공부 시간 관련 알고리즘 구현
-- MPAndroidChart 를 이용한 기록 통계 구현
+- MPAndroidChart 를 이용한 기록 통계 화면,로직 구현
 - firebase 연동 및 채팅기능 구현
 
 ---
